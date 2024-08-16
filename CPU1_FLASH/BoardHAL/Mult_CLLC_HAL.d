@@ -98,6 +98,7 @@ BoardHAL/Mult_CLLC_HAL.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverl
 BoardHAL/Mult_CLLC_HAL.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h
 BoardHAL/Mult_CLLC_HAL.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
 BoardHAL/Mult_CLLC_HAL.obj: C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h
+BoardHAL/Mult_CLLC_HAL.obj: syscfg/board.h
 BoardHAL/Mult_CLLC_HAL.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC_settings.h
 
 ../BoardHAL/Mult_CLLC_HAL.c:
@@ -295,6 +296,8 @@ C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h:
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
 C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h:
+
+syscfg/board.h:
 
 C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC_settings.h:
 
