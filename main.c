@@ -70,8 +70,6 @@ uint16_t count = 0;
 
 uint16_t tbprd = 500;
 
-__interrupt void FAULT_INPUT1_ISR(void);
-__interrupt void FAULT_INPUT2_ISR(void);
 //
 // Main
 //
