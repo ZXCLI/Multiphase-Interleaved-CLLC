@@ -99,7 +99,8 @@ main.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-
 main.obj: C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h
 main.obj: syscfg/board.h
 main.obj: syscfg/c2000ware_libraries.h
-main.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO/SFO_V8.h
+main.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/Mult_CLLC_HAL.h
+main.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC_settings.h
 
 ../main.c:
 
@@ -299,5 +300,7 @@ syscfg/board.h:
 
 syscfg/c2000ware_libraries.h:
 
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO/SFO_V8.h:
+C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/Mult_CLLC_HAL.h:
+
+C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC_settings.h:
 

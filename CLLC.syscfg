@@ -55,6 +55,7 @@ const gpio15           = gpio.addInstance();
 const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
 const inputxbar_input1 = inputxbar_input.addInstance();
 const inputxbar_input2 = inputxbar_input.addInstance();
+const inputxbar_input3 = inputxbar_input.addInstance();
 const pmbus            = scripting.addModule("/driverlib/pmbus.js", {}, false);
 const pmbus1           = pmbus.addInstance();
 const sci              = scripting.addModule("/driverlib/sci.js", {}, false);
@@ -505,9 +506,9 @@ inputxbar_input2.$name         = "myINPUTXBARINPUT1";
 gpio1.xint.inputxbar           = inputxbar_input2;
 inputxbar_input2.inputxbarGpio = "GPIO28";
 
-const inputxbar_input3 = inputxbar_input.addInstance({}, false);
-inputxbar_input3.$name = "myINPUTXBARINPUT2";
-gpio2.xint.inputxbar   = inputxbar_input3;
+inputxbar_input3.$name         = "myINPUTXBARINPUT2";
+gpio2.xint.inputxbar           = inputxbar_input3;
+inputxbar_input3.inputxbarGpio = "GPIO29";
 
 pmbus1.$name                        = "myPMBUS0";
 pmbus1.pmbus.pmbus_alertPin.$assign = "GPIO27";

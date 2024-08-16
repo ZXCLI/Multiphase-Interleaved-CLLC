@@ -54,21 +54,13 @@
 #include "c2000ware_libraries.h"
 #include "gpio.h"
 #include "inc/hw_memmap.h"
-#include "SFO_V8.h"
-//#include <cstdint>
 
-#define DAC_PWM_Generator_MAX 1613
-#define DAC_PWM_Generator_MIN 868
+#include "Mult_CLLC_HAL.h"
 
 bool fault_input1_flag = false;
 bool fault_input2_flag = false;
-bool strat_flag = false;
 
 uint16_t DAC_PWM_Generator = 0;
-uint16_t ADCC_result[1000] = {};
-uint16_t count = 0;
-
-uint16_t tbprd = 500;
 
 //
 // Main
@@ -97,24 +89,21 @@ void main(void)
     //
     Interrupt_initVectorTable();
 
-    SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
+    Mult_CLLC_HAL_disablePWMClkCounting();//关闭EPWM时钟
+    
     //
     // PinMux and Peripheral Initialization
     //
-
-    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//开启EPWM时钟
-
-    //
-    // C2000Ware Library initialization
-    //
-    C2000Ware_libraries_init();
+    Board_init();
+    
 
     CPUTimer_startTimer(CPUTIMER0_BASE);
     //CPUTimer_startTimer(CPUTIMER1_BASE);
 
     DEVICE_DELAY_US(10000);//延时10ms
-    strat_flag = true;
+    //strat_flag = true;
 
+    Mult_CLLC_HAL_enablePWMClkCounting();//开启EPWM时钟
     //
     // Enable Global Interrupt (INTM) and real time interrupt (DBGM)
     //
@@ -122,15 +111,9 @@ void main(void)
     ERTM;
 
     while (1) {
-       GPIO_togglePin(FAN1);
-       EPWM_setTimeBasePeriod(EPWM3_BASE, tbprd);
-       //tbprd -= 1;
+
        DEVICE_DELAY_US(100);
-       ADCC_result[count++] = ADC_readResult(ADCCRESULT_BASE, ADC_SOC_NUMBER0);
-       if( count >= 1000) {count = 0;}
-       if( tbprd < 10){
-          tbprd = 500;
-       }
+       
     }
 }
 
@@ -144,11 +127,11 @@ __interrupt void ISR1(void)
 __interrupt void ISR2(void)
 {
     //GPIO_togglePin(DEBUG2);
-    DAC_setShadowValue(myDAC0_BASE, DAC_PWM_Generator);
-    DAC_PWM_Generator += 2;
-    if (DAC_PWM_Generator > DAC_PWM_Generator_MAX) {
-      DAC_PWM_Generator = DAC_PWM_Generator_MIN;
-    }
+    // DAC_setShadowValue(myDAC0_BASE, DAC_PWM_Generator);
+    // DAC_PWM_Generator += 2;
+    // if (DAC_PWM_Generator > DAC_PWM_Generator_MAX) {
+    //   DAC_PWM_Generator = DAC_PWM_Generator_MIN;
+    // }
 }
 
 __interrupt void ISR3(void)
