@@ -12,6 +12,7 @@
         "hw_xint.h": "c",
         "cpu.h": "c",
         "interrupt.h": "c",
-        "mult_cllc_hal.h": "c"
+        "mult_cllc_hal.h": "c",
+        "stdint.h": "c"
     }
 }

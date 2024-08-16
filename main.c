@@ -126,12 +126,7 @@ __interrupt void ISR1(void)
 
 __interrupt void ISR2(void)
 {
-    //GPIO_togglePin(DEBUG2);
-    // DAC_setShadowValue(myDAC0_BASE, DAC_PWM_Generator);
-    // DAC_PWM_Generator += 2;
-    // if (DAC_PWM_Generator > DAC_PWM_Generator_MAX) {
-    //   DAC_PWM_Generator = DAC_PWM_Generator_MIN;
-    // }
+    
 }
 
 __interrupt void ISR3(void)

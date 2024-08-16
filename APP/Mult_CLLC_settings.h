@@ -1,18 +1,8 @@
 #ifndef MULT_CLLC_SETTINGS_H
 #define MULT_CLLC_SETTINGS_H
 
-//#############################################################################
-//
-// Includes
-//
-//#############################################################################
-#include <stdint.h>
+#warning // Modify parameters here to suit your system
 
-//#############################################################################
-//
-// Macro Definitions
-//
-//#############################################################################
 #ifndef C2000_IEEE754_TYPES
     #define C2000_IEEE754_TYPES
     #ifdef __TI_EABI__
@@ -65,29 +55,43 @@
 //
 // 功率级相关定义
 //
-#define CLLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ  ((float32_t)89.13*1000)
-#define CLLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ ((float32_t)160*1000)
-#define CLLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ ((float32_t)50*1000)
+#define MULT_CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ    ((float32_t)89.13*1000)//谐振频率
+#define MULT_CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)160*1000)
+#define MULT_CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)50*1000)
 
-// #define CLLLC_PRIM_PWM_DEADBAND_RED_NS ((float32_t)102.3)
-// #define CLLLC_PRIM_PWM_DEADBAND_FED_NS ((float32_t)102.3)
-// #define CLLLC_SEC_PWM_DEADBAND_RED_NS  ((float32_t)102)
-// #define CLLLC_SEC_PWM_DEADBAND_FED_NS  ((float32_t)102)
+#define MULT_CLLC_VPRIM_MAX_SENSE_VOLTS         ((float32_t)420)
+#define MULT_CLLC_VSEC_MAX_SENSE_VOLTS          ((float32_t)110)
+#define MULT_CLLC_VSEC_OPTIMAL_RANGE_VOLTS      ((float32_t)100)
+#define MULT_CLLC_IPRIM_MAX_SENSE_AMPS          ((float32_t)8)
+#define MULT_CLLC_ISEC_MAX_SENSE_AMPS           ((float32_t)55)
+#define MULT_CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS   ((float32_t)5)
+#define MULT_CLLC_ISEC_MAX_BRACH_SENSE_AMPS     ((float32_t)35)
+//#define MULT_CLLC_IPRIM_TANK_MAX_SENSE_AMPS ((float32_t)34.375)
+//#define MULT_CLLC_ISEC_TANK_MAX_SENSE_AMPS ((float32_t)42.375)
 
-#define CLLLC_VPRIM_MAX_SENSE_VOLTS    ((float32_t)420)
-#define CLLLC_VSEC_MAX_SENSE_VOLTS     ((float32_t)110)
-#define CLLLC_VSEC_OPTIMAL_RANGE_VOLTS ((float32_t)450)
-#define CLLLC_IPRIM_MAX_SENSE_AMPS    ((float32_t)34.375)
-#define CLLLC_ISEC_MAX_SENSE_AMPS     ((float32_t)42.438)
-#define CLLLC_IPRIM_TANK_MAX_SENSE_AMPS ((float32_t)34.375)
-#define CLLLC_ISEC_TANK_MAX_SENSE_AMPS ((float32_t)42.375)
+#define MULT_CLLC_VSEC_NOMINAL_VOLTS    ((float32_t)100)
+#define MULT_CLLC_VPRIM_NOMINAL_VOLTS   ((float32_t)400)
 
-#define CLLLC_VSEC_NOMINAL_VOLTS ((float32_t)300)
-#define CLLLC_VPRIM_NOMINAL_VOLTS ((float32_t)400)
+// #define MULT_CLLC_IPRIM_TRIP_LIMIT_AMPS ((float32_t)30)
+// #define MULT_CLLC_ISEC_TRIP_LIMIT_AMPS ((float32_t)40)
+#define MULT_CLLC_IPRIM_TANK_TRIP_LIMIT_AMPS_PEAK   ((float32_t)10)
+#define MULT_CLLC_ISEC_TANK_TRIP_LIMIT_AMPS_PEAK    ((float32_t)40)
 
-#define CLLLC_IPRIM_TRIP_LIMIT_AMPS ((float32_t)30)
-#define CLLLC_ISEC_TRIP_LIMIT_AMPS  ((float32_t)40)
-#define CLLLC_IPRIM_TANK_TRIP_LIMIT_AMPS ((float32_t)30)
-#define CLLLC_ISEC_TANK_TRIP_LIMIT_AMPS  ((float32_t)40)
+//
+// 根据实际调整 
+//
+#define MULT_CLLC_IPRIM_TANK_DACHVAL 2150
+#define MULT_CLLC_IPRIM_TANK_DACLVAL 1950
+#define MULT_CLLC_ISEC_TANK_DACHVAL 2150
+#define MULT_CLLC_ISEC_TANK_DACLVAL 1950
 
-#endif  // MULT_CLLC_SETTINGS_H
+// 用于计算的常量
+#define PI_VALUE ((float32_t)3.141592653589)
+#define MULT_CLLC_ADC_PU_SCALE_FACTOR ((float32_t)1 / (1 << 12)) // 12bit
+
+//
+// 环路相关参数
+//
+#define MULT_CLLC_MAX_TD_STEP_PU ((float32_t)0.05) // 电荷积分TD的最大调整步长
+
+#endif // MULT_CLLC_SETTINGS_H

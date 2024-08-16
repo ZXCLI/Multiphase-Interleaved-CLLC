@@ -5,6 +5,11 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 //"${workspaceFolder}/Uerlib/Inc",
+                "${workspaceFolder}/APP",
+                "${workspaceFolder}/BoardHAL",
+                "${workspaceFolder}/LIB/DCL",
+                "${workspaceFolder}/LIB/SFO",
+                "${workspaceFolder}/LIB/utilities",
                 "${workspaceFolder}/device/",
                 "${workspaceFolder}/device/driverlib",
                 "${workspaceFolder}/device/driverlib/inc"
