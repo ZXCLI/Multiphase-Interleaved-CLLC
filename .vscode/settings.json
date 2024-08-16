@@ -13,6 +13,7 @@
         "cpu.h": "c",
         "interrupt.h": "c",
         "mult_cllc_hal.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "mult_cllc_settings.h": "c"
     }
 }

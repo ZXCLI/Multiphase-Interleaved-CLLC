@@ -103,7 +103,7 @@ void main(void)
     DEVICE_DELAY_US(10000);//延时10ms
     //strat_flag = true;
 
-    Mult_CLLC_HAL_enablePWMClkCounting();//开启EPWM时钟
+    Mult_CLLC_HAL_enablePWMClkCounting();//初始化完成，开启EPWM时钟
     //
     // Enable Global Interrupt (INTM) and real time interrupt (DBGM)
     //
@@ -126,7 +126,7 @@ __interrupt void ISR1(void)
 
 __interrupt void ISR2(void)
 {
-    
+
 }
 
 __interrupt void ISR3(void)
