@@ -10,6 +10,7 @@
                 "${workspaceFolder}/LIB/DCL",
                 "${workspaceFolder}/LIB/SFO",
                 "${workspaceFolder}/LIB/utilities",
+                "${workspaceFolder}/CPU1_FLASH/syscfg",
                 "${workspaceFolder}/device/",
                 "${workspaceFolder}/device/driverlib",
                 "${workspaceFolder}/device/driverlib/inc"

@@ -60,48 +60,24 @@
 bool fault_input1_flag = false;
 bool fault_input2_flag = false;
 
-uint16_t DAC_PWM_Generator = 0;
 
 //
 // Main
 //
 void main(void)
 {
-    
-    //
-    // Initialize device clock and peripherals
-    //
-    Device_init();
 
-    //
-    // Disable pin locks and enable internal pull-ups.
-    //
-    Device_initGPIO();
+    Mult_CLLC_HAL_setupDevice(); // 初始化设备
 
-    //
-    // Initialize PIE and clear PIE registers. Disables CPU interrupts.
-    //
-    Interrupt_initModule();
-
-    //
-    // Initialize the PIE vector table with pointers to the shell Interrupt
-    // Service Routines (ISR).
-    //
-    Interrupt_initVectorTable();
 
     Mult_CLLC_HAL_disablePWMClkCounting();//关闭EPWM时钟
     
-    //
-    // PinMux and Peripheral Initialization
-    //
-    Board_init();
+
     
 
     CPUTimer_startTimer(CPUTIMER0_BASE);
     //CPUTimer_startTimer(CPUTIMER1_BASE);
 
-    DEVICE_DELAY_US(10000);//延时10ms
-    //strat_flag = true;
 
     Mult_CLLC_HAL_enablePWMClkCounting();//初始化完成，开启EPWM时钟
     //
@@ -112,14 +88,12 @@ void main(void)
 
     while (1) {
 
-       DEVICE_DELAY_US(100);
        
     }
 }
 
 __interrupt void ISR1(void)
 {
-    //ADCC_result = ADC_readResult(ADCCRESULT_BASE,ADC_SOC_NUMBER0);
     
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);//timer0要加上清除中断标志位这句话
 }
