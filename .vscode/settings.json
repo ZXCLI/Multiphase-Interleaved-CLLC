@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "gpio.h": "c",
+        "test.h": "c",
+        "driverlib.h": "c",
+        "board.h": "c",
+        "device.h": "c",
+        "c2000ware_libraries.h": "c",
+        "hw_gpio.h": "c",
+        "hw_memmap.h": "c",
+        "hw_types.h": "c",
+        "hw_xint.h": "c",
+        "cpu.h": "c",
+        "interrupt.h": "c"
+    }
+}

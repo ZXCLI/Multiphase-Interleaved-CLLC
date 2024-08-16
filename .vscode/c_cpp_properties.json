@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                //"${workspaceFolder}/Uerlib/Inc",
+                "${workspaceFolder}/device/",
+                "${workspaceFolder}/device/driverlib",
+                "${workspaceFolder}/device/driverlib/inc"
+                //"D://Software/ti/ccs12/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "__TMS320C28XX__"
+            ],
+            "cStandard": "c99"
+        }
+    ],
+    "version": 4
+}
