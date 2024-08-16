@@ -1400,10 +1400,18 @@ void SEC_ZCD2_init(){
 //*****************************************************************************
 void INPUTXBAR_init(){
 	myINPUTXBARINPUT0_init();
+	myINPUTXBARINPUT1_init();
+	myINPUTXBARINPUT2_init();
 }
 
 void myINPUTXBARINPUT0_init(){
 	XBAR_setInputPin(myINPUTXBARINPUT0_INPUT, myINPUTXBARINPUT0_SOURCE);
+}
+void myINPUTXBARINPUT1_init(){
+	XBAR_setInputPin(myINPUTXBARINPUT1_INPUT, myINPUTXBARINPUT1_SOURCE);
+}
+void myINPUTXBARINPUT2_init(){
+	XBAR_setInputPin(myINPUTXBARINPUT2_INPUT, myINPUTXBARINPUT2_SOURCE);
 }
 
 //*****************************************************************************
@@ -1424,6 +1432,14 @@ void INTERRUPT_init(){
 	// Interrupt Setings for INT_myCPUTIMER2
 	Interrupt_register(INT_myCPUTIMER2, &ISR3);
 	Interrupt_enable(INT_myCPUTIMER2);
+	
+	// Interrupt Setings for INT_FAULT_INPUT1_XINT
+	Interrupt_register(INT_FAULT_INPUT1_XINT, &FAULT_INPUT1_ISR);
+	Interrupt_enable(INT_FAULT_INPUT1_XINT);
+	
+	// Interrupt Setings for INT_FAULT_INPUT2_XINT
+	Interrupt_register(INT_FAULT_INPUT2_XINT, &FAULT_INPUT2_ISR);
+	Interrupt_enable(INT_FAULT_INPUT2_XINT);
 	
 	// Interrupt Setings for INT_PRIM_ZCD1_XINT
 	Interrupt_register(INT_PRIM_ZCD1_XINT, &PZCD1_ISR);
@@ -1506,9 +1522,21 @@ void SYNC_init(){
 //
 //*****************************************************************************
 void XINT_init(){
+	FAULT_INPUT1_XINT_init();
+	FAULT_INPUT2_XINT_init();
 	PRIM_ZCD1_XINT_init();
 }
 
+void FAULT_INPUT1_XINT_init(){
+	GPIO_setInterruptType(FAULT_INPUT1_XINT, GPIO_INT_TYPE_RISING_EDGE);
+	GPIO_setInterruptPin(FAULT_INPUT1, FAULT_INPUT1_XINT);
+	GPIO_enableInterrupt(FAULT_INPUT1_XINT);
+}
+void FAULT_INPUT2_XINT_init(){
+	GPIO_setInterruptType(FAULT_INPUT2_XINT, GPIO_INT_TYPE_FALLING_EDGE);
+	GPIO_setInterruptPin(FAULT_INPUT2, FAULT_INPUT2_XINT);
+	GPIO_enableInterrupt(FAULT_INPUT2_XINT);
+}
 void PRIM_ZCD1_XINT_init(){
 	GPIO_setInterruptType(PRIM_ZCD1_XINT, GPIO_INT_TYPE_BOTH_EDGES);
 	GPIO_setInterruptPin(PRIM_ZCD1, PRIM_ZCD1_XINT);

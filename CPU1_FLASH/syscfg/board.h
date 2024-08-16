@@ -571,6 +571,12 @@ void SEC_ZCD2_init();
 #define myINPUTXBARINPUT0_SOURCE 23
 #define myINPUTXBARINPUT0_INPUT XBAR_INPUT4
 void myINPUTXBARINPUT0_init();
+#define myINPUTXBARINPUT1_SOURCE 28
+#define myINPUTXBARINPUT1_INPUT XBAR_INPUT6
+void myINPUTXBARINPUT1_init();
+#define myINPUTXBARINPUT2_SOURCE 0xFFFE
+#define myINPUTXBARINPUT2_INPUT XBAR_INPUT13
+void myINPUTXBARINPUT2_init();
 
 //*****************************************************************************
 //
@@ -590,6 +596,16 @@ extern __interrupt void ISR2(void);
 // Interrupt Settings for INT_myCPUTIMER2
 #define INT_myCPUTIMER2 INT_TIMER2
 extern __interrupt void ISR3(void);
+
+// Interrupt Settings for INT_FAULT_INPUT1_XINT
+#define INT_FAULT_INPUT1_XINT INT_XINT3
+#define INT_FAULT_INPUT1_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP12
+extern __interrupt void FAULT_INPUT1_ISR(void);
+
+// Interrupt Settings for INT_FAULT_INPUT2_XINT
+#define INT_FAULT_INPUT2_XINT INT_XINT4
+#define INT_FAULT_INPUT2_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP12
+extern __interrupt void FAULT_INPUT2_ISR(void);
 
 // Interrupt Settings for INT_PRIM_ZCD1_XINT
 #define INT_PRIM_ZCD1_XINT INT_XINT1
@@ -635,6 +651,12 @@ void mySCI0_init();
 // XINT Configurations
 //
 //*****************************************************************************
+#define FAULT_INPUT1_XINT GPIO_INT_XINT3
+#define FAULT_INPUT1_XINT_TYPE GPIO_INT_TYPE_RISING_EDGE
+void FAULT_INPUT1_XINT_init();
+#define FAULT_INPUT2_XINT GPIO_INT_XINT4
+#define FAULT_INPUT2_XINT_TYPE GPIO_INT_TYPE_FALLING_EDGE
+void FAULT_INPUT2_XINT_init();
 #define PRIM_ZCD1_XINT GPIO_INT_XINT1
 #define PRIM_ZCD1_XINT_TYPE GPIO_INT_TYPE_BOTH_EDGES
 void PRIM_ZCD1_XINT_init();

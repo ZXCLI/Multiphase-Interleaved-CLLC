@@ -54,6 +54,7 @@ const gpio14           = gpio.addInstance();
 const gpio15           = gpio.addInstance();
 const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
 const inputxbar_input1 = inputxbar_input.addInstance();
+const inputxbar_input2 = inputxbar_input.addInstance();
 const pmbus            = scripting.addModule("/driverlib/pmbus.js", {}, false);
 const pmbus1           = pmbus.addInstance();
 const sci              = scripting.addModule("/driverlib/sci.js", {}, false);
@@ -420,11 +421,24 @@ epwm8.epwm.$assign                                            = "EPWM8";
 epwm8.epwm.epwm_aPin.$assign                                  = "GPIO14";
 epwm8.epwm.epwm_bPin.$assign                                  = "GPIO15";
 
-gpio1.$name     = "FAULT_INPUT1";
-gpio1.padConfig = "PULLUP";
+gpio1.$name                      = "FAULT_INPUT1";
+gpio1.padConfig                  = "PULLUP";
+gpio1.useInterrupt               = true;
+gpio1.xint.xintNum               = "GPIO_INT_XINT3";
+gpio1.xint.intType               = "GPIO_INT_TYPE_RISING_EDGE";
+gpio1.xint.enableInt             = true;
+gpio1.xint.registerInterrupts    = true;
+gpio1.xint.xInt.enableInterrupt  = true;
+gpio1.xint.xInt.interruptHandler = "FAULT_INPUT1_ISR";
 
-gpio2.$name           = "FAULT_INPUT2";
-gpio2.gpioPin.$assign = "GPIO29";
+gpio2.$name                      = "FAULT_INPUT2";
+gpio2.useInterrupt               = true;
+gpio2.gpioPin.$assign            = "GPIO29";
+gpio2.xint.xintNum               = "GPIO_INT_XINT4";
+gpio2.xint.enableInt             = true;
+gpio2.xint.registerInterrupts    = true;
+gpio2.xint.xInt.interruptHandler = "FAULT_INPUT2_ISR";
+gpio2.xint.xInt.enableInterrupt  = true;
 
 gpio3.$name           = "FAULT_OUTPUT";
 gpio3.direction       = "GPIO_DIR_MODE_OUT";
@@ -486,6 +500,14 @@ gpio15.gpioPin.$assign = "GPIO17";
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio9.xint.inputxbar           = inputxbar_input1;
 inputxbar_input1.inputxbarGpio = "GPIO23";
+
+inputxbar_input2.$name         = "myINPUTXBARINPUT1";
+gpio1.xint.inputxbar           = inputxbar_input2;
+inputxbar_input2.inputxbarGpio = "GPIO28";
+
+const inputxbar_input3 = inputxbar_input.addInstance({}, false);
+inputxbar_input3.$name = "myINPUTXBARINPUT2";
+gpio2.xint.inputxbar   = inputxbar_input3;
 
 pmbus1.$name                        = "myPMBUS0";
 pmbus1.pmbus.pmbus_alertPin.$assign = "GPIO27";

@@ -103,16 +103,6 @@ void main(void)
     //
     // PinMux and Peripheral Initialization
     //
-    Board_init();
-
-/*------------------------FAULT_INPUT2上升沿触发--------------------------------------*/
-    // GPIO_setInterruptType(GPIO_INT_XINT2, GPIO_INT_TYPE_RISING_EDGE);
-    // GPIO_setInterruptPin(FAULT_INPUT2, GPIO_INT_XINT2);
-    // GPIO_enableInterrupt(GPIO_INT_XINT2);
-
-    // Interrupt_register(INT_XINT2, &FAULT_INPUT2_ISR);
-    // Interrupt_enable(INT_XINT2);
-/*-----------------------------------------------------------------------------------*/
 
     SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//开启EPWM时钟
 
