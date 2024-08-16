@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "TI C2000",
             "includePath": [
                 "${workspaceFolder}/**",
                 //"${workspaceFolder}/Uerlib/Inc",
@@ -13,16 +13,20 @@
                 "${workspaceFolder}/CPU1_FLASH/syscfg",
                 "${workspaceFolder}/device/",
                 "${workspaceFolder}/device/driverlib",
-                "${workspaceFolder}/device/driverlib/inc"
-                //"D://Software/ti/ccs12/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/include"
+                "${workspaceFolder}/device/driverlib/inc",
+                "C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/include"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "__TMS320C28XX__"
+                "__TMS320C28XX__",
+                "__interrupt=" // 定义为空，消除红色波浪线
             ],
-            "cStandard": "c99"
+            "cStandard": "c11",
+            "intelliSenseMode": "gcc-x64",
+            //"compilerPath": "C:/ti/ccs1240/xdctools_3_62_01_16_core/gmake.exe"
+            "compilerPath": "C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/bin/cl2000.exe"
         }
     ],
     "version": 4

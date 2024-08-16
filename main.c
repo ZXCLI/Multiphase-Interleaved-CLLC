@@ -75,7 +75,7 @@ void main(void)
 
     
 
-    CPUTimer_startTimer(CPUTIMER0_BASE);
+    //CPUTimer_startTimer(CPUTIMER0_BASE);
     //CPUTimer_startTimer(CPUTIMER1_BASE);
 
 
