@@ -589,23 +589,15 @@ void myINPUTXBARINPUT2_init();
 #define INT_myCPUTIMER0_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void ISR1(void);
 
-// Interrupt Settings for INT_myCPUTIMER1
-#define INT_myCPUTIMER1 INT_TIMER1
-extern __interrupt void ISR2(void);
-
-// Interrupt Settings for INT_myCPUTIMER2
-#define INT_myCPUTIMER2 INT_TIMER2
-extern __interrupt void ISR3(void);
-
 // Interrupt Settings for INT_FAULT_INPUT1_XINT
 #define INT_FAULT_INPUT1_XINT INT_XINT3
 #define INT_FAULT_INPUT1_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP12
-extern __interrupt void FAULT_INPUT1_ISR(void);
+extern __interrupt void FAULT_INPUT1_ISR1(void);
 
 // Interrupt Settings for INT_FAULT_INPUT2_XINT
 #define INT_FAULT_INPUT2_XINT INT_XINT4
 #define INT_FAULT_INPUT2_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP12
-extern __interrupt void FAULT_INPUT2_ISR(void);
+extern __interrupt void FAULT_INPUT2_ISR1(void);
 
 // Interrupt Settings for INT_PRIM_ZCD1_XINT
 #define INT_PRIM_ZCD1_XINT INT_XINT1

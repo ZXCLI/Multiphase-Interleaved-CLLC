@@ -15,6 +15,7 @@ ORDERED_OBJS += \
 "./main.obj" \
 "./APP/Mult_CLLC.obj" \
 "./BoardHAL/Mult_CLLC_HAL.obj" \
+"./BoardHAL/State_machine.obj" \
 "./LIB/DCL/DCL_DF22_C1.obj" \
 "./LIB/DCL/DCL_PI_C1.obj" \
 "./LIB/DCL/DCL_PI_C4.obj" \
@@ -177,8 +178,8 @@ Multiphase-Interleaved-CLLC.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "main.obj" "APP\Mult_CLLC.obj" "BoardHAL\Mult_CLLC_HAL.obj" "LIB\DCL\DCL_DF22_C1.obj" "LIB\DCL\DCL_PI_C1.obj" "LIB\DCL\DCL_PI_C4.obj" "LIB\DCL\DCL_PI_L1.obj" "LIB\sfra\sfra_gui_scicomms_driverlib.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
-	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "main.d" "APP\Mult_CLLC.d" "BoardHAL\Mult_CLLC_HAL.d" "LIB\sfra\sfra_gui_scicomms_driverlib.d" "device\device.d" 
+	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "main.obj" "APP\Mult_CLLC.obj" "BoardHAL\Mult_CLLC_HAL.obj" "BoardHAL\State_machine.obj" "LIB\DCL\DCL_DF22_C1.obj" "LIB\DCL\DCL_PI_C1.obj" "LIB\DCL\DCL_PI_C4.obj" "LIB\DCL\DCL_PI_L1.obj" "LIB\sfra\sfra_gui_scicomms_driverlib.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
+	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "main.d" "APP\Mult_CLLC.d" "BoardHAL\Mult_CLLC_HAL.d" "BoardHAL\State_machine.d" "LIB\sfra\sfra_gui_scicomms_driverlib.d" "device\device.d" 
 	-$(RM) "LIB\DCL\DCL_DF22_C1.d" "LIB\DCL\DCL_PI_C1.d" "LIB\DCL\DCL_PI_C4.d" "LIB\DCL\DCL_PI_L1.d" "device\f28004x_codestartbranch.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'

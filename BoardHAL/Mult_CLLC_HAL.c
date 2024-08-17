@@ -7,26 +7,14 @@
 
 void Mult_CLLC_HAL_setupDevice(void)
 {
-    //
-    // Initialize device clock and peripherals
-    //
-    Device_init();
+    Device_init();// Initialize device clock and peripherals
 
-    //
-    // Disable pin locks and enable internal pull-ups.
-    //
-    Device_initGPIO();
+    Device_initGPIO();// Disable pin locks and enable internal pull-ups.
 
-    //
-    // Initialize PIE and clear PIE registers. Disables CPU interrupts.
-    //
-    Interrupt_initModule();
+    Interrupt_initModule(); // Initialize PIE and clear PIE registers. Disables CPU interrupts.
 
-    //
-    // Initialize the PIE vector table with pointers to the shell Interrupt
-    // Service Routines (ISR).
-    //
-    Interrupt_initVectorTable();
+    Interrupt_initVectorTable();// Initialize the PIE vector table with pointers to the shell Interrupt
+                                // Service Routines (ISR).
 
     CPUTIMER_init();
 

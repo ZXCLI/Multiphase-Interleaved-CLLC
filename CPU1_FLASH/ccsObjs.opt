@@ -3,6 +3,7 @@
 "./main.obj"
 "./APP/Mult_CLLC.obj"
 "./BoardHAL/Mult_CLLC_HAL.obj"
+"./BoardHAL/State_machine.obj"
 "./LIB/DCL/DCL_DF22_C1.obj"
 "./LIB/DCL/DCL_PI_C1.obj"
 "./LIB/DCL/DCL_PI_C4.obj"

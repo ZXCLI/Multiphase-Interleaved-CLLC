@@ -139,24 +139,15 @@ cputimer1.$name                     = "myCPUTIMER0";
 cputimer1.enableInterrupt           = true;
 cputimer1.registerInterrupts        = true;
 cputimer1.timerPeriod               = 1200;
-cputimer1.timerInt.enableInterrupt  = true;
 cputimer1.timerInt.interruptHandler = "ISR1";
 
-cputimer2.$name                     = "myCPUTIMER1";
-cputimer2.cputimerBase              = "CPUTIMER1_BASE";
-cputimer2.enableInterrupt           = true;
-cputimer2.registerInterrupts        = true;
-cputimer2.timerPeriod               = 10000;
-cputimer2.timerInt.enableInterrupt  = true;
-cputimer2.timerInt.interruptHandler = "ISR2";
+cputimer2.$name        = "myCPUTIMER1";
+cputimer2.cputimerBase = "CPUTIMER1_BASE";
+cputimer2.timerPeriod  = 10000;
 
-cputimer3.$name                     = "myCPUTIMER2";
-cputimer3.cputimerBase              = "CPUTIMER2_BASE";
-cputimer3.enableInterrupt           = true;
-cputimer3.timerPeriod               = 100000;
-cputimer3.registerInterrupts        = true;
-cputimer3.timerInt.enableInterrupt  = true;
-cputimer3.timerInt.interruptHandler = "ISR3";
+cputimer3.$name        = "myCPUTIMER2";
+cputimer3.cputimerBase = "CPUTIMER2_BASE";
+cputimer3.timerPeriod  = 100000;
 
 dac1.$name            = "myDAC0";
 dac1.enableOutput     = true;
@@ -428,8 +419,7 @@ gpio1.xint.xintNum               = "GPIO_INT_XINT3";
 gpio1.xint.intType               = "GPIO_INT_TYPE_RISING_EDGE";
 gpio1.xint.enableInt             = true;
 gpio1.xint.registerInterrupts    = true;
-gpio1.xint.xInt.enableInterrupt  = true;
-gpio1.xint.xInt.interruptHandler = "FAULT_INPUT1_ISR";
+gpio1.xint.xInt.interruptHandler = "FAULT_INPUT1_ISR1";
 
 gpio2.$name                      = "FAULT_INPUT2";
 gpio2.useInterrupt               = true;
@@ -437,8 +427,7 @@ gpio2.gpioPin.$assign            = "GPIO29";
 gpio2.xint.xintNum               = "GPIO_INT_XINT4";
 gpio2.xint.enableInt             = true;
 gpio2.xint.registerInterrupts    = true;
-gpio2.xint.xInt.interruptHandler = "FAULT_INPUT2_ISR";
-gpio2.xint.xInt.enableInterrupt  = true;
+gpio2.xint.xInt.interruptHandler = "FAULT_INPUT2_ISR1";
 
 gpio3.$name           = "FAULT_OUTPUT";
 gpio3.direction       = "GPIO_DIR_MODE_OUT";
@@ -471,10 +460,9 @@ gpio9.padConfig                  = "PULLUP";
 gpio9.useInterrupt               = true;
 gpio9.gpioPin.$assign            = "GPIO23_VSW";
 gpio9.xint.intType               = "GPIO_INT_TYPE_BOTH_EDGES";
-gpio9.xint.enableInt             = true;
 gpio9.xint.registerInterrupts    = true;
+gpio9.xint.enableInt             = true;
 gpio9.xint.xInt.interruptHandler = "PZCD1_ISR";
-gpio9.xint.xInt.enableInterrupt  = true;
 
 gpio10.$name           = "PRIM_ZCD2";
 gpio10.gpioPin.$assign = "GPIO22_VFBSW";

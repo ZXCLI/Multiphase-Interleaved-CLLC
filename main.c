@@ -8,8 +8,8 @@
 
 #include "Mult_CLLC_HAL.h"
 
-bool fault_input1_flag = false;
-bool fault_input2_flag = false;
+volatile bool fault_input1_flag = false;
+volatile bool fault_input2_flag = false;
 
 
 void main(void)
@@ -33,10 +33,14 @@ void main(void)
     ERTM;
 
     while (1) {
-
-       
+        (*Alpha_State_Ptr)(); //调用状态机
     }
 }
+
+//
+// 下面是中断函数的定义
+//
+
 
 __interrupt void ISR1(void)
 {
@@ -44,17 +48,17 @@ __interrupt void ISR1(void)
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);//timer0要加上清除中断标志位这句话
 }
 
-__interrupt void ISR2(void)
-{
+// __interrupt void ISR2(void)
+// {
 
-}
+// }
 
-__interrupt void ISR3(void)
-{
+// __interrupt void ISR3(void)
+// {
     
-}
+// }
 
-__interrupt void FAULT_INPUT1_ISR(void)
+__interrupt void FAULT_INPUT1_ISR1(void)
 {
     //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
     //GPIO_writePin(FAULT_OUTPUT,1);//触发保护
@@ -64,7 +68,7 @@ __interrupt void FAULT_INPUT1_ISR(void)
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
 }
 
-__interrupt void FAULT_INPUT2_ISR(void)
+__interrupt void FAULT_INPUT2_ISR1(void)
 {
     //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
     //GPIO_writePin(FAULT_OUTPUT,1);//触发保护

@@ -875,7 +875,7 @@ void myCPUTIMER1_init(){
 	CPUTimer_setEmulationMode(myCPUTIMER1_BASE, CPUTIMER_EMULATIONMODE_STOPAFTERNEXTDECREMENT);
 	CPUTimer_setPreScaler(myCPUTIMER1_BASE, 0U);
 	CPUTimer_setPeriod(myCPUTIMER1_BASE, 10000U);
-	CPUTimer_enableInterrupt(myCPUTIMER1_BASE);
+	CPUTimer_disableInterrupt(myCPUTIMER1_BASE);
 	CPUTimer_stopTimer(myCPUTIMER1_BASE);
 
 	CPUTimer_reloadTimerCounter(myCPUTIMER1_BASE);
@@ -885,7 +885,7 @@ void myCPUTIMER2_init(){
 	CPUTimer_selectClockSource(myCPUTIMER2_BASE, CPUTIMER_CLOCK_SOURCE_SYS, CPUTIMER_CLOCK_PRESCALER_1);
 	CPUTimer_setPreScaler(myCPUTIMER2_BASE, 0U);
 	CPUTimer_setPeriod(myCPUTIMER2_BASE, 100000U);
-	CPUTimer_enableInterrupt(myCPUTIMER2_BASE);
+	CPUTimer_disableInterrupt(myCPUTIMER2_BASE);
 	CPUTimer_stopTimer(myCPUTIMER2_BASE);
 
 	CPUTimer_reloadTimerCounter(myCPUTIMER2_BASE);
@@ -1423,27 +1423,19 @@ void INTERRUPT_init(){
 	
 	// Interrupt Setings for INT_myCPUTIMER0
 	Interrupt_register(INT_myCPUTIMER0, &ISR1);
-	Interrupt_enable(INT_myCPUTIMER0);
-	
-	// Interrupt Setings for INT_myCPUTIMER1
-	Interrupt_register(INT_myCPUTIMER1, &ISR2);
-	Interrupt_enable(INT_myCPUTIMER1);
-	
-	// Interrupt Setings for INT_myCPUTIMER2
-	Interrupt_register(INT_myCPUTIMER2, &ISR3);
-	Interrupt_enable(INT_myCPUTIMER2);
+	Interrupt_disable(INT_myCPUTIMER0);
 	
 	// Interrupt Setings for INT_FAULT_INPUT1_XINT
-	Interrupt_register(INT_FAULT_INPUT1_XINT, &FAULT_INPUT1_ISR);
-	Interrupt_enable(INT_FAULT_INPUT1_XINT);
+	Interrupt_register(INT_FAULT_INPUT1_XINT, &FAULT_INPUT1_ISR1);
+	Interrupt_disable(INT_FAULT_INPUT1_XINT);
 	
 	// Interrupt Setings for INT_FAULT_INPUT2_XINT
-	Interrupt_register(INT_FAULT_INPUT2_XINT, &FAULT_INPUT2_ISR);
-	Interrupt_enable(INT_FAULT_INPUT2_XINT);
+	Interrupt_register(INT_FAULT_INPUT2_XINT, &FAULT_INPUT2_ISR1);
+	Interrupt_disable(INT_FAULT_INPUT2_XINT);
 	
 	// Interrupt Setings for INT_PRIM_ZCD1_XINT
 	Interrupt_register(INT_PRIM_ZCD1_XINT, &PZCD1_ISR);
-	Interrupt_enable(INT_PRIM_ZCD1_XINT);
+	Interrupt_disable(INT_PRIM_ZCD1_XINT);
 }
 //*****************************************************************************
 //

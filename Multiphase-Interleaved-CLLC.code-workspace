@@ -20,7 +20,9 @@
             "interrupt.h": "c",
             "mult_cllc_hal.h": "c",
             "stdint.h": "c",
-            "mult_cllc_settings.h": "c"
+            "mult_cllc_settings.h": "c",
+            "state_machine.h": "c",
+            "adc.h": "c"
         }
     }
 }
