@@ -24,9 +24,9 @@
                 "__interrupt=" // 定义为空，消除红色波浪线
             ],
             "cStandard": "c11",
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "gcc-x64"
             //"compilerPath": "C:/ti/ccs1240/xdctools_3_62_01_16_core/gmake.exe"
-            "compilerPath": "C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/bin/cl2000.exe"
+            //"compilerPath": "C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/bin/cl2000.exe"
         }
     ],
     "version": 4
