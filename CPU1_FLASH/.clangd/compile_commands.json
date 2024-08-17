@@ -2,6 +2,16 @@
    {
       "directory" : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH",
       "command"   : "clang++ -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL\" -I\"C:/ti/C2000Ware_5_01_00_00\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/device\" -I\"C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include\" -DDEBUG -D_FLASH -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg\"",
+      "file"      : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC.c"
+   },
+   {
+      "directory" : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH",
+      "command"   : "clang++ -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL\" -I\"C:/ti/C2000Ware_5_01_00_00\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/device\" -I\"C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include\" -DDEBUG -D_FLASH -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg\"",
+      "file"      : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/Mult_CLLC_HAL.c"
+   },
+   {
+      "directory" : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH",
+      "command"   : "clang++ -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL\" -I\"C:/ti/C2000Ware_5_01_00_00\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/device\" -I\"C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include\" -DDEBUG -D_FLASH -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg\"",
       "file"      : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/DCL/DCL_DF22_C1.asm"
    },
    {
@@ -48,15 +58,5 @@
       "directory" : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH",
       "command"   : "clang++ -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL\" -I\"C:/ti/C2000Ware_5_01_00_00\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/device\" -I\"C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include\" -DDEBUG -D_FLASH -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg\"",
       "file"      : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg/c2000ware_libraries.c"
-   },
-   {
-      "directory" : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH",
-      "command"   : "clang++ -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL\" -I\"C:/ti/C2000Ware_5_01_00_00\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/device\" -I\"C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include\" -DDEBUG -D_FLASH -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg\"",
-      "file"      : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/Mult_CLLC_HAL.c"
-   },
-   {
-      "directory" : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH",
-      "command"   : "clang++ -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL\" -I\"C:/ti/C2000Ware_5_01_00_00\" -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/device\" -I\"C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib\" -I\"C:/ti/ccstheia140/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include\" -DDEBUG -D_FLASH -I\"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg\"",
-      "file"      : "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC.c"
    }
 ]

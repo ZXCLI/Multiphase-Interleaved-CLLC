@@ -59,13 +59,13 @@
 #define MULT_CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)160*1000)
 #define MULT_CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)50*1000)
 
-#define MULT_CLLC_VPRIM_MAX_SENSE_VOLTS         ((float32_t)420)
-#define MULT_CLLC_VSEC_MAX_SENSE_VOLTS          ((float32_t)110)
+#define MULT_CLLC_VPRIM_MAX_SENSE_VOLTS         ((float32_t)420)    //初级母线最大电压
+#define MULT_CLLC_VSEC_MAX_SENSE_VOLTS          ((float32_t)110)    //次级母线最大电压
 #define MULT_CLLC_VSEC_OPTIMAL_RANGE_VOLTS      ((float32_t)100)
-#define MULT_CLLC_IPRIM_MAX_SENSE_AMPS          ((float32_t)8)
-#define MULT_CLLC_ISEC_MAX_SENSE_AMPS           ((float32_t)55)
-#define MULT_CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS   ((float32_t)5)
-#define MULT_CLLC_ISEC_MAX_BRACH_SENSE_AMPS     ((float32_t)35)
+#define MULT_CLLC_IPRIM_MAX_SENSE_AMPS          ((float32_t)8)      //初级母线最大电流
+#define MULT_CLLC_ISEC_MAX_SENSE_AMPS           ((float32_t)55)     //次级母线最大电流
+#define MULT_CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS   ((float32_t)5)      //初级母线最大支路电流
+#define MULT_CLLC_ISEC_MAX_BRACH_SENSE_AMPS     ((float32_t)35)     //次级母线最大支路电流
 //#define MULT_CLLC_IPRIM_TANK_MAX_SENSE_AMPS ((float32_t)34.375)
 //#define MULT_CLLC_ISEC_TANK_MAX_SENSE_AMPS ((float32_t)42.375)
 

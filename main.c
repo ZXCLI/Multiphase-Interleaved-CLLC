@@ -12,9 +12,6 @@ bool fault_input1_flag = false;
 bool fault_input2_flag = false;
 
 
-//
-// Main
-//
 void main(void)
 {
 
