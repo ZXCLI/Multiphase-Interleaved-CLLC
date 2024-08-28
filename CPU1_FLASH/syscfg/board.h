@@ -230,10 +230,6 @@ extern "C"
 //
 #define DEBUG2_GPIO_PIN_CONFIG GPIO_58_GPIO58
 //
-// GPIO37 - GPIO Settings
-//
-#define FAN1_GPIO_PIN_CONFIG GPIO_37_GPIO37
-//
 // GPIO35 - GPIO Settings
 //
 #define FAN2_GPIO_PIN_CONFIG GPIO_35_GPIO35
@@ -245,6 +241,16 @@ extern "C"
 // GPIO17 - GPIO Settings
 //
 #define SEC_ZCD2_GPIO_PIN_CONFIG GPIO_17_GPIO17
+
+//
+// OUTPUTXBAR2 -> FAN1 Pinmux
+//
+//
+// OUTPUTXBAR2 - GPIO Settings
+//
+#define GPIO_PIN_OUTPUTXBAR2 37
+#define FAN1_OUTPUTXBAR_GPIO 37
+#define FAN1_OUTPUTXBAR_PIN_CONFIG GPIO_37_OUTPUTXBAR2
 
 //
 // PMBUSA -> myPMBUS0 Pinmux
@@ -554,8 +560,6 @@ void PRIM_ZCD1_init();
 void PRIM_ZCD2_init();
 #define DEBUG2 58
 void DEBUG2_init();
-#define FAN1 37
-void FAN1_init();
 #define FAN2 35
 void FAN2_init();
 #define SEC_ZCD1 33
@@ -603,6 +607,15 @@ extern __interrupt void FAULT_INPUT2_ISR1(void);
 #define INT_PRIM_ZCD1_XINT INT_XINT1
 #define INT_PRIM_ZCD1_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void PZCD1_ISR(void);
+
+//*****************************************************************************
+//
+// OUTPUTXBAR Configurations
+//
+//*****************************************************************************
+void FAN1_init();
+#define FAN1 XBAR_OUTPUT2
+#define FAN1_ENABLED_MUXES (XBAR_MUX00)
 
 //*****************************************************************************
 //
@@ -669,6 +682,7 @@ void	EPWM_init();
 void	GPIO_init();
 void	INPUTXBAR_init();
 void	INTERRUPT_init();
+void	OUTPUTXBAR_init();
 void	PMBUS_init();
 void	SCI_init();
 void	SYNC_init();

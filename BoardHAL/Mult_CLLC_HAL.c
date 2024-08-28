@@ -17,8 +17,24 @@ void Mult_CLLC_HAL_setupDevice(void)
                                 // Service Routines (ISR).
 
     CPUTIMER_init();
-
-
+    //
+    // initialize CPU timers
+    // Initialize timer period to rate at which they will be used
+    // to slice of task
+    // TASK A FREQUENCY
+    //
+    CPUTimer_setPeriod(MULT_CLLC_TASKA_CPUTIMER_BASE,
+                       DEVICE_SYSCLK_FREQ / MULT_CLLC_TASKA_FREQ_HZ);
+    //
+    // TASK B FREQUENCY
+    //
+    CPUTimer_setPeriod(MULT_CLLC_TASKB_CPUTIMER_BASE,
+                       DEVICE_SYSCLK_FREQ / MULT_CLLC_TASKB_FREQ_HZ);
+    //
+    // TASK C FREQUENCY
+    //
+    CPUTimer_setPeriod(MULT_CLLC_TASKC_CPUTIMER_BASE,
+                       DEVICE_SYSCLK_FREQ / MULT_CLLC_TASKC_FREQ_HZ);
 }
 void Mult_CLLC_HAL_setupLED(void)
 {

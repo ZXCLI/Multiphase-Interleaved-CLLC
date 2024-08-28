@@ -58,6 +58,7 @@ void Board_init()
 	ECAP_init();
 	EPWM_init();
 	GPIO_init();
+	OUTPUTXBAR_init();
 	PMBUS_init();
 	SCI_init();
 	XINT_init();
@@ -187,14 +188,16 @@ void PinMux_init()
 	GPIO_setPinConfig(GPIO_22_GPIO22);
 	// GPIO58 -> DEBUG2 Pinmux
 	GPIO_setPinConfig(GPIO_58_GPIO58);
-	// GPIO37/TDO -> FAN1 Pinmux
-	GPIO_setPinConfig(GPIO_37_GPIO37);
 	// GPIO35/TDI -> FAN2 Pinmux
 	GPIO_setPinConfig(GPIO_35_GPIO35);
 	// GPIO33 -> SEC_ZCD1 Pinmux
 	GPIO_setPinConfig(GPIO_33_GPIO33);
 	// GPIO17 -> SEC_ZCD2 Pinmux
 	GPIO_setPinConfig(GPIO_17_GPIO17);
+	//
+	// OUTPUTXBAR2 -> FAN1 Pinmux
+	//
+	GPIO_setPinConfig(FAN1_OUTPUTXBAR_PIN_CONFIG);
 	//
 	// PMBUSA -> myPMBUS0 Pinmux
 	//
@@ -1294,7 +1297,6 @@ void GPIO_init(){
 	PRIM_ZCD1_init();
 	PRIM_ZCD2_init();
 	DEBUG2_init();
-	FAN1_init();
 	FAN2_init();
 	SEC_ZCD1_init();
 	SEC_ZCD2_init();
@@ -1368,12 +1370,6 @@ void DEBUG2_init(){
 	GPIO_setDirectionMode(DEBUG2, GPIO_DIR_MODE_OUT);
 	GPIO_setControllerCore(DEBUG2, GPIO_CORE_CPU1);
 }
-void FAN1_init(){
-	GPIO_setPadConfig(FAN1, GPIO_PIN_TYPE_STD);
-	GPIO_setQualificationMode(FAN1, GPIO_QUAL_SYNC);
-	GPIO_setDirectionMode(FAN1, GPIO_DIR_MODE_OUT);
-	GPIO_setControllerCore(FAN1, GPIO_CORE_CPU1);
-}
 void FAN2_init(){
 	GPIO_setPadConfig(FAN2, GPIO_PIN_TYPE_STD);
 	GPIO_setQualificationMode(FAN2, GPIO_QUAL_SYNC);
@@ -1437,6 +1433,26 @@ void INTERRUPT_init(){
 	Interrupt_register(INT_PRIM_ZCD1_XINT, &PZCD1_ISR);
 	Interrupt_disable(INT_PRIM_ZCD1_XINT);
 }
+//*****************************************************************************
+//
+// OUTPUTXBAR Configurations
+//
+//*****************************************************************************
+void OUTPUTXBAR_init(){
+	FAN1_init();
+}
+
+void FAN1_init(){
+	XBAR_setOutputLatchMode(FAN1, false);
+	XBAR_invertOutputSignal(FAN1, false);
+		
+	//
+	//Mux configuration
+	//
+	XBAR_setOutputMuxConfig(FAN1, XBAR_OUT_MUX00_ECAP1_OUT);
+	XBAR_enableOutputMux(FAN1, XBAR_MUX00);
+}
+
 //*****************************************************************************
 //
 // PMBUS Configurations

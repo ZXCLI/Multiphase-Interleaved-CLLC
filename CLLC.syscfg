@@ -51,11 +51,12 @@ const gpio11           = gpio.addInstance();
 const gpio12           = gpio.addInstance();
 const gpio13           = gpio.addInstance();
 const gpio14           = gpio.addInstance();
-const gpio15           = gpio.addInstance();
 const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
 const inputxbar_input1 = inputxbar_input.addInstance();
 const inputxbar_input2 = inputxbar_input.addInstance();
 const inputxbar_input3 = inputxbar_input.addInstance();
+const outputxbar       = scripting.addModule("/driverlib/outputxbar.js", {}, false);
+const outputxbar1      = outputxbar.addInstance();
 const pmbus            = scripting.addModule("/driverlib/pmbus.js", {}, false);
 const pmbus1           = pmbus.addInstance();
 const sci              = scripting.addModule("/driverlib/sci.js", {}, false);
@@ -471,19 +472,15 @@ gpio11.$name           = "DEBUG2";
 gpio11.direction       = "GPIO_DIR_MODE_OUT";
 gpio11.gpioPin.$assign = "GPIO58";
 
-gpio12.$name                         = "FAN1";
-gpio12.direction                     = "GPIO_DIR_MODE_OUT";
-gpio12.gpioPin.$assignAllowConflicts = "GPIO37/TDO";
+gpio12.$name           = "FAN2";
+gpio12.direction       = "GPIO_DIR_MODE_OUT";
+gpio12.gpioPin.$assign = "GPIO35/TDI";
 
-gpio13.$name           = "FAN2";
-gpio13.direction       = "GPIO_DIR_MODE_OUT";
-gpio13.gpioPin.$assign = "GPIO35/TDI";
+gpio13.$name           = "SEC_ZCD1";
+gpio13.gpioPin.$assign = "GPIO33";
 
-gpio14.$name           = "SEC_ZCD1";
-gpio14.gpioPin.$assign = "GPIO33";
-
-gpio15.$name           = "SEC_ZCD2";
-gpio15.gpioPin.$assign = "GPIO17";
+gpio14.$name           = "SEC_ZCD2";
+gpio14.gpioPin.$assign = "GPIO17";
 
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio9.xint.inputxbar           = inputxbar_input1;
@@ -496,6 +493,12 @@ inputxbar_input2.inputxbarGpio = "GPIO28";
 inputxbar_input3.$name         = "myINPUTXBARINPUT2";
 gpio2.xint.inputxbar           = inputxbar_input3;
 inputxbar_input3.inputxbarGpio = "GPIO29";
+
+outputxbar1.$name                            = "FAN1";
+outputxbar1.sourceSignals                    = ["ECAP1_OUT"];
+outputxbar1.useSourceSelect                  = true;
+outputxbar1.outputxbar.$assign               = "OUTPUTXBAR2";
+outputxbar1.outputxbar.outputxbarPin.$assign = "GPIO37/TDO";
 
 pmbus1.$name                        = "myPMBUS0";
 pmbus1.pmbus.pmbus_alertPin.$assign = "GPIO27";
