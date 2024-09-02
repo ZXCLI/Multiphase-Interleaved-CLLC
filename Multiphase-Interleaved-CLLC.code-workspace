@@ -23,7 +23,12 @@
             "mult_cllc_settings.h": "c",
             "state_machine.h": "c",
             "adc.h": "c",
-            "mult_cllc.h": "c"
+            "mult_cllc.h": "c",
+            "string": "c",
+            "functional": "c",
+            "limits": "c",
+            "memory": "c",
+            "mult_cllc_user_settings.h": "c"
         }
     }
 }

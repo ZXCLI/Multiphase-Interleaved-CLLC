@@ -24,28 +24,23 @@ void main(void)
 
     Mult_CLLC_HAL_setupLED();//初始化LED
 
-    // Board_init();//初始化板子
-
-    MUlt_CLLC_HAL_setupBoardProtection();//初始化保护
+    Mult_CLLC_HAL_setupCPI();//通信外设初始化
 
     Mult_CLLC_HAL_setupADC();//初始化ADC
 
+    Mult_CLLC_HAL_setupPWM(
+            MULT_CLLC_powerFlowStateActive.MULT_CLLC_PowerFlowState_Enum);
+    // 初始化PWM
+
+    MUlt_CLLC_HAL_setupBoardProtection(); // 初始化保护
+    
     MULT_CLLC_HAL_setupInterrupt(
             MULT_CLLC_powerFlowStateActive.MULT_CLLC_PowerFlowState_Enum); 
     // 初始化中断
 
     Mult_CLLC_HAL_enablePWMClkCounting(); // 初始化完成，开启EPWM时钟
-    //
-    // Enable Global Interrupt (INTM) and real time interrupt (DBGM)
-    //
-    EINT;
-    ERTM;
-
+ 
     while (1) {
-        if(test == 1){
-            EPWM_clearTripZoneFlag(EPWM3_BASE, EPWM_TZ_FLAG_OST);
-        }
-        mm =  EPWM_getTripZoneFlagStatus(EPWM3_BASE);
         //(*Alpha_State_Ptr)(); //调用状态机
     }
 }

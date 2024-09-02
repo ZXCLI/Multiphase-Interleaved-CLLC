@@ -24,7 +24,15 @@
 //
 #define MULT_CLLC_POWER_FLOW_PRIM_SEC 1
 #define MULT_CLLC_POWER_FLOW_SEC_PRIM 2
-#define MULT_CLLC_POWER_FLOW_TRANSTION_STAGE 3
+#define MULT_CLLC_POWER_FLOW_TRANSITION_STAGE 3
+
+//
+// 保护开关
+// 0 -> DISABLED
+// 1 -> ENABLED
+//
+#define MULT_CLLC_PROTECTION_ENABLED 1
+#define MULT_CLLC_PROTECTION_DISABLED 0
 
 //
 // 构建模式，开环或者闭环
@@ -55,7 +63,8 @@
 //
 // 功率级相关定义
 //
-#define MULT_CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ    ((float32_t)89.13*1000)//谐振频率
+#define MULT_CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ    ((float32_t)89.13*1000)
+                                                                    //谐振频率
 #define MULT_CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)160*1000)
 #define MULT_CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)50*1000)
 

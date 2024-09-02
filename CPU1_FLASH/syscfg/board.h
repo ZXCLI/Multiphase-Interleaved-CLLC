@@ -429,10 +429,10 @@ void myECAP0_init();
 //
 //*****************************************************************************
 #define M_EPWM1_BASE EPWM1_BASE
-#define M_EPWM1_TBPRD 500
+#define M_EPWM1_TBPRD 1120
 #define M_EPWM1_COUNTER_MODE EPWM_COUNTER_MODE_UP
 #define M_EPWM1_TBPHS 0
-#define M_EPWM1_CMPA 250
+#define M_EPWM1_CMPA 560
 #define M_EPWM1_CMPB 250
 #define M_EPWM1_CMPC 0
 #define M_EPWM1_CMPD 0
@@ -442,11 +442,11 @@ void myECAP0_init();
 #define M_EPWM1_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define M_EPWM1_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 #define M_EPWM2_BASE EPWM2_BASE
-#define M_EPWM2_TBPRD 500
+#define M_EPWM2_TBPRD 1120
 #define M_EPWM2_COUNTER_MODE EPWM_COUNTER_MODE_UP
 #define M_EPWM2_TBPHS 0
-#define M_EPWM2_CMPA 250
-#define M_EPWM2_CMPB 250
+#define M_EPWM2_CMPA 560
+#define M_EPWM2_CMPB 560
 #define M_EPWM2_CMPC 0
 #define M_EPWM2_CMPD 0
 #define M_EPWM2_DBRED 20
