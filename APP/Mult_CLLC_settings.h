@@ -3,17 +3,6 @@
 
 #warning // Modify parameters here to suit your system
 
-#ifndef C2000_IEEE754_TYPES
-    #define C2000_IEEE754_TYPES
-    #ifdef __TI_EABI__
-        typedef float         float32_t;
-        typedef double        float64_t;
-    #else // TI COFF
-        typedef float         float32_t;
-        typedef long double   float64_t;
-    #endif // __TI_EABI__
-#endif // C2000_IEEE754_TYPES
-
 //
 // CPU相关定义
 //
@@ -21,12 +10,12 @@
 #define MULT_CLLC_PWMSYSCLOCK_FREQ_HZ ((float32_t)100 * 1000000)
 
 //
-// 控制模式，电压或者电流
-// 1 -> Voltage
-// 2 -> Current
+// 控制模式，直接频率控制或者时移控制
+// 1 -> direct frequency control
+// 2 -> time shift control
 //
-#define MULT_CLLC_VOLTAGE_MODE 1
-#define MULT_CLLC_CURRENT_MODE 2
+#define MULT_CLLC_DIR_FEEQ_CTRL 1
+#define MULT_CLLC_TIME_SHIF_CTRL 2
 
 //
 // 功率流向

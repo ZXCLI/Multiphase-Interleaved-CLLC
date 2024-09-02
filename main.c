@@ -6,26 +6,35 @@
 #include "gpio.h"
 #include "inc/hw_memmap.h"
 
-#include "Mult_CLLC_HAL.h"
+#include "Mult_CLLC.h"
 
 volatile bool fault_input1_flag = false;
 volatile bool fault_input2_flag = false;
-
+uint16_t test = 0;
+uint16_t mm = 0;
 
 void main(void)
 {
 
     Mult_CLLC_HAL_setupDevice(); // 初始化设备
 
-
     Mult_CLLC_HAL_disablePWMClkCounting();//关闭EPWM时钟
-    
 
-    //CPUTimer_startTimer(CPUTIMER0_BASE);
-    //CPUTimer_startTimer(CPUTIMER1_BASE);
+    Mult_CLLC_HAL_setPins();//设置引脚
 
+    Mult_CLLC_HAL_setupLED();//初始化LED
 
-    Mult_CLLC_HAL_enablePWMClkCounting();//初始化完成，开启EPWM时钟
+    // Board_init();//初始化板子
+
+    MUlt_CLLC_HAL_setupBoardProtection();//初始化保护
+
+    Mult_CLLC_HAL_setupADC();//初始化ADC
+
+    MULT_CLLC_HAL_setupInterrupt(
+            MULT_CLLC_powerFlowStateActive.MULT_CLLC_PowerFlowState_Enum); 
+    // 初始化中断
+
+    Mult_CLLC_HAL_enablePWMClkCounting(); // 初始化完成，开启EPWM时钟
     //
     // Enable Global Interrupt (INTM) and real time interrupt (DBGM)
     //
@@ -33,7 +42,11 @@ void main(void)
     ERTM;
 
     while (1) {
-        (*Alpha_State_Ptr)(); //调用状态机
+        if(test == 1){
+            EPWM_clearTripZoneFlag(EPWM3_BASE, EPWM_TZ_FLAG_OST);
+        }
+        mm =  EPWM_getTripZoneFlagStatus(EPWM3_BASE);
+        //(*Alpha_State_Ptr)(); //调用状态机
     }
 }
 
@@ -58,26 +71,29 @@ __interrupt void ISR1(void)
     
 // }
 
-__interrupt void FAULT_INPUT1_ISR1(void)
-{
-    //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
-    //GPIO_writePin(FAULT_OUTPUT,1);//触发保护
-    GPIO_writePin(STATUS1,0);//指示灯切换
-    GPIO_writePin(DEBUG1,1);
-    fault_input1_flag = 1;//保存FAULT1
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
-}
+// __interrupt void FAULT_INPUT1_ISR1(void)
+// {
+//     //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
+//     //GPIO_writePin(FAULT_OUTPUT,1);//触发保护
+//     GPIO_writePin(STATUS1,0);//指示灯切换
+//     GPIO_writePin(DEBUG1,1);
+//     fault_input1_flag = 1;//保存FAULT1
+//     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+// }
 
-__interrupt void FAULT_INPUT2_ISR1(void)
+// __interrupt void FAULT_INPUT2_ISR1(void)
+// {
+//     //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
+//     //GPIO_writePin(FAULT_OUTPUT,1);//触发保护
+//     GPIO_writePin(STATUS2,0);//指示灯切换
+//     GPIO_writePin(DEBUG2,1);
+//     fault_input2_flag = 1;//保存FAULT2
+//     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
+// }
+__interrupt void INT_M_EPWM3_TZ_ISR(void)
 {
-    //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
-    //GPIO_writePin(FAULT_OUTPUT,1);//触发保护
-    GPIO_writePin(STATUS2,0);//指示灯切换
-    GPIO_writePin(DEBUG2,1);
-    fault_input2_flag = 1;//保存FAULT2
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
-}
 
+}
 __interrupt void PZCD1_ISR(void)
 {
 
@@ -87,7 +103,7 @@ __interrupt void PZCD1_ISR(void)
     // //   EPWM_setTimeBaseCounter(EPWM3_BASE, 0);
     // //   EPWM_setTimeBaseCounter(EPWM4_BASE, 0);
     // }
-    GPIO_togglePin(DEBUG1);
+    //GPIO_togglePin(DEBUG1);
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
 }
 //

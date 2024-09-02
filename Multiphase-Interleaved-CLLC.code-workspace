@@ -22,7 +22,8 @@
             "stdint.h": "c",
             "mult_cllc_settings.h": "c",
             "state_machine.h": "c",
-            "adc.h": "c"
+            "adc.h": "c",
+            "mult_cllc.h": "c"
         }
     }
 }
