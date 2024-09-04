@@ -597,12 +597,12 @@ void TZ2_init();
 // Interrupt Settings for INT_myCPUTIMER0
 #define INT_myCPUTIMER0 INT_TIMER0
 #define INT_myCPUTIMER0_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
-extern __interrupt void ISR1(void);
+extern __interrupt void ISR2_TIMER0(void);
 
 // Interrupt Settings for INT_PRIM_ZCD1_XINT
 #define INT_PRIM_ZCD1_XINT INT_XINT1
 #define INT_PRIM_ZCD1_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
-extern __interrupt void PZCD1_ISR(void);
+extern __interrupt void ISR1_PZCD(void);
 
 //*****************************************************************************
 //

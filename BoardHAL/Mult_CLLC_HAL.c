@@ -57,8 +57,7 @@ void Mult_CLLC_HAL_setupADC(void)
     ASYSCTL_init();//配置内部参考电压
     ADC_init();//初始化ADC
     DEVICE_DELAY_US(100);
-    MULT_CLLC_HAL_ClaADCOffset();
-
+    MULT_CLLC_HAL_ClaADCOffset();//校准ADC偏移量，并写入寄存器
 }
 
 void MULT_CLLC_HAL_ClaADCOffset(void)
@@ -71,15 +70,17 @@ void Mult_CLLC_HAL_setupFAN(void)
     #if USE_FAN_AUTO_CONTROL == 1
         DAC_init();
     #elif USE_FAN_AUTO_CONTROL == 0
-        ECAP_init();
+        
         OUTPUTXBAR_init();
     #endif
+
+    ECAP_init();
 }
 
 //
 void MUlt_CLLC_HAL_setupBoardProtection(void)
 {
-    #if MULT_CLLC_PROTECTION == MULT_CLLC_PROTECTION_ENABLED
+    #if MULT_CLLC_PROTECTION == MULT_CLLC_PROTECTION_DISABLED
         CMPSS_init();// 配置用于cbc保护的比较器
         // 移除初级跳闸事件
         EPWM_setTripZoneAction(MULT_CLLC_PRIM_LEGA_PWM_BASE,
@@ -151,12 +152,26 @@ void Mult_CLLC_HAL_setupPWM(uint16_t powerFlowDir)
 
 void MULT_CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow)
 {
-    if(powerFlow == MULT_CLLC_POWER_FLOW_PRIM_SEC && 
-        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == MULT_CLLC_POWER_FLOW_SEC_PRIM){
-            //执行由 高压到低压 切换至 低压到高压 的PWM逻辑
-    }else if(powerFlow == MULT_CLLC_POWER_FLOW_SEC_PRIM && 
+    if(powerFlow == MULT_CLLC_POWER_FLOW_SEC_PRIM && 
         MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == MULT_CLLC_POWER_FLOW_PRIM_SEC){
-            //执行由 低压到高压 切换至 高压到低压 的PWM逻辑
+        // 执行由 高压到低压 切换至 低压到高压 的PWM逻辑
+        // 先将标志切换至过渡阶段，避免环路在此时影响PWM
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_TRANSITION_STAGE;
+            
+        // 切换pwm的逻辑
+
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_SEC_PRIM;
+        //PWM逻辑切换完成，标志切换至 低压到高压
+    }else if(powerFlow == MULT_CLLC_POWER_FLOW_PRIM_SEC && 
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == MULT_CLLC_POWER_FLOW_SEC_PRIM){
+        // 执行由 低压到高压 切换至 高压到低压 的PWM逻辑
+        // 先将标志切换至过渡阶段，避免环路在此时影响PWM
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_TRANSITION_STAGE;
+
+        // 切换pwm的逻辑
+
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_PRIM_SEC;
+        // PWM逻辑切换完成，标志切换至 低压到高压
     }
 }
 

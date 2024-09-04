@@ -1432,11 +1432,11 @@ void TZ2_init(){
 void INTERRUPT_init(){
 	
 	// Interrupt Setings for INT_myCPUTIMER0
-	Interrupt_register(INT_myCPUTIMER0, &ISR1);
+	Interrupt_register(INT_myCPUTIMER0, &ISR2_TIMER0);
 	Interrupt_disable(INT_myCPUTIMER0);
 	
 	// Interrupt Setings for INT_PRIM_ZCD1_XINT
-	Interrupt_register(INT_PRIM_ZCD1_XINT, &PZCD1_ISR);
+	Interrupt_register(INT_PRIM_ZCD1_XINT, &ISR1_PZCD);
 	Interrupt_disable(INT_PRIM_ZCD1_XINT);
 }
 //*****************************************************************************

@@ -4,9 +4,11 @@
 #include "Mult_CLLC_settings.h"
 #include "Mult_CLLC_HAL.h"
 
-void MULT_CLLC_initGlobalVariables(void);
+void MULT_CLLC_initGlobalVariables(void);//初始化变量
 
-void MULT_CLLC_updateBoardStatus(void);
+void MULT_CLLC_updateBoardStatus(void);//更新板卡状态
+void MULT_CLLC_isBRUSTModeEnabled(void);//判断是否需要进入BRUST模式
+void MULT_CLLL_checkPowerFlow(void);//检测功率流向
 
 typedef union
 {

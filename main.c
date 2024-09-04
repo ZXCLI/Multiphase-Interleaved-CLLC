@@ -8,10 +8,6 @@
 
 #include "Mult_CLLC.h"
 
-volatile bool fault_input1_flag = false;
-volatile bool fault_input2_flag = false;
-uint16_t test = 0;
-uint16_t mm = 0;
 
 void main(void)
 {
@@ -50,11 +46,7 @@ void main(void)
 //
 
 
-__interrupt void ISR1(void)
-{
-    
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);//timer0要加上清除中断标志位这句话
-}
+
 
 // __interrupt void ISR2(void)
 // {
@@ -66,41 +58,11 @@ __interrupt void ISR1(void)
     
 // }
 
-// __interrupt void FAULT_INPUT1_ISR1(void)
-// {
-//     //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
-//     //GPIO_writePin(FAULT_OUTPUT,1);//触发保护
-//     GPIO_writePin(STATUS1,0);//指示灯切换
-//     GPIO_writePin(DEBUG1,1);
-//     fault_input1_flag = 1;//保存FAULT1
-//     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
-// }
-
-// __interrupt void FAULT_INPUT2_ISR1(void)
-// {
-//     //SysCtl_disablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC);//关闭EPWM时钟
-//     //GPIO_writePin(FAULT_OUTPUT,1);//触发保护
-//     GPIO_writePin(STATUS2,0);//指示灯切换
-//     GPIO_writePin(DEBUG2,1);
-//     fault_input2_flag = 1;//保存FAULT2
-//     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
-// }
 __interrupt void INT_M_EPWM3_TZ_ISR(void)
 {
 
 }
-__interrupt void PZCD1_ISR(void)
-{
 
-    // if(strat_flag){
-    //   HWREGH(EPWM3_BASE + EPWM_O_TBCTR) = 0;
-    //   HWREGH(EPWM4_BASE + EPWM_O_TBCTR) = 0;
-    // //   EPWM_setTimeBaseCounter(EPWM3_BASE, 0);
-    // //   EPWM_setTimeBaseCounter(EPWM4_BASE, 0);
-    // }
-    //GPIO_togglePin(DEBUG1);
-    Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1);
-}
 //
 // End of File
 //
