@@ -6,6 +6,7 @@
 #include "board.h"
 #include "Mult_CLLC_settings.h"
 #include "Mult_CLLC_user_settings.h"
+#include "Mult_CLLC.h"
 #include "State_machine.h"
 
 
@@ -23,6 +24,8 @@ void Mult_CLLC_HAL_enablePWMClkCounting(void);
 void MULT_CLLC_HAL_ClaADCOffset(void);
 void MULT_CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow);
 
+void MULT_CLLC_HAL_DEBUG_Transnit(void);
+
 static inline void MULT_CLLC_HAL_setupInterrupt(uint16_t powerFlow)
 {
     XINT_init();
@@ -35,6 +38,10 @@ static inline void MULT_CLLC_HAL_setupInterrupt(uint16_t powerFlow)
             {Interrupt_enable(INT_SEC_ZCD1_XINT); } // 只有时移控制需要开启中断
     #endif
     //Interrupt_enable(INT_PRIM_ZCD1_XINT);
+
+    Interrupt_enable(INT_myCPUTIMER0);
+    CPUTimer_startTimer(MULT_CLLC_TASKA_CPUTIMER_BASE);
+    
     EALLOW;
     //
     // Enable Global interrupt INTM
@@ -46,4 +53,15 @@ static inline void MULT_CLLC_HAL_setupInterrupt(uint16_t powerFlow)
     ERTM;
     EDIS;
 }
+
+static inline uint16_t MULT_CLLC_HAL_getPrimTBPRD(void)
+{
+    return (HWREGH(MULT_CLLC_PRIM_LEGA_PWM_BASE + EPWM_O_TBPRD));
+}
+
+static inline uint16_t MULT_CLLC_HAL_getSecTBPRD(void)
+{
+    return (HWREGH(MULT_CLLC_SEC_LEGA_PWM_BASE + EPWM_O_TBPRD));
+}
+
 #endif // MULT_CLLC_HAL_H

@@ -103,7 +103,13 @@ BoardHAL/Mult_CLLC_HAL.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multi
 BoardHAL/Mult_CLLC_HAL.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC_user_settings.h
 BoardHAL/Mult_CLLC_HAL.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/Mult_CLLC.h
 BoardHAL/Mult_CLLC_HAL.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/Mult_CLLC_HAL.h
+BoardHAL/Mult_CLLC_HAL.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/LIB/utilities/emavg.h
+BoardHAL/Mult_CLLC_HAL.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/math.h
+BoardHAL/Mult_CLLC_HAL.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/_defs.h
+BoardHAL/Mult_CLLC_HAL.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_limits.h
 BoardHAL/Mult_CLLC_HAL.obj: ../BoardHAL/State_machine.h
+BoardHAL/Mult_CLLC_HAL.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdio.h
+BoardHAL/Mult_CLLC_HAL.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdarg.h
 
 ../BoardHAL/Mult_CLLC_HAL.c:
 
@@ -311,5 +317,17 @@ C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/M
 
 C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/Mult_CLLC_HAL.h:
 
+C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/LIB/utilities/emavg.h:
+
+C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/math.h:
+
+C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/_defs.h:
+
+C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_limits.h:
+
 ../BoardHAL/State_machine.h:
+
+C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdio.h:
+
+C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdarg.h:
 

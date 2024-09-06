@@ -218,15 +218,15 @@ void PinMux_init()
 	GPIO_setQualificationMode(myPMBUS0_PMBUSSDA_GPIO, GPIO_QUAL_ASYNC);
 
 	//
-	// SCIB -> mySCI0 Pinmux
+	// SCIB -> DEBUG Pinmux
 	//
-	GPIO_setPinConfig(mySCI0_SCIRX_PIN_CONFIG);
-	GPIO_setPadConfig(mySCI0_SCIRX_GPIO, GPIO_PIN_TYPE_STD | GPIO_PIN_TYPE_PULLUP);
-	GPIO_setQualificationMode(mySCI0_SCIRX_GPIO, GPIO_QUAL_ASYNC);
+	GPIO_setPinConfig(DEBUG_SCIRX_PIN_CONFIG);
+	GPIO_setPadConfig(DEBUG_SCIRX_GPIO, GPIO_PIN_TYPE_STD | GPIO_PIN_TYPE_PULLUP);
+	GPIO_setQualificationMode(DEBUG_SCIRX_GPIO, GPIO_QUAL_ASYNC);
 
-	GPIO_setPinConfig(mySCI0_SCITX_PIN_CONFIG);
-	GPIO_setPadConfig(mySCI0_SCITX_GPIO, GPIO_PIN_TYPE_STD | GPIO_PIN_TYPE_PULLUP);
-	GPIO_setQualificationMode(mySCI0_SCITX_GPIO, GPIO_QUAL_ASYNC);
+	GPIO_setPinConfig(DEBUG_SCITX_PIN_CONFIG);
+	GPIO_setPadConfig(DEBUG_SCITX_GPIO, GPIO_PIN_TYPE_STD | GPIO_PIN_TYPE_PULLUP);
+	GPIO_setQualificationMode(DEBUG_SCITX_GPIO, GPIO_QUAL_ASYNC);
 
 
 }
@@ -401,12 +401,12 @@ void M_ADC_B_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 3
-	//	  	Trigger			: ADC_TRIGGER_SW_ONLY
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN3
 	//	 	Sample Window	: 10 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN3, 10U);
+	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 10U);
 	ADC_setInterruptSOCTrigger(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
 }
 void M_ADC_C_init(){
@@ -478,12 +478,12 @@ void M_ADC_C_init(){
 	//
 	// Configures a start-of-conversion (SOC) in the ADC and its interrupt SOC trigger.
 	// 	  	SOC number		: 2
-	//	  	Trigger			: ADC_TRIGGER_SW_ONLY
+	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN2
 	//	 	Sample Window	: 10 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN2, 10U);
+	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN2, 10U);
 	ADC_setInterruptSOCTrigger(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 }
 
@@ -1089,6 +1089,7 @@ void EPWM_init(){
     EPWM_setCounterCompareShadowLoadMode(M_EPWM3_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
     EPWM_setCounterCompareValue(M_EPWM3_BASE, EPWM_COUNTER_COMPARE_B, 250);	
     EPWM_setCounterCompareShadowLoadMode(M_EPWM3_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);	
+    EPWM_setCounterCompareValue(M_EPWM3_BASE, EPWM_COUNTER_COMPARE_C, 448);	
     EPWM_setActionQualifierAction(M_EPWM3_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);	
     EPWM_setActionQualifierAction(M_EPWM3_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_NO_CHANGE, EPWM_AQ_OUTPUT_ON_TIMEBASE_PERIOD);	
     EPWM_setActionQualifierAction(M_EPWM3_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);	
@@ -1114,7 +1115,7 @@ void EPWM_init(){
     EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN10, EPWM_DC_TYPE_DCAH);	
     EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN10, EPWM_DC_TYPE_DCAL);	
     EPWM_enableADCTrigger(M_EPWM3_BASE, EPWM_SOC_A);	
-    EPWM_setADCTriggerSource(M_EPWM3_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_U_CMPA);	
+    EPWM_setADCTriggerSource(M_EPWM3_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_U_CMPC);	
     EPWM_setADCTriggerEventPrescale(M_EPWM3_BASE, EPWM_SOC_A, 1);	
     EPWM_enableGlobalLoad(M_EPWM4_BASE);	
     EPWM_setGlobalLoadTrigger(M_EPWM4_BASE, EPWM_GL_LOAD_PULSE_CNTR_ZERO_PERIOD);	
@@ -1489,21 +1490,20 @@ void myPMBUS0_init(){
 //
 //*****************************************************************************
 void SCI_init(){
-	mySCI0_init();
+	DEBUG_init();
 }
 
-void mySCI0_init(){
-	SCI_clearInterruptStatus(mySCI0_BASE, SCI_INT_RXFF | SCI_INT_TXFF | SCI_INT_FE | SCI_INT_OE | SCI_INT_PE | SCI_INT_RXERR | SCI_INT_RXRDY_BRKDT | SCI_INT_TXRDY);
-	SCI_clearOverflowStatus(mySCI0_BASE);
-	SCI_resetTxFIFO(mySCI0_BASE);
-	SCI_resetRxFIFO(mySCI0_BASE);
-	SCI_resetChannels(mySCI0_BASE);
-	SCI_setConfig(mySCI0_BASE, DEVICE_LSPCLK_FREQ, mySCI0_BAUDRATE, (SCI_CONFIG_WLEN_8|SCI_CONFIG_STOP_ONE|SCI_CONFIG_PAR_NONE));
-	SCI_disableLoopback(mySCI0_BASE);
-	SCI_performSoftwareReset(mySCI0_BASE);
-	SCI_setFIFOInterruptLevel(mySCI0_BASE, SCI_FIFO_TX0, SCI_FIFO_RX0);
-	SCI_enableFIFO(mySCI0_BASE);
-	SCI_enableModule(mySCI0_BASE);
+void DEBUG_init(){
+	SCI_clearInterruptStatus(DEBUG_BASE, SCI_INT_RXFF | SCI_INT_TXFF | SCI_INT_FE | SCI_INT_OE | SCI_INT_PE | SCI_INT_RXERR | SCI_INT_RXRDY_BRKDT | SCI_INT_TXRDY);
+	SCI_clearOverflowStatus(DEBUG_BASE);
+	SCI_resetTxFIFO(DEBUG_BASE);
+	SCI_resetRxFIFO(DEBUG_BASE);
+	SCI_resetChannels(DEBUG_BASE);
+	SCI_setConfig(DEBUG_BASE, DEVICE_LSPCLK_FREQ, DEBUG_BAUDRATE, (SCI_CONFIG_WLEN_8|SCI_CONFIG_STOP_ONE|SCI_CONFIG_PAR_NONE));
+	SCI_disableLoopback(DEBUG_BASE);
+	SCI_performSoftwareReset(DEBUG_BASE);
+	SCI_enableFIFO(DEBUG_BASE);
+	SCI_enableModule(DEBUG_BASE);
 }
 
 //*****************************************************************************

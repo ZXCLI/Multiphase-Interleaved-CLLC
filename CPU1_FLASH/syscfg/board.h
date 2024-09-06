@@ -281,20 +281,20 @@ extern "C"
 #define myPMBUS0_PMBUSSDA_PIN_CONFIG GPIO_25_PMBUSA_SDA
 
 //
-// SCIB -> mySCI0 Pinmux
+// SCIB -> DEBUG Pinmux
 //
 //
 // SCIB_RX - GPIO Settings
 //
 #define GPIO_PIN_SCIB_RX 57
-#define mySCI0_SCIRX_GPIO 57
-#define mySCI0_SCIRX_PIN_CONFIG GPIO_57_SCIB_RX
+#define DEBUG_SCIRX_GPIO 57
+#define DEBUG_SCIRX_PIN_CONFIG GPIO_57_SCIB_RX
 //
 // SCIB_TX - GPIO Settings
 //
 #define GPIO_PIN_SCIB_TX 56
-#define mySCI0_SCITX_GPIO 56
-#define mySCI0_SCITX_PIN_CONFIG GPIO_56_SCIB_TX
+#define DEBUG_SCITX_GPIO 56
+#define DEBUG_SCITX_PIN_CONFIG GPIO_56_SCIB_TX
 
 //*****************************************************************************
 //
@@ -340,7 +340,7 @@ void M_ADC_A_init();
 #define M_ADC_B_SOC3 ADC_SOC_NUMBER3
 #define M_ADC_B_FORCE_SOC3 ADC_FORCE_SOC3
 #define M_ADC_B_SAMPLE_WINDOW_SOC3 100
-#define M_ADC_B_TRIGGER_SOURCE_SOC3 ADC_TRIGGER_SW_ONLY
+#define M_ADC_B_TRIGGER_SOURCE_SOC3 ADC_TRIGGER_EPWM3_SOCA
 #define M_ADC_B_CHANNEL_SOC3 ADC_CH_ADCIN3
 void M_ADC_B_init();
 
@@ -359,7 +359,7 @@ void M_ADC_B_init();
 #define M_ADC_C_SOC2 ADC_SOC_NUMBER2
 #define M_ADC_C_FORCE_SOC2 ADC_FORCE_SOC2
 #define M_ADC_C_SAMPLE_WINDOW_SOC2 100
-#define M_ADC_C_TRIGGER_SOURCE_SOC2 ADC_TRIGGER_SW_ONLY
+#define M_ADC_C_TRIGGER_SOURCE_SOC2 ADC_TRIGGER_EPWM3_SOCA
 #define M_ADC_C_CHANNEL_SOC2 ADC_CH_ADCIN2
 void M_ADC_C_init();
 
@@ -460,7 +460,7 @@ void myECAP0_init();
 #define M_EPWM3_TBPHS 0
 #define M_EPWM3_CMPA 560
 #define M_EPWM3_CMPB 250
-#define M_EPWM3_CMPC 0
+#define M_EPWM3_CMPC 448
 #define M_EPWM3_CMPD 0
 #define M_EPWM3_DBRED 80
 #define M_EPWM3_DBFED 80
@@ -632,14 +632,12 @@ void myPMBUS0_init();
 // SCI Configurations
 //
 //*****************************************************************************
-#define mySCI0_BASE SCIB_BASE
-#define mySCI0_BAUDRATE 115200
-#define mySCI0_CONFIG_WLEN SCI_CONFIG_WLEN_8
-#define mySCI0_CONFIG_STOP SCI_CONFIG_STOP_ONE
-#define mySCI0_CONFIG_PAR SCI_CONFIG_PAR_NONE
-#define mySCI0_FIFO_TX_LVL SCI_FIFO_TX0
-#define mySCI0_FIFO_RX_LVL SCI_FIFO_RX0
-void mySCI0_init();
+#define DEBUG_BASE SCIB_BASE
+#define DEBUG_BAUDRATE 256000
+#define DEBUG_CONFIG_WLEN SCI_CONFIG_WLEN_8
+#define DEBUG_CONFIG_STOP SCI_CONFIG_STOP_ONE
+#define DEBUG_CONFIG_PAR SCI_CONFIG_PAR_NONE
+void DEBUG_init();
 
 //*****************************************************************************
 //

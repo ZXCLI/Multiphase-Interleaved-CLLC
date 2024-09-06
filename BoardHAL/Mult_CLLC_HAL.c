@@ -1,4 +1,7 @@
 #include "Mult_CLLC_HAL.h"
+#include "Mult_CLLC.h"
+#include "stdio.h"
+
 
 
 void Mult_CLLC_HAL_setupDevice(void)
@@ -76,7 +79,6 @@ void Mult_CLLC_HAL_setupFAN(void)
 
     ECAP_init();
 }
-
 //
 void MUlt_CLLC_HAL_setupBoardProtection(void)
 {
@@ -156,22 +158,22 @@ void MULT_CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow)
         MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == MULT_CLLC_POWER_FLOW_PRIM_SEC){
         // 执行由 高压到低压 切换至 低压到高压 的PWM逻辑
         // 先将标志切换至过渡阶段，避免环路在此时影响PWM
-        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_TRANSITION_STAGE;
-            
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = powerFlow_intermediateState;
+
         // 切换pwm的逻辑
 
-        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_SEC_PRIM;
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = powerFlow_SecToPrim;
         //PWM逻辑切换完成，标志切换至 低压到高压
     }else if(powerFlow == MULT_CLLC_POWER_FLOW_PRIM_SEC && 
         MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == MULT_CLLC_POWER_FLOW_SEC_PRIM){
         // 执行由 低压到高压 切换至 高压到低压 的PWM逻辑
         // 先将标志切换至过渡阶段，避免环路在此时影响PWM
-        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_TRANSITION_STAGE;
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = powerFlow_intermediateState;
 
         // 切换pwm的逻辑
 
-        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = MULT_CLLC_POWER_FLOW_PRIM_SEC;
-        // PWM逻辑切换完成，标志切换至 低压到高压
+        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = powerFlow_PrimToSec;
+        // PWM逻辑切换完成，标志切换至 高压到低压
     }
 }
 
@@ -184,3 +186,26 @@ void Mult_CLLC_HAL_enablePWMClkCounting(void)
 {
     SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC); // 开启EPWM时钟
 }
+
+ void UARTprintf(const char *pcString)
+ {
+    while (*pcString != '\0')
+    {
+        SCI_writeCharBlockingFIFO(DEBUG_BASE, *pcString++);
+    }
+ }
+
+void MULT_CLLC_HAL_DEBUG_Transnit(void)
+{
+    char DEBUG_Buffer[100];
+
+    uint16_t Vprim = (uint16_t)(MULT_CLLC_vPrimSensed_pu * 1000.0f);
+    uint16_t Vsec = (uint16_t)(MULT_CLLC_vSecSensed_pu * 1000.0f);
+    uint16_t Iprim1 = (uint16_t)(MULT_CLLC_iPrimMAINSensed_pu * 1000.0f);
+    uint16_t Isec1 = (uint16_t)(MULT_CLLC_iSecMAINSensed_pu * 1000.0f);
+
+    sprintf(DEBUG_Buffer, "%d,%d,%d,%d\n", Vprim, Vsec, Iprim1, Isec1);
+
+    UARTprintf(DEBUG_Buffer);
+ }
+

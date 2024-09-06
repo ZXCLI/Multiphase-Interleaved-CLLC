@@ -1,3 +1,5 @@
+// By ZXC on 2024/08/16
+
 #include "adc.h"
 #include "driverlib.h"
 #include "device.h"
@@ -13,6 +15,8 @@ void main(void)
 {
 
     Mult_CLLC_HAL_setupDevice(); // 初始化设备
+
+    MULT_CLLC_initGlobalVariables(); // 初始化全局变量
 
     Mult_CLLC_HAL_disablePWMClkCounting();//关闭EPWM时钟
 
@@ -35,8 +39,11 @@ void main(void)
     // 初始化中断
 
     Mult_CLLC_HAL_enablePWMClkCounting(); // 初始化完成，开启EPWM时钟
+
+    
  
     while (1) {
+        MULT_CLLC_HAL_DEBUG_Transnit(); // 调试信息传输
         //(*Alpha_State_Ptr)(); //调用状态机
     }
 }

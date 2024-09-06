@@ -49,8 +49,8 @@
 #define MULT_CLLC_TASKB_CPUTIMER_BASE CPUTIMER1_BASE
 #define MULT_CLLC_TASKC_CPUTIMER_BASE CPUTIMER2_BASE
 
-#define MULT_CLLC_TASKA_FREQ_HZ 100
-#define MULT_CLLC_TASKB_FREQ_HZ 10
+#define MULT_CLLC_TASKA_FREQ_HZ 10000
+#define MULT_CLLC_TASKB_FREQ_HZ 100
 #define MULT_CLLC_TASKC_FREQ_HZ MULT_CLLC_ISR3_FREQUENCY_HZ
 
 //
@@ -68,13 +68,13 @@
 #define MULT_CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)160*1000)
 #define MULT_CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)50*1000)
 
-#define MULT_CLLC_VPRIM_MAX_SENSE_VOLTS         ((float32_t)420)    //初级母线最大电压
-#define MULT_CLLC_VSEC_MAX_SENSE_VOLTS          ((float32_t)110)    //次级母线最大电压
+#define MULT_CLLC_VPRIM_MAX_SENSE_VOLTS         ((float32_t)470.423) //初级母线最大电压
+#define MULT_CLLC_VSEC_MAX_SENSE_VOLTS          ((float32_t)112.448) //次级母线最大电压
 #define MULT_CLLC_VSEC_OPTIMAL_RANGE_VOLTS      ((float32_t)100)
-#define MULT_CLLC_IPRIM_MAX_SENSE_AMPS          ((float32_t)8)      //初级母线最大电流
-#define MULT_CLLC_ISEC_MAX_SENSE_AMPS           ((float32_t)55)     //次级母线最大电流
-#define MULT_CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS   ((float32_t)5)      //初级母线最大支路电流
-#define MULT_CLLC_ISEC_MAX_BRACH_SENSE_AMPS     ((float32_t)35)     //次级母线最大支路电流
+// #define MULT_CLLC_IPRIM_MAX_SENSE_AMPS          ((float32_t)8)      //初级母线最大电流
+// #define MULT_CLLC_ISEC_MAX_SENSE_AMPS           ((float32_t)55)     //次级母线最大电流
+#define MULT_CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS   ((float32_t)13.013)      //初级母线最大支路电流
+#define MULT_CLLC_ISEC_MAX_BRACH_SENSE_AMPS     ((float32_t)43.086)     //次级母线最大支路电流
 //#define MULT_CLLC_IPRIM_TANK_MAX_SENSE_AMPS ((float32_t)34.375)
 //#define MULT_CLLC_ISEC_TANK_MAX_SENSE_AMPS ((float32_t)42.375)
 
@@ -96,7 +96,7 @@
 
 // 用于计算的常量
 #define PI_VALUE ((float32_t)3.141592653589)
-#define MULT_CLLC_ADC_PU_SCALE_FACTOR ((float32_t)1 / (1 << 12)) // 12bit
+#define MULT_CLLC_ADC_PU_SCALE_FACTOR ((float32_t)( 1.0f )) // 12bit
 
 //
 // 环路相关参数
