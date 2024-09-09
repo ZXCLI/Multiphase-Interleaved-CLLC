@@ -1,4 +1,5 @@
 #include "Mult_CLLC.h"
+#include "emavg.h"
 
 volatile MULT_CLLC_SystemState_EnumType MULT_CLLC_systemState;//系统状态
 
@@ -172,5 +173,19 @@ void MULT_CLLC_initGlobalVariables(void)
 
     MULT_CLLC_vSecSensed_pu = 0.0f;
     MULT_CLLC_vSecSensedOffset_pu = 0.0f;
+
+    EMAVG_reset(&MULT_CLLC_iPrimMAINSensedAvg_pu);
+    EMAVG_config(&MULT_CLLC_iPrimMAINSensedAvg_pu, 0.01f);
+
+    EMAVG_reset(&MULT_CLLC_iPrimSECONDARYSensedAvg_pu);
+    EMAVG_config(&MULT_CLLC_iPrimSECONDARYSensedAvg_pu, 0.01f);// 电流
+
+    EMAVG_reset(&MULT_CLLC_iSecMAINSensedAvg_pu);
+    EMAVG_config(&MULT_CLLC_iSecMAINSensedAvg_pu, 0.01f);
+
+    EMAVG_reset(&MULT_CLLC_iSecSECONDARYSensedAvg_pu);
+    EMAVG_config(&MULT_CLLC_iSecSECONDARYSensedAvg_pu, 0.01f);
+
+    EMAVG_reset(&MULT_CLLC_vPrimSensedAvg_pu);
+    EMAVG_config(&MULT_CLLC_vSecSensedAvg_pu, 0.01f);
 }
- 

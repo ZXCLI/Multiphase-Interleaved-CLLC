@@ -1,8 +1,6 @@
 #ifndef MULT_CLLC_H
 #define MULT_CLLC_H
 
-// #include "Mult_CLLC_settings.h"
-// #include "Mult_CLLC_user_settings.h"
 #include "Mult_CLLC_user_settings.h"
 #include "Mult_CLLC_HAL.h"
 #include "emavg.h"

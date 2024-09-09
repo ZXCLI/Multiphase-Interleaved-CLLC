@@ -43,24 +43,6 @@
 #define MULT_CLLC_CLOSED_LOOP_BUILD 2
 
 //
-//CPU time related
-//
-#define MULT_CLLC_TASKA_CPUTIMER_BASE CPUTIMER0_BASE
-#define MULT_CLLC_TASKB_CPUTIMER_BASE CPUTIMER1_BASE
-#define MULT_CLLC_TASKC_CPUTIMER_BASE CPUTIMER2_BASE
-
-#define MULT_CLLC_TASKA_FREQ_HZ 10000
-#define MULT_CLLC_TASKB_FREQ_HZ 100
-#define MULT_CLLC_TASKC_FREQ_HZ MULT_CLLC_ISR3_FREQUENCY_HZ
-
-//
-// 中断频率定义
-//
-// #define MULT_CLLC_ISR1_FREQUENCY_HZ  ((float32_t)10000)
-// #define MULT_CLLC_ISR2_FREQUENCY_HZ  ((float32_t)10000)
-#define MULT_CLLC_ISR3_FREQUENCY_HZ  ((float32_t)10000)
-
-//
 // 功率级相关定义
 //
 #define MULT_CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ    ((float32_t)89.13*1000)
@@ -96,7 +78,7 @@
 
 // 用于计算的常量
 #define PI_VALUE ((float32_t)3.141592653589)
-#define MULT_CLLC_ADC_PU_SCALE_FACTOR ((float32_t)( 1.0f )) // 12bit
+#define MULT_CLLC_ADC_PU_SCALE_FACTOR ((float32_t)( 1.0f / (1 << 12) )) // 12bit
 
 //
 // 环路相关参数

@@ -197,6 +197,7 @@
                                     <listOptionValue value="${PROJECT_ROOT}/LIB/utilities"/>
                                     <listOptionValue value="${PROJECT_ROOT}/APP"/>
                                     <listOptionValue value="${PROJECT_ROOT}/BoardHAL"/>
+                                    <listOptionValue value="${PROJECT_ROOT}/APP"/>
                                     <listOptionValue value="${C2000WARE_ROOT}"/>
                                     <listOptionValue value="${PROJECT_ROOT}/device"/>
                                     <listOptionValue value="${C2000WARE_DLIB_ROOT}"/>
@@ -268,7 +269,7 @@
                         </toolChain>
                     </folderInfo>
                     <sourceEntries>
-                        <entry excluding="device/driverlib|28004x_generic_ram_lnk.cmd|targetConfigs/TMS320F280049C_LaunchPad.ccxml" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+                        <entry excluding="BoardHAL/vTimer.md|device/driverlib|28004x_generic_ram_lnk.cmd|targetConfigs/TMS320F280049C_LaunchPad.ccxml" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
                     </sourceEntries>
                 </configuration>
             </storageModule>

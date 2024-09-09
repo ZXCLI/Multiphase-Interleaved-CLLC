@@ -1,11 +1,10 @@
 # FIXED
 
 main.obj: ../main.c
-main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/adc.h
-main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdbool.h
+main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/cpu.h
+main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdint.h
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/_ti_config.h
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/linkage.h
-main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdint.h
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/_stdint40.h
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/sys/stdint.h
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/sys/cdefs.h
@@ -13,13 +12,14 @@ main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_types.h
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_stdint.h
 main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/sys/_stdint.h
+main.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
+main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
+main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/adc.h
+main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdbool.h
 main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_adc.h
 main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_asysctl.h
-main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_types.h
-main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/cpu.h
 main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/debug.h
-main.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
 main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/asysctl.h
 main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/sysctl.h
 main.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_nmi.h
@@ -113,15 +113,13 @@ main.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include
 
 ../main.c:
 
-C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/adc.h:
+C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/cpu.h:
 
-C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdbool.h:
+C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdint.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/_ti_config.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/linkage.h:
-
-C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdint.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/_stdint40.h:
 
@@ -137,19 +135,21 @@ C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/sys/_stdint.h:
 
+C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
+
+C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
+
+C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/adc.h:
+
+C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdbool.h:
+
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_adc.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_asysctl.h:
 
-C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
-
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_types.h:
 
-C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/cpu.h:
-
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/debug.h:
-
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/asysctl.h:
 

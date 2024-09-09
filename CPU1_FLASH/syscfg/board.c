@@ -1403,20 +1403,12 @@ void SEC_ZCD2_init(){
 //*****************************************************************************
 void INPUTXBAR_init(){
 	myINPUTXBARINPUT0_init();
-	myINPUTXBARINPUT1_init();
-	myINPUTXBARINPUT2_init();
 	TZ1_init();
 	TZ2_init();
 }
 
 void myINPUTXBARINPUT0_init(){
 	XBAR_setInputPin(myINPUTXBARINPUT0_INPUT, myINPUTXBARINPUT0_SOURCE);
-}
-void myINPUTXBARINPUT1_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT1_INPUT, myINPUTXBARINPUT1_SOURCE);
-}
-void myINPUTXBARINPUT2_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT2_INPUT, myINPUTXBARINPUT2_SOURCE);
 }
 void TZ1_init(){
 	XBAR_setInputPin(TZ1_INPUT, TZ1_SOURCE);

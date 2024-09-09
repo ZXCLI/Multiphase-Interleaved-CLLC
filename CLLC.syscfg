@@ -55,8 +55,6 @@ const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}
 const inputxbar_input1 = inputxbar_input.addInstance();
 const inputxbar_input2 = inputxbar_input.addInstance();
 const inputxbar_input3 = inputxbar_input.addInstance();
-const inputxbar_input4 = inputxbar_input.addInstance();
-const inputxbar_input5 = inputxbar_input.addInstance();
 const outputxbar       = scripting.addModule("/driverlib/outputxbar.js", {}, false);
 const outputxbar1      = outputxbar.addInstance();
 const pmbus            = scripting.addModule("/driverlib/pmbus.js", {}, false);
@@ -112,8 +110,8 @@ adc3.enabledSOCs       = ["ADC_SOC_NUMBER0","ADC_SOC_NUMBER1","ADC_SOC_NUMBER2"]
 adc3.soc2SampleWindow  = 10;
 adc3.soc2Channel       = "ADC_CH_ADCIN2";
 adc3.$name             = "M_ADC_C";
-adc3.soc0Trigger       = "ADC_TRIGGER_EPWM3_SOCA";
 adc3.soc0SampleWindow  = 50;
+adc3.soc0Trigger       = "ADC_TRIGGER_EPWM3_SOCA";
 adc3.soc2Trigger       = "ADC_TRIGGER_EPWM3_SOCA";
 
 asysctl.analogReference        = "INTERNAL";
@@ -254,7 +252,6 @@ epwm3.epwmEventTrigger_EPWM_SOC_A_triggerEnable                = true;
 epwm3.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar        = "1";
 epwm3.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                     = "EPWM_DC_TRIP_TRIPIN10";
 epwm3.epwmDigitalCompare_EPWM_DC_TYPE_DCAL                     = "EPWM_DC_TRIP_TRIPIN10";
-epwm3.epwmTimebase_period                                      = 1120;
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
 epwm3.epwmCounterCompare_cmpA                                  = 560;
@@ -262,6 +259,7 @@ epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                    = "EPWM_TZ_ACTION
 epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                    = "EPWM_TZ_ACTION_LOW";
 epwm3.epwmEventTrigger_EPWM_SOC_A_triggerSource                = "EPWM_SOC_TBCTR_U_CMPC";
 epwm3.epwmCounterCompare_cmpC                                  = 448;
+epwm3.epwmTimebase_period                                      = 1120;
 epwm3.epwm.$assign                                             = "EPWM3";
 epwm3.epwm.epwm_aPin.$assign                                   = "GPIO4";
 epwm3.epwm.epwm_bPin.$assign                                   = "GPIO5";
@@ -490,20 +488,12 @@ inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio9.xint.inputxbar           = inputxbar_input1;
 inputxbar_input1.inputxbarGpio = "GPIO23";
 
-inputxbar_input2.$name          = "myINPUTXBARINPUT1";
-inputxbar_input2.inputxbarInput = "XBAR_INPUT6";
-inputxbar_input2.inputxbarGpio  = "GPIO28";
+inputxbar_input2.$name         = "TZ1";
+inputxbar_input2.inputxbarGpio = "GPIO28";
 
-inputxbar_input3.$name          = "myINPUTXBARINPUT2";
-inputxbar_input3.inputxbarInput = "XBAR_INPUT13";
+inputxbar_input3.$name          = "TZ2";
+inputxbar_input3.inputxbarInput = "XBAR_INPUT2";
 inputxbar_input3.inputxbarGpio  = "GPIO29";
-
-inputxbar_input4.$name         = "TZ1";
-inputxbar_input4.inputxbarGpio = "GPIO28";
-
-inputxbar_input5.$name          = "TZ2";
-inputxbar_input5.inputxbarInput = "XBAR_INPUT2";
-inputxbar_input5.inputxbarGpio  = "GPIO29";
 
 outputxbar1.$name                            = "FAN1";
 outputxbar1.sourceSignals                    = ["ECAP1_OUT"];
@@ -519,7 +509,6 @@ pmbus1.pmbus.pmbus_sdaPin.$assign   = "GPIO25";
 
 sci1.$name                 = "DEBUG";
 sci1.useInterrupts         = false;
-sci1.baudRates             = 256000;
 sci1.sci.$assign           = "SCIB";
 sci1.sci.sci_rxPin.$assign = "GPIO57";
 sci1.sci.sci_txPin.$assign = "GPIO56";

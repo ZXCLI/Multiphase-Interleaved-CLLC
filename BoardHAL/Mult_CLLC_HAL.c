@@ -1,5 +1,8 @@
 #include "Mult_CLLC_HAL.h"
 #include "Mult_CLLC.h"
+#include "Mult_CLLC_settings.h"
+#include "Mult_CLLC_user_settings.h"
+#include "inc/hw_types.h"
 #include "stdio.h"
 
 
@@ -34,6 +37,10 @@ void Mult_CLLC_HAL_setupDevice(void)
     //
     CPUTimer_setPeriod(MULT_CLLC_TASKC_CPUTIMER_BASE,
                        DEVICE_SYSCLK_FREQ / MULT_CLLC_TASKC_FREQ_HZ);
+
+    CPUTimer_startTimer(MULT_CLLC_TASKA_CPUTIMER_BASE);
+    CPUTimer_startTimer(MULT_CLLC_TASKB_CPUTIMER_BASE);
+    CPUTimer_startTimer(MULT_CLLC_TASKC_CPUTIMER_BASE);
 }
 
 void Mult_CLLC_HAL_setPins(void)
@@ -187,25 +194,31 @@ void Mult_CLLC_HAL_enablePWMClkCounting(void)
     SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC); // 开启EPWM时钟
 }
 
- void UARTprintf(const char *pcString)
- {
-    while (*pcString != '\0')
-    {
-        SCI_writeCharBlockingFIFO(DEBUG_BASE, *pcString++);
-    }
- }
-
 void MULT_CLLC_HAL_DEBUG_Transnit(void)
 {
     char DEBUG_Buffer[100];
 
-    uint16_t Vprim = (uint16_t)(MULT_CLLC_vPrimSensed_pu * 1000.0f);
-    uint16_t Vsec = (uint16_t)(MULT_CLLC_vSecSensed_pu * 1000.0f);
-    uint16_t Iprim1 = (uint16_t)(MULT_CLLC_iPrimMAINSensed_pu * 1000.0f);
-    uint16_t Isec1 = (uint16_t)(MULT_CLLC_iSecMAINSensed_pu * 1000.0f);
+    EMAVG_run(&MULT_CLLC_iPrimMAINSensedAvg_pu, MULT_CLLC_iPrimMAINSensed_pu);
+    EMAVG_run(&MULT_CLLC_iSecMAINSensedAvg_pu, MULT_CLLC_iSecMAINSensed_pu);
 
-    sprintf(DEBUG_Buffer, "%d,%d,%d,%d\n", Vprim, Vsec, Iprim1, Isec1);
+    EMAVG_run(&MULT_CLLC_iPrimSECONDARYSensedAvg_pu, MULT_CLLC_iPrimSECONDARYSensed_pu);
+    EMAVG_run(&MULT_CLLC_iSecSECONDARYSensedAvg_pu, MULT_CLLC_iSecSECONDARYSensed_pu);
+
+    EMAVG_run(&MULT_CLLC_vPrimSensedAvg_pu, MULT_CLLC_vPrimSensed_pu);
+    EMAVG_run(&MULT_CLLC_vSecSensedAvg_pu, MULT_CLLC_vSecSensed_pu);
+
+    float32_t Vprim = (MULT_CLLC_vPrimSensedAvg_pu.out * MULT_CLLC_VPRIM_MAX_SENSE_VOLTS);
+    float32_t Vsec = (MULT_CLLC_vSecSensedAvg_pu.out * MULT_CLLC_VSEC_MAX_SENSE_VOLTS);
+    float32_t Iprim1 = (MULT_CLLC_iPrimMAINSensedAvg_pu.out * MULT_CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS * 100.0f);
+    float32_t Isec1 = (MULT_CLLC_iSecMAINSensedAvg_pu.out * MULT_CLLC_ISEC_MAX_BRACH_SENSE_AMPS * 100.0f);
+    DEBUG2_TRACE_IN;
+    formatData(Vprim, Vsec, Iprim1, Isec1, DEBUG_Buffer);
+
+    DEBUG2_TRACE_OUT;
+
+    DEBUG2_TRACE_IN;
 
     UARTprintf(DEBUG_Buffer);
- }
+    DEBUG2_TRACE_OUT;
+}
 
