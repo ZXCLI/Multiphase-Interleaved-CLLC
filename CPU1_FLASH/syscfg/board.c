@@ -57,6 +57,7 @@ void Board_init()
 	DAC_init();
 	ECAP_init();
 	EPWM_init();
+	EPWMXBAR_init();
 	GPIO_init();
 	OUTPUTXBAR_init();
 	PMBUS_init();
@@ -195,9 +196,13 @@ void PinMux_init()
 	// GPIO17 -> SEC_ZCD2 Pinmux
 	GPIO_setPinConfig(GPIO_17_GPIO17);
 	//
-	// OUTPUTXBAR2 -> FAN1 Pinmux
+	// OUTPUTXBAR1 -> FAN1 Pinmux
 	//
 	GPIO_setPinConfig(FAN1_OUTPUTXBAR_PIN_CONFIG);
+	//
+	// OUTPUTXBAR2 -> CMPSS1OUT0 Pinmux
+	//
+	GPIO_setPinConfig(CMPSS1OUT0_OUTPUTXBAR_PIN_CONFIG);
 	//
 	// PMBUSA -> myPMBUS0 Pinmux
 	//
@@ -537,7 +542,7 @@ void M_CMPSS1_init(){
     //
     // Sets the configuration for the low comparator.
     //
-    CMPSS_configLowComparator(M_CMPSS1_BASE,(CMPSS_INSRC_DAC));
+    CMPSS_configLowComparator(M_CMPSS1_BASE,(CMPSS_INSRC_DAC | CMPSS_INV_INVERTED));
     //
     // Sets the configuration for the internal comparator DACs.
     //
@@ -545,15 +550,15 @@ void M_CMPSS1_init(){
     //
     // Sets the value of the internal DAC of the high comparator.
     //
-    CMPSS_setDACValueHigh(M_CMPSS1_BASE,0U);
+    CMPSS_setDACValueHigh(M_CMPSS1_BASE,2800U);
     //
     // Sets the value of the internal DAC of the low comparator.
     //
-    CMPSS_setDACValueLow(M_CMPSS1_BASE,0U);
+    CMPSS_setDACValueLow(M_CMPSS1_BASE,1000U);
     //
     //  Configures the digital filter of the high comparator.
     //
-    CMPSS_configFilterHigh(M_CMPSS1_BASE, 0U, 1U, 1U);
+    CMPSS_configFilterHigh(M_CMPSS1_BASE, 0U, 10U, 8U);
     //
     // Configures the digital filter of the low comparator.
     //
@@ -585,7 +590,7 @@ void M_CMPSS1_init(){
     //
     // Sets the ePWM module blanking signal that holds trip in reset.
     //
-    CMPSS_configBlanking(M_CMPSS1_BASE,1U);
+    CMPSS_configBlanking(M_CMPSS1_BASE,3U);
     //
     // Disables an ePWM blanking signal from holding trip in reset.
     //
@@ -595,10 +600,9 @@ void M_CMPSS1_init(){
     //
     CMPSS_configLatchOnPWMSYNC(M_CMPSS1_BASE,false,false);
     //
-    // Disables the CMPSS module.
+    // Enables the CMPSS module.
     //
-    CMPSS_disableModule(M_CMPSS1_BASE);
-
+    CMPSS_enableModule(M_CMPSS1_BASE);
     //
     // Delay for CMPSS DAC to power up.
     //
@@ -935,7 +939,11 @@ void myDAC1_init(){
 	//
 	// Set DAC reference voltage.
 	//
-	DAC_setReferenceVoltage(myDAC1_BASE, DAC_REF_VDAC);
+	DAC_setReferenceVoltage(myDAC1_BASE, DAC_REF_ADC_VREFHI);
+	//
+	// Set DAC gain mode.
+	//
+	DAC_setGainMode(myDAC1_BASE, DAC_GAIN_TWO);
 	//
 	// Set DAC load mode.
 	//
@@ -976,11 +984,11 @@ void myECAP0_init(){
 	//
 	// Set eCAP APWM period.
 	//
-	ECAP_setAPWMPeriod(myECAP0_BASE,100U);
+	ECAP_setAPWMPeriod(myECAP0_BASE,100000U);
 	//
 	// Set eCAP APWM on or off time count.
 	//
-	ECAP_setAPWMCompare(myECAP0_BASE,50U);
+	ECAP_setAPWMCompare(myECAP0_BASE,50000U);
 	//
 	// Set eCAP APWM polarity.
 	//
@@ -1112,8 +1120,13 @@ void EPWM_init(){
     EPWM_setDeadBandCounterClock(M_EPWM3_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
     EPWM_setTripZoneAction(M_EPWM3_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
     EPWM_setTripZoneAction(M_EPWM3_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
-    EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN10, EPWM_DC_TYPE_DCAH);	
-    EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN10, EPWM_DC_TYPE_DCAL);	
+    EPWM_setTripZoneAction(M_EPWM3_BASE, EPWM_TZ_ACTION_EVENT_DCAEVT2, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM3_BASE, EPWM_TZ_SIGNAL_DCAEVT2);	
+    EPWM_selectCycleByCycleTripZoneClearEvent(M_EPWM3_BASE, EPWM_TZ_CBC_PULSE_CLR_CNTR_PERIOD);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCAH);	
+    EPWM_setTripZoneDigitalCompareEventCondition(M_EPWM3_BASE, EPWM_TZ_DC_OUTPUT_A2, EPWM_TZ_EVENT_DCXH_HIGH);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCBL);	
+    EPWM_setTripZoneDigitalCompareEventCondition(M_EPWM3_BASE, EPWM_TZ_DC_OUTPUT_B2, EPWM_TZ_EVENT_DCXL_HIGH);	
     EPWM_enableADCTrigger(M_EPWM3_BASE, EPWM_SOC_A);	
     EPWM_setADCTriggerSource(M_EPWM3_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_U_CMPC);	
     EPWM_setADCTriggerEventPrescale(M_EPWM3_BASE, EPWM_SOC_A, 1);	
@@ -1161,6 +1174,9 @@ void EPWM_init(){
     EPWM_setDeadBandCounterClock(M_EPWM4_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
     EPWM_setTripZoneAction(M_EPWM4_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
     EPWM_setTripZoneAction(M_EPWM4_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM4_BASE, EPWM_TZ_SIGNAL_DCAEVT2);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM4_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCAH);	
+    EPWM_setTripZoneDigitalCompareEventCondition(M_EPWM4_BASE, EPWM_TZ_DC_OUTPUT_A2, EPWM_TZ_EVENT_DCXH_HIGH);	
     EPWM_setClockPrescaler(M_EPWM5_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(M_EPWM5_BASE, 500);	
     EPWM_setTimeBaseCounter(M_EPWM5_BASE, 0);	
@@ -1285,6 +1301,63 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(M_EPWM8_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_setFallingEdgeDelayCount(M_EPWM8_BASE, 20);	
     EPWM_setDeadBandCounterClock(M_EPWM8_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
+}
+
+//*****************************************************************************
+//
+// EPWMXBAR Configurations
+//
+//*****************************************************************************
+void EPWMXBAR_init(){
+	CMPSS2OUT_init();
+	CMPSS3OUT_init();
+	CMPSS7OUT_init();
+	CLB1H_init();
+	CLB1L_init();
+	CLB2H_init();
+	CLB2L_init();
+	CMPSS1OUT_init();
+}
+
+void CMPSS2OUT_init(){
+		
+	XBAR_setEPWMMuxConfig(CMPSS2OUT, XBAR_EPWM_MUX02_CMPSS2_CTRIPH_OR_L);
+	XBAR_enableEPWMMux(CMPSS2OUT, XBAR_MUX02);
+}
+void CMPSS3OUT_init(){
+		
+	XBAR_setEPWMMuxConfig(CMPSS3OUT, XBAR_EPWM_MUX04_CMPSS3_CTRIPH_OR_L);
+	XBAR_enableEPWMMux(CMPSS3OUT, XBAR_MUX04);
+}
+void CMPSS7OUT_init(){
+		
+	XBAR_setEPWMMuxConfig(CMPSS7OUT, XBAR_EPWM_MUX12_CMPSS7_CTRIPH_OR_L);
+	XBAR_enableEPWMMux(CMPSS7OUT, XBAR_MUX12);
+}
+void CLB1H_init(){
+		
+	XBAR_setEPWMMuxConfig(CLB1H, XBAR_EPWM_MUX01_CLB1_OUT4);
+	XBAR_enableEPWMMux(CLB1H, XBAR_MUX01);
+}
+void CLB1L_init(){
+		
+	XBAR_setEPWMMuxConfig(CLB1L, XBAR_EPWM_MUX03_CLB1_OUT5);
+	XBAR_enableEPWMMux(CLB1L, XBAR_MUX03);
+}
+void CLB2H_init(){
+		
+	XBAR_setEPWMMuxConfig(CLB2H, XBAR_EPWM_MUX05_CLB2_OUT4);
+	XBAR_enableEPWMMux(CLB2H, XBAR_MUX05);
+}
+void CLB2L_init(){
+		
+	XBAR_setEPWMMuxConfig(CLB2L, XBAR_EPWM_MUX07_CLB2_OUT5);
+	XBAR_enableEPWMMux(CLB2L, XBAR_MUX07);
+}
+void CMPSS1OUT_init(){
+		
+	XBAR_setEPWMMuxConfig(CMPSS1OUT, XBAR_EPWM_MUX00_CMPSS1_CTRIPH_OR_L);
+	XBAR_enableEPWMMux(CMPSS1OUT, XBAR_MUX00);
 }
 
 //*****************************************************************************
@@ -1439,6 +1512,7 @@ void INTERRUPT_init(){
 //*****************************************************************************
 void OUTPUTXBAR_init(){
 	FAN1_init();
+	CMPSS1OUT0_init();
 }
 
 void FAN1_init(){
@@ -1450,6 +1524,16 @@ void FAN1_init(){
 	//
 	XBAR_setOutputMuxConfig(FAN1, XBAR_OUT_MUX00_ECAP1_OUT);
 	XBAR_enableOutputMux(FAN1, XBAR_MUX00);
+}
+void CMPSS1OUT0_init(){
+	XBAR_setOutputLatchMode(CMPSS1OUT0, false);
+	XBAR_invertOutputSignal(CMPSS1OUT0, false);
+		
+	//
+	//Mux configuration
+	//
+	XBAR_setOutputMuxConfig(CMPSS1OUT0, XBAR_OUT_MUX00_CMPSS1_CTRIPOUTH_OR_L);
+	XBAR_enableOutputMux(CMPSS1OUT0, XBAR_MUX00);
 }
 
 //*****************************************************************************

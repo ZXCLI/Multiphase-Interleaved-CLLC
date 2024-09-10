@@ -2,6 +2,8 @@
 #include "Mult_CLLC.h"
 #include "Mult_CLLC_settings.h"
 #include "Mult_CLLC_user_settings.h"
+#include "epwm.h"
+#include "inc/hw_epwm.h"
 #include "inc/hw_types.h"
 #include "stdio.h"
 
@@ -81,16 +83,14 @@ void Mult_CLLC_HAL_setupFAN(void)
         DAC_init();
     #elif USE_FAN_AUTO_CONTROL == 0
         
-        OUTPUTXBAR_init();
     #endif
-
+    OUTPUTXBAR_init();
     ECAP_init();
 }
 //
 void MUlt_CLLC_HAL_setupBoardProtection(void)
 {
     #if MULT_CLLC_PROTECTION == MULT_CLLC_PROTECTION_DISABLED
-        CMPSS_init();// 配置用于cbc保护的比较器
         // 移除初级跳闸事件
         EPWM_setTripZoneAction(MULT_CLLC_PRIM_LEGA_PWM_BASE,
                                 EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
@@ -131,32 +131,42 @@ void MUlt_CLLC_HAL_setupBoardProtection(void)
                                EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
         EPWM_setTripZoneAction(MULT_CLLC_SEC_LEGD_PWM_BASE,
                                EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-#endif
-    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGA_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1));
-    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGB_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1));
-    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGA_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1));
-    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGB_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1));
-                           // 清除第一相的OST
 
-    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGC_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1));
-    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGD_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1));
-    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGC_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1));
-    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGD_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT1)); 
-                           // 清除第二相的OST
+    #elif MULT_CLLC_PROTECTION == MULT_CLLC_PROTECTION_ENABLED
+        CMPSS_init(); // 初始化比较器
+
+        // XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPH);
+        // XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPL);
+        // CMPSS_clearFilterLatchHigh(CMPSS1_BASE);
+        // CMPSS_clearFilterLatchLow(CMPSS1_BASE);
+
+#endif
+    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGA_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGB_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGA_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGB_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+    //                        // 清除第一相的OST
+
+    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGC_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGD_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGC_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGD_PWM_BASE,
+    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2)); 
+    //                        // 清除第二相的OST
 }
 
 void Mult_CLLC_HAL_setupPWM(uint16_t powerFlowDir)
 {
     SYNC_init(); // 初始化同步模块
     EPWM_init(); // 初始化EPWM
+    EPWMXBAR_init(); // 初始化XBAR
 }
 
 void MULT_CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow)
@@ -221,4 +231,3 @@ void MULT_CLLC_HAL_DEBUG_Transnit(void)
     UARTprintf(DEBUG_Buffer);
     DEBUG2_TRACE_OUT;
 }
-

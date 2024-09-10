@@ -36,6 +36,15 @@ const epwm5            = epwm.addInstance();
 const epwm6            = epwm.addInstance();
 const epwm7            = epwm.addInstance();
 const epwm8            = epwm.addInstance();
+const epwmxbar         = scripting.addModule("/driverlib/epwmxbar.js", {}, false);
+const epwmxbar1        = epwmxbar.addInstance();
+const epwmxbar2        = epwmxbar.addInstance();
+const epwmxbar3        = epwmxbar.addInstance();
+const epwmxbar4        = epwmxbar.addInstance();
+const epwmxbar5        = epwmxbar.addInstance();
+const epwmxbar6        = epwmxbar.addInstance();
+const epwmxbar7        = epwmxbar.addInstance();
+const epwmxbar8        = epwmxbar.addInstance();
 const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
 const gpio1            = gpio.addInstance();
 const gpio2            = gpio.addInstance();
@@ -57,6 +66,7 @@ const inputxbar_input2 = inputxbar_input.addInstance();
 const inputxbar_input3 = inputxbar_input.addInstance();
 const outputxbar       = scripting.addModule("/driverlib/outputxbar.js", {}, false);
 const outputxbar1      = outputxbar.addInstance();
+const outputxbar2      = outputxbar.addInstance();
 const pmbus            = scripting.addModule("/driverlib/pmbus.js", {}, false);
 const pmbus1           = pmbus.addInstance();
 const sci              = scripting.addModule("/driverlib/sci.js", {}, false);
@@ -126,7 +136,14 @@ mux1.inputSelect = "XTAL";
 const mux2       = system.clockTree["OSCCLKSRCSEL"];
 mux2.inputSelect = "X1_XTAL";
 
-cmpss1.$name = "M_CMPSS1";
+cmpss1.$name            = "M_CMPSS1";
+cmpss1.configBlanking   = "3";
+cmpss1.enableModule     = true;
+cmpss1.lowCompInvert    = true;
+cmpss1.sampleWindowHigh = 10;
+cmpss1.thresholdHigh    = 8;
+cmpss1.dacValLow        = 1000;
+cmpss1.dacValHigh       = 2800;
 
 cmpss2.cmpssBase           = "CMPSS2_BASE";
 cmpss2.asysCMPHPMXSELValue = "1";
@@ -157,15 +174,17 @@ dac1.enableOutput     = true;
 dac1.referenceVoltage = "DAC_REF_ADC_VREFHI";
 dac1.gainMode         = "DAC_GAIN_TWO";
 
-dac2.$name        = "myDAC1";
-dac2.dacBase      = "DACB_BASE";
-dac2.enableOutput = true;
+dac2.$name            = "myDAC1";
+dac2.dacBase          = "DACB_BASE";
+dac2.enableOutput     = true;
+dac2.referenceVoltage = "DAC_REF_ADC_VREFHI";
+dac2.gainMode         = "DAC_GAIN_TWO";
 
 ecap1.$name         = "myECAP0";
 ecap1.ecapMode      = "APWM";
 ecap1.useInterrupts = false;
-ecap1.apwmPeriod    = 100;
-ecap1.apwmCompare   = 50;
+ecap1.apwmPeriod    = 100000;
+ecap1.apwmCompare   = 50000;
 
 epwm1.$name                                                    = "M_EPWM1";
 epwm1.epwmCounterCompare_cmpB                                  = 250;
@@ -250,16 +269,21 @@ epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_PERIOD  = "EPWM_AQ_OUTPUT
 epwm3.epwmCounterCompare_cmpAGld                               = true;
 epwm3.epwmEventTrigger_EPWM_SOC_A_triggerEnable                = true;
 epwm3.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar        = "1";
-epwm3.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                     = "EPWM_DC_TRIP_TRIPIN10";
-epwm3.epwmDigitalCompare_EPWM_DC_TYPE_DCAL                     = "EPWM_DC_TRIP_TRIPIN10";
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
 epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
 epwm3.epwmCounterCompare_cmpA                                  = 560;
-epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                    = "EPWM_TZ_ACTION_LOW";
-epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                    = "EPWM_TZ_ACTION_LOW";
 epwm3.epwmEventTrigger_EPWM_SOC_A_triggerSource                = "EPWM_SOC_TBCTR_U_CMPC";
 epwm3.epwmCounterCompare_cmpC                                  = 448;
 epwm3.epwmTimebase_period                                      = 1120;
+epwm3.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                     = "EPWM_DC_TRIP_TRIPIN4";
+epwm3.epwmDigitalCompare_EPWM_DC_TYPE_DCBL                     = "EPWM_DC_TRIP_TRIPIN4";
+epwm3.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_B2                  = "EPWM_TZ_EVENT_DCXL_HIGH";
+epwm3.epwmTripZone_cbcPulse                                    = "EPWM_TZ_CBC_PULSE_CLR_CNTR_PERIOD";
+epwm3.epwmTripZone_cbcSource                                   = ["EPWM_TZ_SIGNAL_DCAEVT2"];
+epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                    = "EPWM_TZ_ACTION_LOW";
+epwm3.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A2                  = "EPWM_TZ_EVENT_DCXH_HIGH";
+epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_DCAEVT2                = "EPWM_TZ_ACTION_LOW";
+epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                    = "EPWM_TZ_ACTION_LOW";
 epwm3.epwm.$assign                                             = "EPWM3";
 epwm3.epwm.epwm_aPin.$assign                                   = "GPIO4";
 epwm3.epwm.epwm_bPin.$assign                                   = "GPIO5";
@@ -305,6 +329,9 @@ epwm4.epwmTimebase_period                                      = 1120;
 epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
 epwm4.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
 epwm4.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                    = "EPWM_TZ_ACTION_LOW";
+epwm4.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                     = "EPWM_DC_TRIP_TRIPIN4";
+epwm4.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A2                  = "EPWM_TZ_EVENT_DCXH_HIGH";
+epwm4.epwmTripZone_cbcSource                                   = ["EPWM_TZ_SIGNAL_DCAEVT2"];
 epwm4.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                    = "EPWM_TZ_ACTION_LOW";
 epwm4.epwm.$assign                                             = "EPWM4";
 epwm4.epwm.epwm_aPin.$assign                                   = "GPIO6";
@@ -426,6 +453,45 @@ epwm8.epwm.$assign                                            = "EPWM8";
 epwm8.epwm.epwm_aPin.$assign                                  = "GPIO14";
 epwm8.epwm.epwm_bPin.$assign                                  = "GPIO15";
 
+epwmxbar1.tripInput       = "XBAR_TRIP5";
+epwmxbar1.$name           = "CMPSS2OUT";
+epwmxbar1.useSourceSelect = true;
+epwmxbar1.sourceSignals   = ["CMPSS2_CTRIPH_OR_L"];
+
+epwmxbar2.tripInput       = "XBAR_TRIP7";
+epwmxbar2.$name           = "CMPSS3OUT";
+epwmxbar2.useSourceSelect = true;
+epwmxbar2.sourceSignals   = ["CMPSS3_CTRIPH_OR_L"];
+
+epwmxbar3.tripInput       = "XBAR_TRIP8";
+epwmxbar3.$name           = "CMPSS7OUT";
+epwmxbar3.useSourceSelect = true;
+epwmxbar3.sourceSignals   = ["CMPSS7_CTRIPH_OR_L"];
+
+epwmxbar4.$name           = "CLB1H";
+epwmxbar4.tripInput       = "XBAR_TRIP9";
+epwmxbar4.useSourceSelect = true;
+epwmxbar4.sourceSignals   = ["CLB1_OUT4"];
+
+epwmxbar5.tripInput       = "XBAR_TRIP10";
+epwmxbar5.$name           = "CLB1L";
+epwmxbar5.useSourceSelect = true;
+epwmxbar5.sourceSignals   = ["CLB1_OUT5"];
+
+epwmxbar6.tripInput       = "XBAR_TRIP11";
+epwmxbar6.$name           = "CLB2H";
+epwmxbar6.useSourceSelect = true;
+epwmxbar6.sourceSignals   = ["CLB2_OUT4"];
+
+epwmxbar7.tripInput       = "XBAR_TRIP12";
+epwmxbar7.$name           = "CLB2L";
+epwmxbar7.useSourceSelect = true;
+epwmxbar7.sourceSignals   = ["CLB2_OUT5"];
+
+epwmxbar8.$name           = "CMPSS1OUT";
+epwmxbar8.useSourceSelect = true;
+epwmxbar8.sourceSignals   = ["CMPSS1_CTRIPH_OR_L"];
+
 gpio1.$name     = "FAULT_INPUT1";
 gpio1.padConfig = "PULLUP";
 
@@ -498,14 +564,20 @@ inputxbar_input3.inputxbarGpio  = "GPIO29";
 outputxbar1.$name                            = "FAN1";
 outputxbar1.sourceSignals                    = ["ECAP1_OUT"];
 outputxbar1.useSourceSelect                  = true;
-outputxbar1.outputxbar.$assign               = "OUTPUTXBAR2";
-outputxbar1.outputxbar.outputxbarPin.$assign = "GPIO37/TDO";
+outputxbar1.outputxbar.$assign               = "OUTPUTXBAR1";
+outputxbar1.outputxbar.outputxbarPin.$assign = "GPIO24";
 
-pmbus1.$name                        = "myPMBUS0";
-pmbus1.pmbus.pmbus_alertPin.$assign = "GPIO27";
-pmbus1.pmbus.pmbus_ctlPin.$assign   = "GPIO26";
-pmbus1.pmbus.pmbus_sclPin.$assign   = "GPIO16";
-pmbus1.pmbus.pmbus_sdaPin.$assign   = "GPIO25";
+outputxbar2.$name                            = "CMPSS1OUT0";
+outputxbar2.useSourceSelect                  = true;
+outputxbar2.sourceSignals                    = ["CMPSS1_CTRIPOUTH_OR_L"];
+outputxbar2.outputxbar.$assign               = "OUTPUTXBAR2";
+outputxbar2.outputxbar.outputxbarPin.$assign = "GPIO37/TDO";
+
+pmbus1.$name                                    = "myPMBUS0";
+pmbus1.pmbus.pmbus_alertPin.$assign             = "GPIO27";
+pmbus1.pmbus.pmbus_ctlPin.$assign               = "GPIO26";
+pmbus1.pmbus.pmbus_sclPin.$assign               = "GPIO16";
+pmbus1.pmbus.pmbus_sdaPin.$assignAllowConflicts = "GPIO25";
 
 sci1.$name                 = "DEBUG";
 sci1.useInterrupts         = false;

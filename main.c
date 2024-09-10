@@ -1,5 +1,6 @@
 // By ZXC on 2024/08/16
 
+#include "Mult_CLLC_HAL.h"
 #include "cpu.h"
 #include "driverlib.h"
 #include "device.h"
@@ -10,6 +11,9 @@
 
 #include "Mult_CLLC.h"
 
+uint16_t test;
+uint16_t test2;
+uint16_t test3;
 
 void main(void)
 {
@@ -26,14 +30,16 @@ void main(void)
 
     Mult_CLLC_HAL_setupCPI();//通信外设初始化
 
+    Mult_CLLC_HAL_setupFAN();//初始化风扇
+
     Mult_CLLC_HAL_setupADC();//初始化ADC
 
     Mult_CLLC_HAL_setupPWM(
             MULT_CLLC_powerFlowStateActive.MULT_CLLC_PowerFlowState_Enum);
     // 初始化PWM
-
-    MUlt_CLLC_HAL_setupBoardProtection(); // 初始化保护
     
+    MUlt_CLLC_HAL_setupBoardProtection(); // 初始化保护
+
     MULT_CLLC_HAL_setupInterrupt(
             MULT_CLLC_powerFlowStateActive.MULT_CLLC_PowerFlowState_Enum); 
     // 初始化中断

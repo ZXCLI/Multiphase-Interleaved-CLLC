@@ -243,14 +243,24 @@ extern "C"
 #define SEC_ZCD2_GPIO_PIN_CONFIG GPIO_17_GPIO17
 
 //
-// OUTPUTXBAR2 -> FAN1 Pinmux
+// OUTPUTXBAR1 -> FAN1 Pinmux
+//
+//
+// OUTPUTXBAR1 - GPIO Settings
+//
+#define GPIO_PIN_OUTPUTXBAR1 24
+#define FAN1_OUTPUTXBAR_GPIO 24
+#define FAN1_OUTPUTXBAR_PIN_CONFIG GPIO_24_OUTPUTXBAR1
+
+//
+// OUTPUTXBAR2 -> CMPSS1OUT0 Pinmux
 //
 //
 // OUTPUTXBAR2 - GPIO Settings
 //
 #define GPIO_PIN_OUTPUTXBAR2 37
-#define FAN1_OUTPUTXBAR_GPIO 37
-#define FAN1_OUTPUTXBAR_PIN_CONFIG GPIO_37_OUTPUTXBAR2
+#define CMPSS1OUT0_OUTPUTXBAR_GPIO 37
+#define CMPSS1OUT0_OUTPUTXBAR_PIN_CONFIG GPIO_37_OUTPUTXBAR2
 
 //
 // PMBUSA -> myPMBUS0 Pinmux
@@ -466,6 +476,7 @@ void myECAP0_init();
 #define M_EPWM3_DBFED 80
 #define M_EPWM3_TZA_ACTION EPWM_TZ_ACTION_LOW
 #define M_EPWM3_TZB_ACTION EPWM_TZ_ACTION_LOW
+#define M_EPWM3_CBC_SOURCES EPWM_TZ_SIGNAL_DCAEVT2
 #define M_EPWM3_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 #define M_EPWM4_BASE EPWM4_BASE
 #define M_EPWM4_TBPRD 1120
@@ -479,6 +490,7 @@ void myECAP0_init();
 #define M_EPWM4_DBFED 80
 #define M_EPWM4_TZA_ACTION EPWM_TZ_ACTION_LOW
 #define M_EPWM4_TZB_ACTION EPWM_TZ_ACTION_LOW
+#define M_EPWM4_CBC_SOURCES EPWM_TZ_SIGNAL_DCAEVT2
 #define M_EPWM4_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
 #define M_EPWM5_BASE EPWM5_BASE
 #define M_EPWM5_TBPRD 500
@@ -532,6 +544,36 @@ void myECAP0_init();
 #define M_EPWM8_TZA_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define M_EPWM8_TZB_ACTION EPWM_TZ_ACTION_HIGH_Z
 #define M_EPWM8_INTERRUPT_SOURCE EPWM_INT_TBCTR_DISABLED
+
+//*****************************************************************************
+//
+// EPWMXBAR Configurations
+//
+//*****************************************************************************
+void CMPSS2OUT_init();
+#define CMPSS2OUT XBAR_TRIP5
+#define CMPSS2OUT_ENABLED_MUXES (XBAR_MUX02)
+void CMPSS3OUT_init();
+#define CMPSS3OUT XBAR_TRIP7
+#define CMPSS3OUT_ENABLED_MUXES (XBAR_MUX04)
+void CMPSS7OUT_init();
+#define CMPSS7OUT XBAR_TRIP8
+#define CMPSS7OUT_ENABLED_MUXES (XBAR_MUX12)
+void CLB1H_init();
+#define CLB1H XBAR_TRIP9
+#define CLB1H_ENABLED_MUXES (XBAR_MUX01)
+void CLB1L_init();
+#define CLB1L XBAR_TRIP10
+#define CLB1L_ENABLED_MUXES (XBAR_MUX03)
+void CLB2H_init();
+#define CLB2H XBAR_TRIP11
+#define CLB2H_ENABLED_MUXES (XBAR_MUX05)
+void CLB2L_init();
+#define CLB2L XBAR_TRIP12
+#define CLB2L_ENABLED_MUXES (XBAR_MUX07)
+void CMPSS1OUT_init();
+#define CMPSS1OUT XBAR_TRIP4
+#define CMPSS1OUT_ENABLED_MUXES (XBAR_MUX00)
 
 //*****************************************************************************
 //
@@ -604,8 +646,11 @@ extern __interrupt void ISR1_PZCD(void);
 //
 //*****************************************************************************
 void FAN1_init();
-#define FAN1 XBAR_OUTPUT2
+#define FAN1 XBAR_OUTPUT1
 #define FAN1_ENABLED_MUXES (XBAR_MUX00)
+void CMPSS1OUT0_init();
+#define CMPSS1OUT0 XBAR_OUTPUT2
+#define CMPSS1OUT0_ENABLED_MUXES (XBAR_MUX00)
 
 //*****************************************************************************
 //
@@ -661,6 +706,7 @@ void	CPUTIMER_init();
 void	DAC_init();
 void	ECAP_init();
 void	EPWM_init();
+void	EPWMXBAR_init();
 void	GPIO_init();
 void	INPUTXBAR_init();
 void	INTERRUPT_init();
