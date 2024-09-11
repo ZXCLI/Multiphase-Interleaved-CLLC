@@ -34,12 +34,9 @@ float32_t MULT_CLLC_iPrimSECONDARYSensedCalIntercept_pu;
 float32_t MULT_CLLC_iPrimSECONDARYSensedCalXvariable_pu;
 EMAVG MULT_CLLC_iPrimSECONDARYSensedAvg_pu;
 
-float32_t MULT_CLLC_iPrimMAINTankSensed_Amps;
-float32_t MULT_CLLC_iPrimMAINTankSensed_pu;
 float32_t MULT_CLLC_iPrimMAINTankSensedOffset_pu;
-float32_t MULT_CLLC_iPrimMAINTankSensedCalIntercept_pu;
-float32_t MULT_CLLC_iPrimMAINTankSensedCalXvariable_pu;
-EMAVG MULT_CLLC_iPrimMAINTankSensedAvg_pu;
+
+float32_t MULT_CLLC_iPrimSECONDARYTankSensedOffset_pu;
 
 float32_t MULT_CLLC_vPrimSensed_Volts;
 float32_t MULT_CLLC_vPrimSensed_pu;
@@ -76,12 +73,9 @@ float32_t MULT_CLLC_iSecSECONDARYSensedCalIntercept_pu;
 float32_t MULT_CLLC_iSecSECONDARYSensedCalXvariable_pu;
 EMAVG MULT_CLLC_iSecSECONDARYSensedAvg_pu;
 
-float32_t MULT_CLLC_iSecMAINTankSensed_Amps;
-float32_t MULT_CLLC_iSecMAINTankSensed_pu;
 float32_t MULT_CLLC_iSecMAINTankSensedOffset_pu;
-float32_t MULT_CLLC_iSecMAINTankSensedCalIntercept_pu;
-float32_t MULT_CLLC_iSecMAINTankSensedCalXvariable_pu;
-EMAVG MULT_CLLC_iSecMAINTankSensedAvg_pu;
+
+float32_t MULT_CLLC_iSecSECONDARYTankSensedOffset_pu;
 
 float32_t MULT_CLLC_vSecSensed_Volts;
 float32_t MULT_CLLC_vSecSensed_pu;
@@ -163,10 +157,16 @@ void MULT_CLLC_initGlobalVariables(void)
     MULT_CLLC_iPrimMAINSensedOffset_pu = 0.5f;
     MULT_CLLC_iPrimSECONDARYSensedOffset_pu = 0.5f;
 
+    MULT_CLLC_iPrimMAINTankSensedOffset_pu = 0.5f;
+    MULT_CLLC_iPrimSECONDARYTankSensedOffset_pu = 0.5f;// 初级，电流
+
     MULT_CLLC_iSecMAINSensed_pu = 0.0f;
     MULT_CLLC_iSecSECONDARYSensed_pu = 0.0f;
     MULT_CLLC_iSecMAINSensedOffset_pu = 0.5f;
     MULT_CLLC_iSecSECONDARYSensedOffset_pu = 0.5f;
+
+    MULT_CLLC_iSecMAINTankSensedOffset_pu = 0.5f;
+    MULT_CLLC_iSecSECONDARYTankSensedOffset_pu = 0.5f; // 次级，电流
 
     MULT_CLLC_vPrimSensed_pu = 0.0f;
     MULT_CLLC_vPrimSensedOffset_pu = 0.0f;
@@ -178,14 +178,17 @@ void MULT_CLLC_initGlobalVariables(void)
     EMAVG_config(&MULT_CLLC_iPrimMAINSensedAvg_pu, 0.01f);
 
     EMAVG_reset(&MULT_CLLC_iPrimSECONDARYSensedAvg_pu);
-    EMAVG_config(&MULT_CLLC_iPrimSECONDARYSensedAvg_pu, 0.01f);// 电流
+    EMAVG_config(&MULT_CLLC_iPrimSECONDARYSensedAvg_pu, 0.01f);// 初级，电流
 
     EMAVG_reset(&MULT_CLLC_iSecMAINSensedAvg_pu);
     EMAVG_config(&MULT_CLLC_iSecMAINSensedAvg_pu, 0.01f);
 
     EMAVG_reset(&MULT_CLLC_iSecSECONDARYSensedAvg_pu);
-    EMAVG_config(&MULT_CLLC_iSecSECONDARYSensedAvg_pu, 0.01f);
+    EMAVG_config(&MULT_CLLC_iSecSECONDARYSensedAvg_pu, 0.01f);// 次级，电流
 
     EMAVG_reset(&MULT_CLLC_vPrimSensedAvg_pu);
+    EMAVG_config(&MULT_CLLC_vPrimSensedAvg_pu, 0.01f);
+
+    EMAVG_reset(&MULT_CLLC_vSecSensedAvg_pu);
     EMAVG_config(&MULT_CLLC_vSecSensedAvg_pu, 0.01f);
 }

@@ -26,12 +26,9 @@ extern float32_t MULT_CLLC_iPrimSECONDARYSensedCalIntercept_pu;
 extern float32_t MULT_CLLC_iPrimSECONDARYSensedCalXvariable_pu;
 extern EMAVG MULT_CLLC_iPrimSECONDARYSensedAvg_pu;
 
-extern float32_t MULT_CLLC_iPrimMAINTankSensed_Amps;
-extern float32_t MULT_CLLC_iPrimMAINTankSensed_pu;
 extern float32_t MULT_CLLC_iPrimMAINTankSensedOffset_pu;
-extern float32_t MULT_CLLC_iPrimMAINTankSensedCalIntercept_pu;
-extern float32_t MULT_CLLC_iPrimMAINTankSensedCalXvariable_pu;
-extern EMAVG MULT_CLLC_iPrimMAINTankSensedAvg_pu;
+
+extern float32_t MULT_CLLC_iPrimSECONDARYTankSensedOffset_pu;
 
 extern float32_t MULT_CLLC_vPrimSensed_Volts;
 extern float32_t MULT_CLLC_vPrimSensed_pu;
@@ -68,12 +65,9 @@ extern float32_t MULT_CLLC_iSecSECONDARYSensedCalIntercept_pu;
 extern float32_t MULT_CLLC_iSecSECONDARYSensedCalXvariable_pu;
 extern EMAVG MULT_CLLC_iSecSECONDARYSensedAvg_pu;
 
-extern float32_t MULT_CLLC_iSecMAINTankSensed_Amps;
-extern float32_t MULT_CLLC_iSecMAINTankSensed_pu;
 extern float32_t MULT_CLLC_iSecMAINTankSensedOffset_pu;
-extern float32_t MULT_CLLC_iSecMAINTankSensedCalIntercept_pu;
-extern float32_t MULT_CLLC_iSecMAINTankSensedCalXvariable_pu;
-extern EMAVG MULT_CLLC_iSecMAINTankSensedAvg_pu;
+
+extern float32_t MULT_CLLC_iSecSECONDARYTankSensedOffset_pu;
 
 extern float32_t MULT_CLLC_vSecSensed_Volts;
 extern float32_t MULT_CLLC_vSecSensed_pu;

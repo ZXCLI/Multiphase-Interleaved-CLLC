@@ -135,31 +135,31 @@ void MUlt_CLLC_HAL_setupBoardProtection(void)
     #elif MULT_CLLC_PROTECTION == MULT_CLLC_PROTECTION_ENABLED
         CMPSS_init(); // 初始化比较器
 
-        // XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPH);
-        // XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPL);
-        // CMPSS_clearFilterLatchHigh(CMPSS1_BASE);
-        // CMPSS_clearFilterLatchLow(CMPSS1_BASE);
+        XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPH);
+        XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPL);
+        CMPSS_clearFilterLatchHigh(CMPSS1_BASE);
+        CMPSS_clearFilterLatchLow(CMPSS1_BASE);
 
 #endif
-    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGA_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
-    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGB_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
-    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGA_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
-    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGB_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
-    //                        // 清除第一相的OST
+    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGA_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGB_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGA_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGB_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+                           // 清除第一相的OST
 
-    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGC_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    // EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGD_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGC_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    // EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGD_PWM_BASE,
-    //                        (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2)); 
-    //                        // 清除第二相的OST
+    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGC_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGD_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGC_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGD_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2)); 
+                           // 清除第二相的OST
 }
 
 void Mult_CLLC_HAL_setupPWM(uint16_t powerFlowDir)
