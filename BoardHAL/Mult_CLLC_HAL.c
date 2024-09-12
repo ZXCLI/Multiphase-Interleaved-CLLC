@@ -2,10 +2,12 @@
 #include "Mult_CLLC.h"
 #include "Mult_CLLC_settings.h"
 #include "Mult_CLLC_user_settings.h"
+#include "adc.h"
 #include "epwm.h"
 #include "inc/hw_epwm.h"
 #include "inc/hw_types.h"
 #include "stdio.h"
+
 
 
 
@@ -48,7 +50,7 @@ void Mult_CLLC_HAL_setupDevice(void)
 void Mult_CLLC_HAL_setPins(void)
 {
     PinMux_init();
-    INPUTXBAR_init();    
+    INPUTXBAR_init();
     GPIO_init();
 }
 
@@ -66,15 +68,76 @@ void Mult_CLLC_HAL_setupLED(void)
 
 void Mult_CLLC_HAL_setupADC(void)
 {
-    ASYSCTL_init();//配置内部参考电压
-    ADC_init();//初始化ADC
-    DEVICE_DELAY_US(100);
-    MULT_CLLC_HAL_ClaADCOffset();//校准ADC偏移量，并写入寄存器
+    ASYSCTL_init();// 配置内部参考电压
+    ADC_init();// 初始化ADC
+    DEVICE_DELAY_US(1000000);// 延时1s，保证偏置电压稳定
+    MULT_CLLC_HAL_ClaADCOffset();// 校准ADC偏移量
 }
 
 void MULT_CLLC_HAL_ClaADCOffset(void)
 {
+    typedef struct 
+    {
+        uint32_t ADC_SOC;
+        ADC_SOCNumber ADC_SOC_NUMBER;
+        uint32_t ADC_RESULTREGBASE;
+    }ADC_SOC_STRUCT;
 
+    ADC_SOC_STRUCT ADC_SOC_TABLE[8] = {
+        {MULT_CLLC_IPRIM_TANK_MAIN_ADC_MODULE,
+         MULT_CLLC_IPRIM_TANK_MAIN_ADC_SOC_NO,
+         MULT_CLLC_IPRIM_TANK_MAIN_ADCRESULTREGBASE},//A2
+        {MULT_CLLC_ISEC_MAIN_ADC_MODULE,
+         MULT_CLLC_ISEC_MAIN_ADC_SOC_NO,
+         MULT_CLLC_ISEC_MAIN_ADCRESULTREGBASE},//A3
+        {MULT_CLLC_IPRIM_MAIN_ADC_MODULE,
+         MULT_CLLC_IPRIM_MAIN_ADC_SOC_NO,
+         MULT_CLLC_IPRIM_MAIN_ADCRESULTREGBASE},//A4
+        {MULT_CLLC_IPRIM_TANK_SECONDARY_ADC_MODULE,
+         MULT_CLLC_IPRIM_TANK_SECONDARY_ADC_SOC_NO,
+         MULT_CLLC_IPRIM_TANK_SECONDARY_ADCRESULTREGBASE},//B1
+        {MULT_CLLC_ISEC_TANK_MAIN_ADC_MODULE,
+         MULT_CLLC_ISEC_TANK_MAIN_ADC_SOC_NO,
+         MULT_CLLC_ISEC_TANK_MAIN_ADCRESULTREGBASE},//B2
+        {MULT_CLLC_IPRIM_SECONDARY_ADC_MODULE,
+         MULT_CLLC_IPRIM_SECONDARY_ADC_SOC_NO,
+         MULT_CLLC_IPRIM_SECONDARY_ADCRESULTREGBASE},//B3
+        {MULT_CLLC_ISEC_TANK_SECONDARY_ADC_MODULE,
+         MULT_CLLC_ISEC_TANK_SECONDARY_ADC_SOC_NO,
+         MULT_CLLC_ISEC_TANK_SECONDARY_ADCRESULTREGBASE},//C1
+        {MULT_CLLC_ISEC_SECONDARY_ADC_MODULE,
+         MULT_CLLC_ISEC_SECONDARY_ADC_SOC_NO,
+         MULT_CLLC_ISEC_SECONDARY_ADCRESULTREGBASE},//C2
+    };
+
+    float32_t ADC_offset[8] = {0};
+
+    uint32_t i,j;
+    for(i = 0; i < 8; i++){
+        for(j = 0; j < 800; j++){
+            ADC_forceSOC(ADC_SOC_TABLE[i].ADC_SOC, ADC_SOC_TABLE[i].ADC_SOC_NUMBER);
+            DEVICE_DELAY_US(10);
+            ADC_offset[i] += (ADC_readResult(ADC_SOC_TABLE[i].ADC_RESULTREGBASE,
+                                             ADC_SOC_TABLE[i].ADC_SOC_NUMBER));
+            // if(j > 0){
+            //     ADC_offset[i] += (float32_t)(ADC_readResult(ADC_SOC_TABLE[i].ADC_RESULTREGBASE, ADC_SOC_TABLE[i].ADC_SOC_NUMBER));
+            //     if(i == 0){
+            //       char str[200] = {0};
+            //       sprintf(str,"%d\n", ADC_readResult(ADC_SOC_TABLE[i].ADC_RESULTREGBASE,ADC_SOC_TABLE[i].ADC_SOC_NUMBER));
+            //       UARTprintf(str);
+            //     }
+            // }
+        }
+    }
+
+    MULT_CLLC_iPrimMAINTankSensedOffset_pu        = (ADC_offset[0] / (800.0f * 4096.0f));
+    MULT_CLLC_iSecMAINSensedOffset_pu             = (ADC_offset[1] / (800.0f * 4096.0f));
+    MULT_CLLC_iPrimMAINSensedOffset_pu            = (ADC_offset[2] / (800.0f * 4096.0f));
+    MULT_CLLC_iPrimSECONDARYTankSensedOffset_pu   = (ADC_offset[3] / (800.0f * 4096.0f));
+    MULT_CLLC_iSecMAINTankSensedOffset_pu         = (ADC_offset[4] / (800.0f * 4096.0f));
+    MULT_CLLC_iPrimSECONDARYSensedOffset_pu       = (ADC_offset[5] / (800.0f * 4096.0f));
+    MULT_CLLC_iSecSECONDARYTankSensedOffset_pu    = (ADC_offset[6] / (800.0f * 4096.0f));
+    MULT_CLLC_iSecSECONDARYSensedOffset_pu        = (ADC_offset[7] / (800.0f * 4096.0f));
 }
 
 void Mult_CLLC_HAL_setupFAN(void)
@@ -134,21 +197,22 @@ void MUlt_CLLC_HAL_setupBoardProtection(void)
 
     #elif MULT_CLLC_PROTECTION == MULT_CLLC_PROTECTION_ENABLED
         CMPSS_init(); // 初始化比较器
-
+        MULT_CLLC_HAL_setupCMPSSDacValue(CMPSS1_BASE,
+                                         MULT_CLLC_iPrimMAINTankSensedOffset_pu , 1000);
         XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPH);
         XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPL);
         CMPSS_clearFilterLatchHigh(CMPSS1_BASE);
         CMPSS_clearFilterLatchLow(CMPSS1_BASE);
+    #endif
 
-#endif
     EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGA_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
     EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGB_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
     EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGA_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
     EPWM_clearTripZoneFlag(MULT_CLLC_SEC_LEGB_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2 | EPWM_TZ_INTERRUPT_DCAEVT1));
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
                            // 清除第一相的OST
 
     EPWM_clearTripZoneFlag(MULT_CLLC_PRIM_LEGC_PWM_BASE,
@@ -172,7 +236,9 @@ void Mult_CLLC_HAL_setupPWM(uint16_t powerFlowDir)
 void MULT_CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow)
 {
     if(powerFlow == MULT_CLLC_POWER_FLOW_SEC_PRIM && 
-        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == MULT_CLLC_POWER_FLOW_PRIM_SEC){
+       MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == \
+       MULT_CLLC_POWER_FLOW_PRIM_SEC)
+    {
         // 执行由 高压到低压 切换至 低压到高压 的PWM逻辑
         // 先将标志切换至过渡阶段，避免环路在此时影响PWM
         MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = powerFlow_intermediateState;
@@ -181,8 +247,10 @@ void MULT_CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow)
 
         MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = powerFlow_SecToPrim;
         //PWM逻辑切换完成，标志切换至 低压到高压
-    }else if(powerFlow == MULT_CLLC_POWER_FLOW_PRIM_SEC && 
-        MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == MULT_CLLC_POWER_FLOW_SEC_PRIM){
+    }else if((powerFlow == MULT_CLLC_POWER_FLOW_PRIM_SEC) && 
+             (MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum == \
+              MULT_CLLC_POWER_FLOW_SEC_PRIM))
+    {
         // 执行由 低压到高压 切换至 高压到低压 的PWM逻辑
         // 先将标志切换至过渡阶段，避免环路在此时影响PWM
         MULT_CLLC_powerFlowState.MULT_CLLC_PowerFlowState_Enum = powerFlow_intermediateState;
@@ -223,6 +291,10 @@ void MULT_CLLC_HAL_DEBUG_Transnit(void)
     float32_t Isec1 = (MULT_CLLC_iSecMAINSensedAvg_pu.out * MULT_CLLC_ISEC_MAX_BRACH_SENSE_AMPS * 100.0f);
     DEBUG2_TRACE_IN;
     formatData(Vprim, Vsec, Iprim1, Isec1, DEBUG_Buffer);
+    // formatData(MULT_CLLC_iPrimMAINTankSensedOffset_pu * 1000.0f,
+    //            MULT_CLLC_iSecMAINSensedOffset_pu * 1000.0f,
+    //            MULT_CLLC_iPrimMAINSensedOffset_pu * 1000.0f,
+    //            MULT_CLLC_iPrimSECONDARYTankSensedOffset_pu * 1000.0f, DEBUG_Buffer);
 
     DEBUG2_TRACE_OUT;
 

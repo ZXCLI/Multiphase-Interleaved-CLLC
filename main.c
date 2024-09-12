@@ -1,14 +1,7 @@
 // By ZXC on 2024/08/16
 
 #include "Mult_CLLC_HAL.h"
-#include "cpu.h"
-#include "driverlib.h"
-#include "device.h"
 #include "board.h"
-#include "c2000ware_libraries.h"
-#include "gpio.h"
-#include "inc/hw_memmap.h"
-
 #include "Mult_CLLC.h"
 
 uint16_t test;

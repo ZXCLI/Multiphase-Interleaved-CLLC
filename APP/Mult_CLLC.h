@@ -5,8 +5,6 @@
 #include "Mult_CLLC_HAL.h"
 #include "emavg.h"
 
-
-
 // 时移算法中断所需变量
 extern volatile uint16_t CLLC_PRIM_COMPA;
 extern volatile uint16_t CLLC_SEC_COMPA;
@@ -88,9 +86,6 @@ extern uint32_t MULT_CLLC_pwmDutyBSec_ticks;
 
 // volatile float32_t MULT_CLLC_pwmDeadBandFEDSecRef_ns;
 // uint32_t MULT_CLLC_pwmDeadBandFEDSec_ticks;
-
-
-
 
 void MULT_CLLC_initGlobalVariables(void);//初始化变量
 

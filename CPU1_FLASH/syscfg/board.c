@@ -292,10 +292,10 @@ void M_ADC_A_init(){
 	// 	  	SOC number		: 0
 	//	  	Trigger			: ADC_TRIGGER_SW_ONLY
 	//	  	Channel			: ADC_CH_ADCIN2
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_A_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN2, 10U);
+	ADC_setupSOC(M_ADC_A_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN2, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_A_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 1 Configuration
@@ -305,10 +305,10 @@ void M_ADC_A_init(){
 	// 	  	SOC number		: 1
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN3
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_A_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 10U);
+	ADC_setupSOC(M_ADC_A_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_A_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 2 Configuration
@@ -318,10 +318,10 @@ void M_ADC_A_init(){
 	// 	  	SOC number		: 2
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN4
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_A_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN4, 10U);
+	ADC_setupSOC(M_ADC_A_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN4, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_A_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 }
 void M_ADC_B_init(){
@@ -369,10 +369,10 @@ void M_ADC_B_init(){
 	// 	  	SOC number		: 0
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN0
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN0, 10U);
+	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN0, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_B_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 1 Configuration
@@ -382,10 +382,10 @@ void M_ADC_B_init(){
 	// 	  	SOC number		: 1
 	//	  	Trigger			: ADC_TRIGGER_SW_ONLY
 	//	  	Channel			: ADC_CH_ADCIN1
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN1, 10U);
+	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN1, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_B_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 2 Configuration
@@ -395,10 +395,10 @@ void M_ADC_B_init(){
 	// 	  	SOC number		: 2
 	//	  	Trigger			: ADC_TRIGGER_SW_ONLY
 	//	  	Channel			: ADC_CH_ADCIN2
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN2, 10U);
+	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN2, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_B_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 3 Configuration
@@ -408,10 +408,10 @@ void M_ADC_B_init(){
 	// 	  	SOC number		: 3
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN3
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 10U);
+	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
 }
 void M_ADC_C_init(){
@@ -459,10 +459,10 @@ void M_ADC_C_init(){
 	// 	  	SOC number		: 0
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN0
-	//	 	Sample Window	: 50 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN0, 50U);
+	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER0, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN0, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_C_BASE, ADC_SOC_NUMBER0, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 1 Configuration
@@ -472,10 +472,10 @@ void M_ADC_C_init(){
 	// 	  	SOC number		: 1
 	//	  	Trigger			: ADC_TRIGGER_SW_ONLY
 	//	  	Channel			: ADC_CH_ADCIN1
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN1, 10U);
+	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER1, ADC_TRIGGER_SW_ONLY, ADC_CH_ADCIN1, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_C_BASE, ADC_SOC_NUMBER1, ADC_INT_SOC_TRIGGER_NONE);
 	//
 	// Start of Conversion 2 Configuration
@@ -485,10 +485,10 @@ void M_ADC_C_init(){
 	// 	  	SOC number		: 2
 	//	  	Trigger			: ADC_TRIGGER_EPWM3_SOCA
 	//	  	Channel			: ADC_CH_ADCIN2
-	//	 	Sample Window	: 10 SYSCLK cycles
+	//	 	Sample Window	: 30 SYSCLK cycles
 	//		Interrupt Trigger: ADC_INT_SOC_TRIGGER_NONE
 	//
-	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN2, 10U);
+	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN2, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 }
 
