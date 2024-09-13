@@ -1,8 +1,8 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
 
-#include "Mult_CLLC_HAL.h"
-#include "Mult_CLLC.h"
+#include "CLLC_HAL.h"
+#include "CLLC.h"
 
 extern int16_t vTimer0[4];         // Virtual Timers slaved off CPU Timers (A events)
 extern int16_t vTimer1[4];         // Virtual Timers slaved off CPU Timers (B events)

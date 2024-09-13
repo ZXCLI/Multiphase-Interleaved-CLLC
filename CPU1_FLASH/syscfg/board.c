@@ -969,50 +969,192 @@ void myDAC1_init(){
 //
 //*****************************************************************************
 void ECAP_init(){
-	myECAP0_init();
+	FAN_PWM_init();
+	EPWM3A_ECAP_init();
+	EPWM1A_ECAP_init();
 }
 
-void myECAP0_init(){
+void FAN_PWM_init(){
 	//
 	// Stops Time stamp counter.
 	//
-	ECAP_stopCounter(myECAP0_BASE);
+	ECAP_stopCounter(FAN_PWM_BASE);
 	//
 	// Sets eCAP in APWM mode.
 	//
-	ECAP_enableAPWMMode(myECAP0_BASE);
+	ECAP_enableAPWMMode(FAN_PWM_BASE);
 	//
 	// Set eCAP APWM period.
 	//
-	ECAP_setAPWMPeriod(myECAP0_BASE,100000U);
+	ECAP_setAPWMPeriod(FAN_PWM_BASE,100000U);
 	//
 	// Set eCAP APWM on or off time count.
 	//
-	ECAP_setAPWMCompare(myECAP0_BASE,50000U);
+	ECAP_setAPWMCompare(FAN_PWM_BASE,50000U);
 	//
 	// Set eCAP APWM polarity.
 	//
-	ECAP_setAPWMPolarity(myECAP0_BASE,ECAP_APWM_ACTIVE_HIGH);
+	ECAP_setAPWMPolarity(FAN_PWM_BASE,ECAP_APWM_ACTIVE_HIGH);
 	//
 	// Sets a phase shift value count.
 	//
-	ECAP_setPhaseShiftCount(myECAP0_BASE,0U);
+	ECAP_setPhaseShiftCount(FAN_PWM_BASE,0U);
 	//
 	// Disable counter loading with phase shift value.
 	//
-	ECAP_disableLoadCounter(myECAP0_BASE);
+	ECAP_disableLoadCounter(FAN_PWM_BASE);
 	//
 	// Configures Sync out signal mode.
 	//
-	ECAP_setSyncOutMode(myECAP0_BASE,ECAP_SYNC_OUT_SYNCI);
+	ECAP_setSyncOutMode(FAN_PWM_BASE,ECAP_SYNC_OUT_SYNCI);
 	//
 	// Configures emulation mode.
 	//
-	ECAP_setEmulationMode(myECAP0_BASE,ECAP_EMULATION_STOP);
+	ECAP_setEmulationMode(FAN_PWM_BASE,ECAP_EMULATION_STOP);
 	//
-	// Starts Time stamp counter for myECAP0.
+	// Starts Time stamp counter for FAN_PWM.
 	//
-	ECAP_startCounter(myECAP0_BASE);
+	ECAP_startCounter(FAN_PWM_BASE);
+
+    //-----------------Signal Monitoring--------------------//
+}
+void EPWM3A_ECAP_init(){
+	//
+	// Disables time stamp capture.
+	//
+	ECAP_disableTimeStampCapture(EPWM3A_ECAP_BASE);
+	//
+	// Stops Time stamp counter.
+	//
+	ECAP_stopCounter(EPWM3A_ECAP_BASE);
+	//
+	// Sets eCAP in Capture mode.
+	//
+	ECAP_enableCaptureMode(EPWM3A_ECAP_BASE);
+	//
+	// Sets the capture mode.
+	//
+	ECAP_setCaptureMode(EPWM3A_ECAP_BASE,ECAP_CONTINUOUS_CAPTURE_MODE,ECAP_EVENT_4);
+	//
+	// Sets the Capture event prescaler.
+	//
+	ECAP_setEventPrescaler(EPWM3A_ECAP_BASE, 0U);
+	//
+	// Sets the Capture event polarity.
+	//
+	ECAP_setEventPolarity(EPWM3A_ECAP_BASE,ECAP_EVENT_1,ECAP_EVNT_RISING_EDGE);
+	ECAP_setEventPolarity(EPWM3A_ECAP_BASE,ECAP_EVENT_2,ECAP_EVNT_FALLING_EDGE);
+	ECAP_setEventPolarity(EPWM3A_ECAP_BASE,ECAP_EVENT_3,ECAP_EVNT_RISING_EDGE);
+	ECAP_setEventPolarity(EPWM3A_ECAP_BASE,ECAP_EVENT_4,ECAP_EVNT_FALLING_EDGE);
+	//
+	// Configure counter reset on events
+	//
+	ECAP_disableCounterResetOnEvent(EPWM3A_ECAP_BASE,ECAP_EVENT_1);
+	ECAP_disableCounterResetOnEvent(EPWM3A_ECAP_BASE,ECAP_EVENT_2);
+	ECAP_disableCounterResetOnEvent(EPWM3A_ECAP_BASE,ECAP_EVENT_3);
+	ECAP_enableCounterResetOnEvent(EPWM3A_ECAP_BASE,ECAP_EVENT_4);	
+	//
+	// Select eCAP input.
+	//
+	ECAP_selectECAPInput(EPWM3A_ECAP_BASE,ECAP_INPUT_INPUTXBAR6);
+	//
+	// Sets a phase shift value count.
+	//
+	ECAP_setPhaseShiftCount(EPWM3A_ECAP_BASE,0U);
+	//
+	// Disable counter loading with phase shift value.
+	//
+	ECAP_disableLoadCounter(EPWM3A_ECAP_BASE);
+	//
+	// Configures Sync out signal mode.
+	//
+	ECAP_setSyncOutMode(EPWM3A_ECAP_BASE,ECAP_SYNC_OUT_SYNCI);
+	//
+	// Configures emulation mode.
+	//
+	ECAP_setEmulationMode(EPWM3A_ECAP_BASE,ECAP_EMULATION_STOP);
+	//
+	// Starts Time stamp counter for EPWM3A_ECAP.
+	//
+	ECAP_startCounter(EPWM3A_ECAP_BASE);
+	//
+	// Enables time stamp capture for EPWM3A_ECAP.
+	//
+	ECAP_enableTimeStampCapture(EPWM3A_ECAP_BASE);
+	//
+	// Re-arms the eCAP module for EPWM3A_ECAP.
+	//
+	ECAP_reArm(EPWM3A_ECAP_BASE);
+
+    //-----------------Signal Monitoring--------------------//
+}
+void EPWM1A_ECAP_init(){
+	//
+	// Disables time stamp capture.
+	//
+	ECAP_disableTimeStampCapture(EPWM1A_ECAP_BASE);
+	//
+	// Stops Time stamp counter.
+	//
+	ECAP_stopCounter(EPWM1A_ECAP_BASE);
+	//
+	// Sets eCAP in Capture mode.
+	//
+	ECAP_enableCaptureMode(EPWM1A_ECAP_BASE);
+	//
+	// Sets the capture mode.
+	//
+	ECAP_setCaptureMode(EPWM1A_ECAP_BASE,ECAP_CONTINUOUS_CAPTURE_MODE,ECAP_EVENT_4);
+	//
+	// Sets the Capture event prescaler.
+	//
+	ECAP_setEventPrescaler(EPWM1A_ECAP_BASE, 0U);
+	//
+	// Sets the Capture event polarity.
+	//
+	ECAP_setEventPolarity(EPWM1A_ECAP_BASE,ECAP_EVENT_1,ECAP_EVNT_RISING_EDGE);
+	ECAP_setEventPolarity(EPWM1A_ECAP_BASE,ECAP_EVENT_2,ECAP_EVNT_FALLING_EDGE);
+	ECAP_setEventPolarity(EPWM1A_ECAP_BASE,ECAP_EVENT_3,ECAP_EVNT_RISING_EDGE);
+	ECAP_setEventPolarity(EPWM1A_ECAP_BASE,ECAP_EVENT_4,ECAP_EVNT_FALLING_EDGE);
+	//
+	// Configure counter reset on events
+	//
+	ECAP_disableCounterResetOnEvent(EPWM1A_ECAP_BASE,ECAP_EVENT_1);
+	ECAP_disableCounterResetOnEvent(EPWM1A_ECAP_BASE,ECAP_EVENT_2);
+	ECAP_disableCounterResetOnEvent(EPWM1A_ECAP_BASE,ECAP_EVENT_3);
+	ECAP_disableCounterResetOnEvent(EPWM1A_ECAP_BASE,ECAP_EVENT_4);
+	//
+	// Select eCAP input.
+	//
+	ECAP_selectECAPInput(EPWM1A_ECAP_BASE,ECAP_INPUT_INPUTXBAR7);
+	//
+	// Sets a phase shift value count.
+	//
+	ECAP_setPhaseShiftCount(EPWM1A_ECAP_BASE,0U);
+	//
+	// Disable counter loading with phase shift value.
+	//
+	ECAP_disableLoadCounter(EPWM1A_ECAP_BASE);
+	//
+	// Configures Sync out signal mode.
+	//
+	ECAP_setSyncOutMode(EPWM1A_ECAP_BASE,ECAP_SYNC_OUT_SYNCI);
+	//
+	// Configures emulation mode.
+	//
+	ECAP_setEmulationMode(EPWM1A_ECAP_BASE,ECAP_EMULATION_STOP);
+	//
+	// Starts Time stamp counter for EPWM1A_ECAP.
+	//
+	ECAP_startCounter(EPWM1A_ECAP_BASE);
+	//
+	// Enables time stamp capture for EPWM1A_ECAP.
+	//
+	ECAP_enableTimeStampCapture(EPWM1A_ECAP_BASE);
+	//
+	// Re-arms the eCAP module for EPWM1A_ECAP.
+	//
+	ECAP_reArm(EPWM1A_ECAP_BASE);
 
     //-----------------Signal Monitoring--------------------//
 }
@@ -1478,19 +1620,27 @@ void SEC_ZCD2_init(){
 //
 //*****************************************************************************
 void INPUTXBAR_init(){
-	myINPUTXBARINPUT0_init();
+	PZCD1_init();
 	TZ1_init();
 	TZ2_init();
+	EPWM3_CAP_init();
+	EPWM1_CAP_init();
 }
 
-void myINPUTXBARINPUT0_init(){
-	XBAR_setInputPin(myINPUTXBARINPUT0_INPUT, myINPUTXBARINPUT0_SOURCE);
+void PZCD1_init(){
+	XBAR_setInputPin(PZCD1_INPUT, PZCD1_SOURCE);
 }
 void TZ1_init(){
 	XBAR_setInputPin(TZ1_INPUT, TZ1_SOURCE);
 }
 void TZ2_init(){
 	XBAR_setInputPin(TZ2_INPUT, TZ2_SOURCE);
+}
+void EPWM3_CAP_init(){
+	XBAR_setInputPin(EPWM3_CAP_INPUT, EPWM3_CAP_SOURCE);
+}
+void EPWM1_CAP_init(){
+	XBAR_setInputPin(EPWM1_CAP_INPUT, EPWM1_CAP_SOURCE);
 }
 
 //*****************************************************************************

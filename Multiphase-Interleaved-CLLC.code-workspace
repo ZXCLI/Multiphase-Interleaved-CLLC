@@ -29,7 +29,8 @@
             "limits": "c",
             "memory": "c",
             "mult_cllc_user_settings.h": "c",
-            "emavg.h": "c"
+            "emavg.h": "c",
+            "stdio.h": "c"
         }
     }
 }

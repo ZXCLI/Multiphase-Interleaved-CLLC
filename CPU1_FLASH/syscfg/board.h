@@ -429,9 +429,15 @@ void myDAC1_init();
 // ECAP Configurations
 //
 //*****************************************************************************
-#define myECAP0_BASE ECAP1_BASE
-#define myECAP0_SIGNAL_MUNIT_BASE ECAP1SIGNALMONITORING_BASE
-void myECAP0_init();
+#define FAN_PWM_BASE ECAP1_BASE
+#define FAN_PWM_SIGNAL_MUNIT_BASE ECAP1SIGNALMONITORING_BASE
+void FAN_PWM_init();
+#define EPWM3A_ECAP_BASE ECAP6_BASE
+#define EPWM3A_ECAP_SIGNAL_MUNIT_BASE ECAP6SIGNALMONITORING_BASE
+void EPWM3A_ECAP_init();
+#define EPWM1A_ECAP_BASE ECAP7_BASE
+#define EPWM1A_ECAP_SIGNAL_MUNIT_BASE ECAP7SIGNALMONITORING_BASE
+void EPWM1A_ECAP_init();
 
 //*****************************************************************************
 //
@@ -614,15 +620,21 @@ void SEC_ZCD2_init();
 // INPUTXBAR Configurations
 //
 //*****************************************************************************
-#define myINPUTXBARINPUT0_SOURCE 23
-#define myINPUTXBARINPUT0_INPUT XBAR_INPUT4
-void myINPUTXBARINPUT0_init();
+#define PZCD1_SOURCE 23
+#define PZCD1_INPUT XBAR_INPUT4
+void PZCD1_init();
 #define TZ1_SOURCE 28
 #define TZ1_INPUT XBAR_INPUT1
 void TZ1_init();
 #define TZ2_SOURCE 29
 #define TZ2_INPUT XBAR_INPUT2
 void TZ2_init();
+#define EPWM3_CAP_SOURCE 4
+#define EPWM3_CAP_INPUT XBAR_INPUT6
+void EPWM3_CAP_init();
+#define EPWM1_CAP_SOURCE 0
+#define EPWM1_CAP_INPUT XBAR_INPUT7
+void EPWM1_CAP_init();
 
 //*****************************************************************************
 //

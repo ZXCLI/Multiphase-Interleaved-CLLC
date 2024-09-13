@@ -1,40 +1,40 @@
-#ifndef MULT_CLLC_HAL_H
-#define MULT_CLLC_HAL_H
+#ifndef CLLC_HAL_H
+#define CLLC_HAL_H
 
 #include "device.h"
 #include "driverlib.h"
 #include "board.h"
-#include "Mult_CLLC_settings.h"
-#include "Mult_CLLC_user_settings.h"
-#include "Mult_CLLC.h"
+#include "CLLC_settings.h"
+#include "CLLC_user_settings.h"
+#include "CLLC.h"
 #include "State_machine.h"
+#include "stdio.h"
 
+void CLLC_HAL_setupDevice(void);
+void CLLC_HAL_setPins(void);
+void CLLC_HAL_setupLED(void);
+void CLLC_HAL_setupADC(void);
+void CLLC_HAL_setupBoardProtection(void);
+void CLLC_HAL_setupPWM(uint16_t powerFlowDir);
+void CLLC_HAL_setupFAN(void);
+void CLLC_HAL_setupCPI(void);
+void CLLC_HAL_disablePWMClkCounting(void);
+void CLLC_HAL_enablePWMClkCounting(void);
 
-void Mult_CLLC_HAL_setupDevice(void);
-void Mult_CLLC_HAL_setPins(void);
-void Mult_CLLC_HAL_setupLED(void);
-void Mult_CLLC_HAL_setupADC(void);
-void MUlt_CLLC_HAL_setupBoardProtection(void);
-void Mult_CLLC_HAL_setupPWM(uint16_t powerFlowDir);
-void Mult_CLLC_HAL_setupFAN(void);
-void Mult_CLLC_HAL_setupCPI(void);
-void Mult_CLLC_HAL_disablePWMClkCounting(void);
-void Mult_CLLC_HAL_enablePWMClkCounting(void);
+void CLLC_HAL_ClaADCOffset(void);
+void CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow);
 
-void MULT_CLLC_HAL_ClaADCOffset(void);
-void MULT_CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow);
+void CLLC_HAL_DEBUG_Transnit(void);
 
-void MULT_CLLC_HAL_DEBUG_Transnit(void);
-
-static inline void MULT_CLLC_HAL_setupInterrupt(uint16_t powerFlow)
+static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
 {
     XINT_init();
 	INTERRUPT_init();
 
-    #if MULT_CLLC_CONTROL_MODE == MULT_CLLC_TIME_SHIF_CTRL
-        if(MULT_CLLC_POWER_FLOW == MULT_CLLC_POWER_FLOW_PRIM_SEC)
+    #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
+        if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_PRIM_SEC)
             {Interrupt_enable(INT_PRIM_ZCD1_XINT);} // 只有时移控制需要开启中断
-        else if(MULT_CLLC_POWER_FLOW == MULT_CLLC_POWER_FLOW_SEC_PRIM)
+        else if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_SEC_PRIM)
             {Interrupt_enable(INT_SEC_ZCD1_XINT); } // 只有时移控制需要开启中断
     #endif
     //Interrupt_enable(INT_PRIM_ZCD1_XINT);
@@ -48,19 +48,31 @@ static inline void MULT_CLLC_HAL_setupInterrupt(uint16_t powerFlow)
 }
 
 // 获取初级PWM的周期值
-static inline uint16_t MULT_CLLC_HAL_getPrimTBPRD(void)
+static inline uint16_t CLLC_HAL_getPrimTBPRD(void)
 {
-    return (HWREGH(MULT_CLLC_PRIM_LEGA_PWM_BASE + EPWM_O_TBPRD));
+    return (HWREGH(CLLC_PRIM_LEGA_PWM_BASE + EPWM_O_TBPRD));
 }
 
 // 获取次级PWM的周期值
-static inline uint16_t MULT_CLLC_HAL_getSecTBPRD(void)
+static inline uint16_t CLLC_HAL_getSecTBPRD(void)
 {
-    return (HWREGH(MULT_CLLC_SEC_LEGA_PWM_BASE + EPWM_O_TBPRD));
+    return (HWREGH(CLLC_SEC_LEGA_PWM_BASE + EPWM_O_TBPRD));
+}
+
+// 获取初级PWM的死区时间
+static inline uint16_t CLLC_HAL_getPrimMAINdeadBand(void)
+{
+  return (HWREGH(CLLC_PRIM_LEGA_PWM_BASE + EPWM_O_DBRED));
+}
+
+// 获取次级PWM的死区时间
+static inline uint16_t CLLC_HAL_getSecMAINdeadBand(void)
+{
+  return (HWREGH(CLLC_SEC_LEGA_PWM_BASE + EPWM_O_DBRED));
 }
 
 // 设置谐振腔CBC保护的阈值
-static inline void MULT_CLLC_HAL_setupCMPSSDacValue(uint32_t CMPSS_BASE,
+static inline void CLLC_HAL_setupCMPSSDacValue(uint32_t CMPSS_BASE,
                                     float32_t offset_pu,
                                     uint16_t Limit)
 {
@@ -68,6 +80,12 @@ static inline void MULT_CLLC_HAL_setupCMPSSDacValue(uint32_t CMPSS_BASE,
                         (4096 * offset_pu) + Limit);
     CMPSS_setDACValueLow(CMPSS_BASE,
                         (4096 * offset_pu) - Limit);
+}
+
+// 强制触发PWM的OneShotTrip事件
+static inline void CLLC_HAL_forcePWMOneShotTrip(uint32_t EPWM_BASE)
+{
+    EPWM_forceTripZoneEvent(EPWM_BASE, EPWM_TZ_FORCE_EVENT_OST);
 }
 
 // 将整数转换为字符串并返回长度
@@ -85,10 +103,8 @@ static inline int intToStr(int num, char *str)
         str[i++] = (num % 10) + '0';
         num /= 10;
     } while (num > 0);
-    // 如果是负数，添加负号
-    if (isNegative){
-        str[i++] = '-';
-    }
+
+    if (isNegative){str[i++] = '-';}
     // 反转字符串
     int start = 0;
     int end = i - 1;
@@ -144,4 +160,4 @@ static inline void UARTprintf(const char *pcString)
 }
 
 
-#endif // MULT_CLLC_HAL_H
+#endif // CLLC_HAL_H

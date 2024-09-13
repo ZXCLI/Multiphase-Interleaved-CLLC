@@ -13,8 +13,8 @@ ORDERED_OBJS += \
 "./syscfg/board.obj" \
 "./syscfg/c2000ware_libraries.obj" \
 "./main.obj" \
-"./APP/Mult_CLLC.obj" \
-"./BoardHAL/Mult_CLLC_HAL.obj" \
+"./APP/CLLC.obj" \
+"./BoardHAL/CLLC_HAL.obj" \
 "./BoardHAL/State_machine.obj" \
 "./LIB/DCL/DCL_DF22_C1.obj" \
 "./LIB/DCL/DCL_PI_C1.obj" \
@@ -170,7 +170,7 @@ all: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 Multiphase-Interleaved-CLLC.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/bin/cl2000" -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 -Ooff --opt_for_speed=0 --define=DEBUG --define=_FLASH --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"Multiphase-Interleaved-CLLC.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO" -i"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/lib" -i"C:/ti/C2000Ware_5_01_00_00" -i"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg" -i"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="Multiphase-Interleaved-CLLC_linkInfo.xml" --entry_point=code_start --rom_model -o "Multiphase-Interleaved-CLLC.out" $(ORDERED_OBJS)
+	"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/bin/cl2000" -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 -O2 --opt_for_speed=3 --define=DEBUG --define=_FLASH --c11 --relaxed_ansi --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"Multiphase-Interleaved-CLLC.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO" -i"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/lib" -i"C:/ti/C2000Ware_5_01_00_00" -i"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg" -i"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="Multiphase-Interleaved-CLLC_linkInfo.xml" --entry_point=code_start --rom_model -o "Multiphase-Interleaved-CLLC.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -178,8 +178,8 @@ Multiphase-Interleaved-CLLC.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "main.obj" "APP\Mult_CLLC.obj" "BoardHAL\Mult_CLLC_HAL.obj" "BoardHAL\State_machine.obj" "LIB\DCL\DCL_DF22_C1.obj" "LIB\DCL\DCL_PI_C1.obj" "LIB\DCL\DCL_PI_C4.obj" "LIB\DCL\DCL_PI_L1.obj" "LIB\sfra\sfra_gui_scicomms_driverlib.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
-	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "main.d" "APP\Mult_CLLC.d" "BoardHAL\Mult_CLLC_HAL.d" "BoardHAL\State_machine.d" "LIB\sfra\sfra_gui_scicomms_driverlib.d" "device\device.d" 
+	-$(RM) "syscfg\board.obj" "syscfg\c2000ware_libraries.obj" "main.obj" "APP\CLLC.obj" "BoardHAL\CLLC_HAL.obj" "BoardHAL\State_machine.obj" "LIB\DCL\DCL_DF22_C1.obj" "LIB\DCL\DCL_PI_C1.obj" "LIB\DCL\DCL_PI_C4.obj" "LIB\DCL\DCL_PI_L1.obj" "LIB\sfra\sfra_gui_scicomms_driverlib.obj" "device\device.obj" "device\f28004x_codestartbranch.obj" 
+	-$(RM) "syscfg\board.d" "syscfg\c2000ware_libraries.d" "main.d" "APP\CLLC.d" "BoardHAL\CLLC_HAL.d" "BoardHAL\State_machine.d" "LIB\sfra\sfra_gui_scicomms_driverlib.d" "device\device.d" 
 	-$(RM) "LIB\DCL\DCL_DF22_C1.d" "LIB\DCL\DCL_PI_C1.d" "LIB\DCL\DCL_PI_C4.d" "LIB\DCL\DCL_PI_L1.d" "device\f28004x_codestartbranch.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'

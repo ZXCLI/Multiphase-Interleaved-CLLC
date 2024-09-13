@@ -27,6 +27,8 @@ const dac1             = dac.addInstance();
 const dac2             = dac.addInstance();
 const ecap             = scripting.addModule("/driverlib/ecap.js", {}, false);
 const ecap1            = ecap.addInstance();
+const ecap2            = ecap.addInstance();
+const ecap3            = ecap.addInstance();
 const epwm             = scripting.addModule("/driverlib/epwm.js", {}, false);
 const epwm1            = epwm.addInstance();
 const epwm2            = epwm.addInstance();
@@ -64,6 +66,8 @@ const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}
 const inputxbar_input1 = inputxbar_input.addInstance();
 const inputxbar_input2 = inputxbar_input.addInstance();
 const inputxbar_input3 = inputxbar_input.addInstance();
+const inputxbar_input4 = inputxbar_input.addInstance();
+const inputxbar_input5 = inputxbar_input.addInstance();
 const outputxbar       = scripting.addModule("/driverlib/outputxbar.js", {}, false);
 const outputxbar1      = outputxbar.addInstance();
 const outputxbar2      = outputxbar.addInstance();
@@ -180,11 +184,29 @@ dac2.enableOutput     = true;
 dac2.referenceVoltage = "DAC_REF_ADC_VREFHI";
 dac2.gainMode         = "DAC_GAIN_TWO";
 
-ecap1.$name         = "myECAP0";
 ecap1.ecapMode      = "APWM";
 ecap1.useInterrupts = false;
 ecap1.apwmPeriod    = 100000;
 ecap1.apwmCompare   = 50000;
+ecap1.$name         = "FAN_PWM";
+
+ecap2.ecapInput           = "ECAP_INPUT_INPUTXBAR6";
+ecap2.$name               = "EPWM3A_ECAP";
+ecap2.ecapBase            = "ECAP6_BASE";
+ecap2.eventTwoPolarity    = "ECAP_EVNT_FALLING_EDGE";
+ecap2.useInterrupts       = false;
+ecap2.eventFourPolarity   = "ECAP_EVNT_FALLING_EDGE";
+ecap2.counterResetOnEvent = ["ECAP_EVENT_4"];
+ecap2.eventStop           = "ECAP_EVENT_4";
+
+ecap3.ecapBase          = "ECAP7_BASE";
+ecap3.eventStop         = "ECAP_EVENT_4";
+ecap3.eventTwoPolarity  = "ECAP_EVNT_FALLING_EDGE";
+ecap3.eventFourPolarity = "ECAP_EVNT_FALLING_EDGE";
+ecap3.useInterrupts     = false;
+ecap3.dmaSource         = "ECAP_EVENT_4";
+ecap3.$name             = "EPWM1A_ECAP";
+ecap3.ecapInput         = "ECAP_INPUT_INPUTXBAR7";
 
 epwm1.$name                                                    = "M_EPWM1";
 epwm1.epwmCounterCompare_cmpB                                  = 250;
@@ -553,9 +575,9 @@ gpio13.gpioPin.$assign = "GPIO33";
 gpio14.$name           = "SEC_ZCD2";
 gpio14.gpioPin.$assign = "GPIO17";
 
-inputxbar_input1.$name         = "myINPUTXBARINPUT0";
 gpio9.xint.inputxbar           = inputxbar_input1;
 inputxbar_input1.inputxbarGpio = "GPIO23";
+inputxbar_input1.$name         = "PZCD1";
 
 inputxbar_input2.$name         = "TZ1";
 inputxbar_input2.inputxbarGpio = "GPIO28";
@@ -563,6 +585,14 @@ inputxbar_input2.inputxbarGpio = "GPIO28";
 inputxbar_input3.$name          = "TZ2";
 inputxbar_input3.inputxbarInput = "XBAR_INPUT2";
 inputxbar_input3.inputxbarGpio  = "GPIO29";
+
+inputxbar_input4.inputxbarInput = "XBAR_INPUT6";
+inputxbar_input4.inputxbarGpio  = "GPIO4";
+inputxbar_input4.$name          = "EPWM3_CAP";
+
+inputxbar_input5.$name          = "EPWM1_CAP";
+inputxbar_input5.inputxbarInput = "XBAR_INPUT7";
+inputxbar_input5.inputxbarGpio  = "GPIO0";
 
 outputxbar1.$name                            = "FAN1";
 outputxbar1.sourceSignals                    = ["ECAP1_OUT"];
