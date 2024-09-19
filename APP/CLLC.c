@@ -2,7 +2,7 @@
 
 
 
-volatile CLLC_SystemState_EnumType CLLC_systemState;//系统状态
+volatile CLLC_SystemState_StructType CLLC_systemState;//系统状态
 
 volatile CLLC_TripFlag_StructType CLLC_tripFlag;//系统跳闸状态
 
@@ -23,8 +23,18 @@ MAINEPWM_StructType CLLC_PRIMPWM,CLLC_SECPWM;
 volatile uint16_t CLLC_PRIM_COMPA = 560;
 volatile uint16_t CLLC_SEC_COMPA = 560;
 
+volatile uint16_t CLLC_clooseGvLoop;
+volatile uint16_t CLLC_PRIM_TimeShift_ticks;
+volatile uint16_t CLLC_SEC_TimeShift_ticks;
+volatile uint16_t CLLC_PRIM_TimeShift_ticks_min,
+                  CLLC_PRIM_TimeShift_ticks_max;
+volatile uint16_t CLLC_SEC_TimeShift_ticks_min,
+                  CLLC_SEC_TimeShift_ticks_max;
+
 CLLC_GV CLLC_gvPrim2Sec;
 CLLC_GV CLLC_gvSec2Prim;
+float32_t CLLC_gvPrim2Sec_out;
+float32_t CLLC_gvSec2Prim_out;
 
 // 高压侧
 //SI unit
@@ -38,17 +48,6 @@ float32_t CLLC_iPrimSECONDARYSensed_pu;// IPRIM2
 float32_t CLLC_vPrimSensed_pu;
 float32_t CLLC_vPrimRef_pu;
 float32_t CLLC_vPrimRefSlewed_pu;
-
-// volatile float32_t CLLC_pwmDutyPrimRef_pu;
-// float32_t CLLC_pwmDutyPrim_pu;
-// uint32_t CLLC_pwmDutyAPrim_ticks;
-// uint32_t CLLC_pwmDutyBPrim_ticks;
-
-// volatile float32_t CLLC_pwmDeadBandREDPrimRef_ns;
-// uint32_t CLLC_pwmDeadBandREDPrim_ticks;
-
-// volatile float32_t CLLC_pwmDeadBandFEDPrimRef_ns;
-// uint32_t CLLC_pwmDeadBandFEDPrim_ticks;
 //OFFSET
 float32_t CLLC_iPrimMAINSensedOffset_pu;
 float32_t CLLC_iPrimSECONDARYSensedOffset_pu;
@@ -73,17 +72,6 @@ float32_t CLLC_iSecSECONDARYSensed_pu;// ISEC2
 float32_t CLLC_vSecSensed_pu;
 float32_t CLLC_vSecRef_pu;
 float32_t CLLC_vSecRefSlewed_pu;
-
-// volatile float32_t CLLC_pwmDutySecRef_pu;
-// float32_t CLLC_pwmDutySec_pu;
-// uint32_t CLLC_pwmDutyASec_ticks;
-// uint32_t CLLC_pwmDutyBSec_ticks;
-
-// volatile float32_t CLLC_pwmDeadBandREDSecRef_ns;
-// uint32_t CLLC_pwmDeadBandREDSec_ticks;
-
-// volatile float32_t CLLC_pwmDeadBandFEDSecRef_ns;
-// uint32_t CLLC_pwmDeadBandFEDSec_ticks;
 //OFFSET
 float32_t CLLC_iSecMAINSensedOffset_pu;
 float32_t CLLC_iSecSECONDARYSensedOffset_pu;
@@ -138,11 +126,16 @@ static inline void CLLC_runVotageLoop(void)
     if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
       CLLC_POWER_FLOW_PRIM_SEC)
     {
-        
+        CLLC_gvPrim2Sec_out = DCL_runPI_C3(&CLLC_gvPrim2Sec, CLLC_vSecSensed_pu, CLLC_vSecRef_pu);
+        CLLC_PRIM_COMPA = CLLC_gvPrim2Sec_out * CLLC_MAX_TD_TICKS;
+        EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
+                                    EPWM_COUNTER_COMPARE_A,CLLC_PRIM_COMPA);
+        EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, CLLC_PRIM_COMPA<<1);
+
     }else if (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
               CLLC_POWER_FLOW_SEC_PRIM)
     {
-        
+        CLLC_gvSec2Prim_out = DCL_runPI_C3(&CLLC_gvSec2Prim, CLLC_vPrimSensed_pu, CLLC_vPrimRef_pu);
     }
     
 }
@@ -152,26 +145,31 @@ __interrupt void ISR2_TIMER0(void)
     CLLC_PRIM_COMPA = (CLLC_HAL_getPrimTBPRD() >> 1);// 获取当前计数器周期值
     CLLC_SEC_COMPA = (CLLC_HAL_getSecTBPRD() >> 1); // 获取当前计数器周期值
     CLLC_readSensedSignals();
-    CLLC_runVotageLoop();
+    if(CLLC_clooseGvLoop == 1){
+        if(CLLC_systemState.systemstate_normal == 1){
+            CLLC_runVotageLoop();
+        }
+    }
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1); // timer0要加上清除中断标志
 }
 
 
 void CLLC_initGlobalVariables(void)
 {
+    // 采样
     CLLC_iPrimMAINSensed_pu = 0.0f;
     CLLC_iPrimSECONDARYSensed_pu = 0.0f;
+
     CLLC_iPrimMAINSensedOffset_pu = 0.5f;
     CLLC_iPrimSECONDARYSensedOffset_pu = 0.5f;
-
     CLLC_iPrimMAINTankSensedOffset_pu = 0.5f;
     CLLC_iPrimSECONDARYTankSensedOffset_pu = 0.5f;// 初级，电流
 
     CLLC_iSecMAINSensed_pu = 0.0f;
     CLLC_iSecSECONDARYSensed_pu = 0.0f;
+
     CLLC_iSecMAINSensedOffset_pu = 0.5f;
     CLLC_iSecSECONDARYSensedOffset_pu = 0.5f;
-
     CLLC_iSecMAINTankSensedOffset_pu = 0.5f;
     CLLC_iSecSECONDARYTankSensedOffset_pu = 0.5f; // 次级，电流
 
@@ -180,6 +178,30 @@ void CLLC_initGlobalVariables(void)
 
     CLLC_vSecSensed_pu = 0.0f;
     CLLC_vSecSensedOffset_pu = 0.0f;
+    
+    // 环路相关变量
+    CLLC_clooseGvLoop = 0;
+    CLLC_PRIM_TimeShift_ticks = 0;
+    CLLC_SEC_TimeShift_ticks = 0;
+
+    CLLC_vPrimRef_pu = 0.0f;
+    CLLC_vSecRef_pu = 0.0f;
+
+    CLLC_PRIM_TimeShift_ticks_min = 300;
+    CLLC_SEC_TimeShift_ticks_min = 300;
+    CLLC_PRIM_TimeShift_ticks_max = 600;
+    CLLC_SEC_TimeShift_ticks_max = 600;
+
+    // 补偿器参数
+    CLLC_gvPrim2Sec.Kp = 3.0f;
+    CLLC_gvPrim2Sec.Ki = 0.0f;
+    CLLC_gvPrim2Sec.Umax = 100.0f;
+    CLLC_gvPrim2Sec.Umin = 0.0f;
+
+    CLLC_gvSec2Prim.Kp = 0.0f;
+    CLLC_gvSec2Prim.Ki = 0.0f;
+    CLLC_gvSec2Prim.Umax = 0.0f;
+    CLLC_gvSec2Prim.Umin = 0.0f;
 
     EMAVG_reset(&CLLC_iPrimMAINSensedAvg_pu);
     EMAVG_config(&CLLC_iPrimMAINSensedAvg_pu, 0.01f);
@@ -199,3 +221,42 @@ void CLLC_initGlobalVariables(void)
     EMAVG_reset(&CLLC_vSecSensedAvg_pu);
     EMAVG_config(&CLLC_vSecSensedAvg_pu, 0.01f);// 两个电压
 }
+
+void CLLC_updateBoardStatus(void)
+{
+
+
+}
+
+
+void CLLC_isBRUSTModeEnabled(void)
+{
+
+
+
+}
+
+
+void CLLC_isSyncRectificationModeEnabled(void)
+{
+
+
+
+}
+
+
+void CLLC_isSecondaryEnabled(void)
+{
+
+
+
+}
+
+
+void MULT_CLLL_checkPowerFlow(void)
+{
+
+
+
+}
+

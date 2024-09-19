@@ -30,7 +30,8 @@
             "memory": "c",
             "mult_cllc_user_settings.h": "c",
             "emavg.h": "c",
-            "stdio.h": "c"
+            "stdio.h": "c",
+            "dclf32.h": "c"
         }
     }
 }
