@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259
+CG_TOOL_ROOT := C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS
 
 GEN_OPTS__FLAG := --cmd_file="syscfg/board.opt" --cmd_file="syscfg/c2000ware_libraries.opt" 
 GEN_CMDS__FLAG := 
@@ -31,7 +31,7 @@ ORDERED_OBJS += \
 "../LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib" \
 "../LIB/sfra/sfra_f32_tmu_eabi.lib" \
 $(GEN_CMDS__FLAG) \
--l"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib" \
+-l"C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib" \
 -lc2000ware_libraries.cmd.genlibs \
 -llibc.a \
 
@@ -156,10 +156,10 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-Multiphase-Interleaved-CLLC.out 
+Multiphase-Interleaved-CLLC.out \
 
 EXE_OUTPUTS__QUOTED += \
-"Multiphase-Interleaved-CLLC.out" 
+"Multiphase-Interleaved-CLLC.out" \
 
 
 # All Target
@@ -170,7 +170,7 @@ all: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 Multiphase-Interleaved-CLLC.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/bin/cl2000" -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 -O2 --opt_for_speed=3 --define=DEBUG --define=_FLASH --c11 --relaxed_ansi --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"Multiphase-Interleaved-CLLC.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO" -i"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/lib" -i"C:/ti/C2000Ware_5_01_00_00" -i"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg" -i"C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="Multiphase-Interleaved-CLLC_linkInfo.xml" --entry_point=code_start --rom_model -o "Multiphase-Interleaved-CLLC.out" $(ORDERED_OBJS)
+	"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/bin/cl2000" -v28 -ml -mt --cla_support=cla2 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu0 -O2 --opt_for_speed=3 --define=DEBUG --define=_FLASH --c11 --relaxed_ansi --diag_suppress=10063 --diag_warning=225 --diag_wrap=off --display_error_number --gen_func_subsections=on --abi=eabi -z -m"Multiphase-Interleaved-CLLC.map" --heap_size=0x200 --stack_size=0x3F8 --warn_sections -i"C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO" -i"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/lib" -i"C:/ti/C2000Ware_5_01_00_00" -i"C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg" -i"C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/include" --reread_libs --define=_FLASH --diag_wrap=off --display_error_number --xml_link_info="Multiphase-Interleaved-CLLC_linkInfo.xml" --entry_point=code_start --rom_model -o "Multiphase-Interleaved-CLLC.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 	@$(MAKE) --no-print-directory post-build
@@ -187,9 +187,9 @@ clean:
 
 post-build:
 	-echo "========= Build of the CLB simulation has moved to the CLB Tool. Click the '?' icon by the _Generate CLB Simulation File_ enable for more details (located in the Global Parameters of the Tile Design SysConfig module) ============="
-	-if 0 == 1  C:/ti/ccstheia141/ccs/tools/node/node.exe "C:/ti/C2000Ware_5_01_00_00/utilities/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "C:/ti/C2000Ware_5_01_00_00/utilities/clb_tool/clb_syscfg/" "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg" "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg/clb.dot"
-	-if 0 == 1  mkdir "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/diagrams"
-	-if 0 == 1  C:/ti/ccstheia141/ccs/tools/node/node.exe "C:/ti/C2000Ware_5_01_00_00/driverlib/.meta/generate_diagrams.js" "C:/ti/C2000Ware_5_01_00_00" "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/diagrams" "C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg"
+	-if 0 == 1  C:/ti/ccs1240/ccs/tools/node/node.exe "C:/ti/C2000Ware_5_01_00_00/utilities/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "C:/ti/C2000Ware_5_01_00_00/utilities/clb_tool/clb_syscfg/" "C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg" "C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg/clb.dot"
+	-if 0 == 1  mkdir "C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/diagrams"
+	-if 0 == 1  C:/ti/ccs1240/ccs/tools/node/node.exe "C:/ti/C2000Ware_5_01_00_00/driverlib/.meta/generate_diagrams.js" "C:/ti/C2000Ware_5_01_00_00" "C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/diagrams" "C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/CPU1_FLASH/syscfg"
 	-@echo ' '
 
 .PHONY: all clean dependents
