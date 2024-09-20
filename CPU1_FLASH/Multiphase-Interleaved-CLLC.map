@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v22.6.1                     
 ******************************************************************************
->> Linked Thu Sep 19 19:18:18 2024
+>> Linked Fri Sep 20 09:58:23 2024
 
 OUTPUT FILE NAME:   <Multiphase-Interleaved-CLLC.out>
 ENTRY POINT SYMBOL: "code_start"  address: 00080000
@@ -135,7 +135,7 @@ codestart
 
 .text.1    0    00082000    00001000     
                   00082000    000006f2     board.obj (.text:EPWM_init)
-                  000826f2    0000021e     CLLC_HAL.obj (.text:CLLC_HAL_DEBUG_Transnit)
+                  000826f2    0000021e     MY_DEBUG.obj (.text:CLLC_HAL_DEBUG_Transnit)
                   00082910    0000017f     board.obj (.text:PinMux_init)
                   00082a8f    00000122     CLLC.obj (.text:ISR2_TIMER0)
                   00082bb1    00000119     driverlib_eabi.lib : pmbus.obj (.text:PMBus_configBusClock)
@@ -308,7 +308,8 @@ MODULE SUMMARY
        Total:                        558    0         188    
                                                              
     .\BoardHAL\
-       CLLC_HAL.obj                  1000   125       0      
+       CLLC_HAL.obj                  458    125       0      
+       MY_DEBUG.obj                  542    0         0      
        State_machine.obj             56     0         14     
     +--+-----------------------------+------+---------+---------+
        Total:                        1056   125       14     

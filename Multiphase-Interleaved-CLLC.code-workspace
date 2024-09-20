@@ -31,7 +31,10 @@
             "mult_cllc_user_settings.h": "c",
             "emavg.h": "c",
             "stdio.h": "c",
-            "dclf32.h": "c"
+            "dclf32.h": "c",
+            "cllc_user_settings.h": "c",
+            "cllc.h": "c",
+            "cllc_hal.h": "c"
         }
     }
 }

@@ -113,6 +113,7 @@ APP/CLLC.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/inc
 APP/CLLC.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/CLLC.h
 APP/CLLC.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/State_machine.h
 APP/CLLC.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/CLLC_HAL.h
+APP/CLLC.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/MY_DEBUG.h
 APP/CLLC.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdio.h
 APP/CLLC.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdarg.h
 APP/CLLC.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/LIB/utilities/emavg.h
@@ -342,6 +343,8 @@ C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/APP/C
 C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/State_machine.h:
 
 C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/CLLC_HAL.h:
+
+C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/BoardHAL/MY_DEBUG.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdio.h:
 

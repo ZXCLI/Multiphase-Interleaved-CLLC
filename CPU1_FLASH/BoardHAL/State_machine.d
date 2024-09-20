@@ -116,6 +116,7 @@ BoardHAL/State_machine.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multi
 BoardHAL/State_machine.obj: ../BoardHAL/State_machine.h
 BoardHAL/State_machine.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdio.h
 BoardHAL/State_machine.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdarg.h
+BoardHAL/State_machine.obj: ../BoardHAL/MY_DEBUG.h
 
 ../BoardHAL/State_machine.c:
 
@@ -348,4 +349,6 @@ C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/LIB/u
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdio.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdarg.h:
+
+../BoardHAL/MY_DEBUG.h:
 

@@ -3,6 +3,7 @@
 
 #include "CLLC_HAL.h"
 #include "CLLC.h"
+#include "MY_DEBUG.h"
 
 extern int16_t vTimer0[4];         // Virtual Timers slaved off CPU Timers (A events)
 extern int16_t vTimer1[4];         // Virtual Timers slaved off CPU Timers (B events)
