@@ -58,11 +58,37 @@ void A1(void)// 0.5ms执行一次
             CLLC_systemState.systemstte_softstart = 1;
        }
 
+        static uint16_t softstart_counter = 0;
+        softstart_counter++;
+        uint16_t softTBPRD = (uint16_t)((CLLC_PWMSYSCLOCK_FREQ_HZ/ \
+                              CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ) / \
+                             (3.8702f-0.1365f*softstart_counter \
+                              +0.00257f* softstart_counter*softstart_counter \
+                              -0.00001803f*softstart_counter* \
+                              softstart_counter*softstart_counter)); 
+        // 三阶多项式拟合，指数衰减从4到1，对应频率从4倍谐振频率下降到1倍谐振频率
         if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
            powerFlow_PrimToSec)
         {
-            EPWM_setTimeBaseCounter(CLLC_PRIM_LEGB_PWM_BASE,1000);
+            EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, softTBPRD);
+            EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
+                                        EPWM_COUNTER_COMPARE_A, (softTBPRD >> 1));
+        }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
+           powerFlow_SecToPrim)
+        {
+            EPWM_setTimeBasePeriod(CLLC_SEC_LEGB_PWM_BASE, softTBPRD);
+            EPWM_setCounterCompareValue(CLLC_SEC_LEGB_PWM_BASE,
+                                        EPWM_COUNTER_COMPARE_A, (softTBPRD >> 1));
         }
+
+        if(softstart_counter > 60){
+            CLLC_systemState.systemstte_softstart = 0;
+            CLLC_systemState.systemstate_normal = 1;
+        }
+    }
+
+    if(CLLC_systemState.systemstate_normal == 1){
+
     }
     //
     // the next time CpuTimer0 'counter' reaches Period value go to A2

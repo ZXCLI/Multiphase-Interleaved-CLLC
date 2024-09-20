@@ -280,7 +280,7 @@ void MULT_CLLL_checkPowerFlow(void)
             CLLC_HAL_setDeadBand(CLLC_PRIM_LEGA_PWM_BASE,2000);
             CLLC_HAL_setDeadBand(CLLC_PRIM_LEGB_PWM_BASE,2000);
         }
-
+        // 启动时先关闭第二相
         CLLC_HAL_setDeadBand(CLLC_PRIM_LEGC_PWM_BASE,2000);
         CLLC_HAL_setDeadBand(CLLC_PRIM_LEGD_PWM_BASE,2000);
         CLLC_HAL_setDeadBand(CLLC_SEC_LEGC_PWM_BASE,2000);
