@@ -126,7 +126,8 @@ static inline void CLLC_runVotageLoop(void)
     if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
       CLLC_POWER_FLOW_PRIM_SEC)
     {
-        CLLC_gvPrim2Sec_out = DCL_runPI_C3(&CLLC_gvPrim2Sec, CLLC_vSecSensed_pu, CLLC_vSecRef_pu);
+        CLLC_gvPrim2Sec_out = DCL_runPI_C3(&CLLC_gvPrim2Sec, CLLC_vSecSensed_pu, 
+                                           CLLC_vSecRef_pu);
         CLLC_PRIM_COMPA = CLLC_gvPrim2Sec_out * CLLC_MAX_TD_TICKS;
         EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
                                     EPWM_COUNTER_COMPARE_A,CLLC_PRIM_COMPA);
@@ -135,7 +136,8 @@ static inline void CLLC_runVotageLoop(void)
     }else if (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
               CLLC_POWER_FLOW_SEC_PRIM)
     {
-        CLLC_gvSec2Prim_out = DCL_runPI_C3(&CLLC_gvSec2Prim, CLLC_vPrimSensed_pu, CLLC_vPrimRef_pu);
+        CLLC_gvSec2Prim_out = DCL_runPI_C3(&CLLC_gvSec2Prim, CLLC_vPrimSensed_pu, 
+                                           CLLC_vPrimRef_pu);
     }
     
 }
@@ -145,10 +147,8 @@ __interrupt void ISR2_TIMER0(void)
     CLLC_PRIM_COMPA = (CLLC_HAL_getPrimTBPRD() >> 1);// 获取当前计数器周期值
     CLLC_SEC_COMPA = (CLLC_HAL_getSecTBPRD() >> 1); // 获取当前计数器周期值
     CLLC_readSensedSignals();
-    if(CLLC_clooseGvLoop == 1){
-        if(CLLC_systemState.systemstate_normal == 1){
-            CLLC_runVotageLoop();
-        }
+    if((CLLC_clooseGvLoop == 1) && (CLLC_systemState.systemstate_normal == 1)){
+        CLLC_runVotageLoop();
     }
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1); // timer0要加上清除中断标志
 }
@@ -255,8 +255,21 @@ void CLLC_isSecondaryEnabled(void)
 
 void MULT_CLLL_checkPowerFlow(void)
 {
+    if(CLLC_systemState.systemstate_normal == 0){ // 初始化时判断功率流向
 
+        CLLC_readSensedSignals();
+        if((CLLC_vPrimSensed_pu > 0.1f) && (CLLC_vSecSensed_pu > 0.1f)){
+            if(CLLC_vPrimSensed_pu > (CLLC_vSecSensed_pu * CLLC_TRANSFORMER_TRUNS_RATIO)){
+                CLLC_powerFlowState.CLLC_PowerFlowState_Enum = powerFlow_PrimToSec;
+            }else{
+                CLLC_powerFlowState.CLLC_PowerFlowState_Enum = powerFlow_SecToPrim;
+            }
+        }else{
+            CLLC_powerFlowState.CLLC_PowerFlowState_Enum = powerFlow_PrimToSec;
+        }
+    }else{ // 正常运行时判断功率流向
 
+    }
 
 }
 

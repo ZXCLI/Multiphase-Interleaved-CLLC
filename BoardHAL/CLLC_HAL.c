@@ -62,6 +62,7 @@ void CLLC_HAL_setupADC(void)
     ADC_init();// 初始化ADC
     DEVICE_DELAY_US(1000000);// 延时1s，保证偏置电压稳定
     CLLC_HAL_ClaADCOffset();// 校准ADC偏移量
+    MULT_CLLL_checkPowerFlow();
 }
 
 void CLLC_HAL_ClaADCOffset(void)
@@ -217,9 +218,8 @@ void CLLC_HAL_setupPWM(uint16_t powerFlowDir)
 
 void CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow)
 {
-    if(powerFlow == CLLC_POWER_FLOW_SEC_PRIM && 
-       CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
-       CLLC_POWER_FLOW_PRIM_SEC)
+    if((powerFlow == CLLC_POWER_FLOW_SEC_PRIM) && 
+       (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_PrimToSec))
     {
         // 执行由 高压到低压 切换至 低压到高压 的PWM逻辑
         // 先将标志切换至过渡阶段，避免环路在此时影响PWM
@@ -230,8 +230,7 @@ void CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow)
         CLLC_powerFlowState.CLLC_PowerFlowState_Enum = powerFlow_SecToPrim;
         //PWM逻辑切换完成，标志切换至 低压到高压
     }else if((powerFlow == CLLC_POWER_FLOW_PRIM_SEC) && 
-             (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
-              CLLC_POWER_FLOW_SEC_PRIM))
+             (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_SecToPrim))
     {
         // 执行由 低压到高压 切换至 高压到低压 的PWM逻辑
         // 先将标志切换至过渡阶段，避免环路在此时影响PWM

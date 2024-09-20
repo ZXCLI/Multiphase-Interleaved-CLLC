@@ -30,12 +30,12 @@ static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
     XINT_init();
 	INTERRUPT_init();
 
-    #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
-        if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_PRIM_SEC)
-            {Interrupt_enable(INT_PRIM_ZCD1_XINT);} // 只有时移控制需要开启中断
-        else if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_SEC_PRIM)
-            {Interrupt_enable(INT_SEC_ZCD1_XINT); } // 只有时移控制需要开启中断
-    #endif
+    // #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
+    //     if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_PRIM_SEC)
+    //         {Interrupt_enable(INT_PRIM_ZCD1_XINT);} // 只有时移控制需要开启中断
+    //     else if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_SEC_PRIM)
+    //         {Interrupt_enable(INT_SEC_ZCD1_XINT); } // 只有时移控制需要开启中断
+    // #endif
     //Interrupt_enable(INT_PRIM_ZCD1_XINT);
 
     Interrupt_enable(INT_myCPUTIMER0);//环路中断
