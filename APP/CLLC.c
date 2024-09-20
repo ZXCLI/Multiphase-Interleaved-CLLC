@@ -144,8 +144,9 @@ static inline void CLLC_runVotageLoop(void)
 
 __interrupt void ISR2_TIMER0(void)
 {
-    CLLC_PRIM_COMPA = (CLLC_HAL_getPrimTBPRD() >> 1);// 获取当前计数器周期值
-    CLLC_SEC_COMPA = (CLLC_HAL_getSecTBPRD() >> 1); // 获取当前计数器周期值
+    // CLLC_PRIM_COMPA = (CLLC_HAL_getTBPRD(CLLC_PRIM_LEGA_PWM_BASE) >> 1);
+    // // 获取当前计数器周期值
+    // CLLC_SEC_COMPA = (CLLC_HAL_getTBPRD(CLLC_SEC_LEGA_PWM_BASE) >> 1);
     CLLC_readSensedSignals();
     if((CLLC_clooseGvLoop == 1) && (CLLC_systemState.systemstate_normal == 1)){
         CLLC_runVotageLoop();
@@ -178,6 +179,8 @@ void CLLC_initGlobalVariables(void)
 
     CLLC_vSecSensed_pu = 0.0f;
     CLLC_vSecSensedOffset_pu = 0.0f;
+
+    CLLC_systemState.systemstate_off = 1;
     
     // 环路相关变量
     CLLC_clooseGvLoop = 0;
@@ -256,7 +259,7 @@ void CLLC_isSecondaryEnabled(void)
 void MULT_CLLL_checkPowerFlow(void)
 {
     if(CLLC_systemState.systemstate_normal == 0){ // 初始化时判断功率流向
-
+        CLLC_HAL_ManuallyTriggeredAllADC();
         CLLC_readSensedSignals();
         if((CLLC_vPrimSensed_pu > 0.1f) && (CLLC_vSecSensed_pu > 0.1f)){
             if(CLLC_vPrimSensed_pu > (CLLC_vSecSensed_pu * CLLC_TRANSFORMER_TRUNS_RATIO)){
@@ -267,6 +270,21 @@ void MULT_CLLL_checkPowerFlow(void)
         }else{
             CLLC_powerFlowState.CLLC_PowerFlowState_Enum = powerFlow_PrimToSec;
         }
+
+        if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_PrimToSec){
+            // 正向
+            CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE,2000);
+            CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE,2000);
+        }else{
+            // 反向
+            CLLC_HAL_setDeadBand(CLLC_PRIM_LEGA_PWM_BASE,2000);
+            CLLC_HAL_setDeadBand(CLLC_PRIM_LEGB_PWM_BASE,2000);
+        }
+
+        CLLC_HAL_setDeadBand(CLLC_PRIM_LEGC_PWM_BASE,2000);
+        CLLC_HAL_setDeadBand(CLLC_PRIM_LEGD_PWM_BASE,2000);
+        CLLC_HAL_setDeadBand(CLLC_SEC_LEGC_PWM_BASE,2000);
+        CLLC_HAL_setDeadBand(CLLC_SEC_LEGD_PWM_BASE,2000);
     }else{ // 正常运行时判断功率流向
 
     }

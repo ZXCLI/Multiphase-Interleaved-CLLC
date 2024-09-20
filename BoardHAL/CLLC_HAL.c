@@ -105,7 +105,7 @@ void CLLC_HAL_ClaADCOffset(void)
 
     uint32_t i,j;
     for(i = 0; i < 8; i++){
-        for(j = 0; j < 800; j++){
+        for(j = 0; j < 80; j++){
             ADC_forceSOC(ADC_SOC_TABLE[i].ADC_SOC, ADC_SOC_TABLE[i].ADC_SOC_NUMBER);
             DEVICE_DELAY_US(10);
             ADC_offset[i] += (ADC_readResult(ADC_SOC_TABLE[i].ADC_RESULTREGBASE,
@@ -113,14 +113,14 @@ void CLLC_HAL_ClaADCOffset(void)
         }
     }
 
-    CLLC_iPrimMAINTankSensedOffset_pu      = (ADC_offset[0] / (800.0f * 4096.0f));
-    CLLC_iSecMAINSensedOffset_pu           = (ADC_offset[1] / (800.0f * 4096.0f));
-    CLLC_iPrimMAINSensedOffset_pu          = (ADC_offset[2] / (800.0f * 4096.0f));
-    CLLC_iPrimSECONDARYTankSensedOffset_pu = (ADC_offset[3] / (800.0f * 4096.0f));
-    CLLC_iSecMAINTankSensedOffset_pu       = (ADC_offset[4] / (800.0f * 4096.0f));
-    CLLC_iPrimSECONDARYSensedOffset_pu     = (ADC_offset[5] / (800.0f * 4096.0f));
-    CLLC_iSecSECONDARYTankSensedOffset_pu  = (ADC_offset[6] / (800.0f * 4096.0f));
-    CLLC_iSecSECONDARYSensedOffset_pu      = (ADC_offset[7] / (800.0f * 4096.0f));
+    CLLC_iPrimMAINTankSensedOffset_pu      = (ADC_offset[0] / (80.0f * 4096.0f));
+    CLLC_iSecMAINSensedOffset_pu           = (ADC_offset[1] / (80.0f * 4096.0f));
+    CLLC_iPrimMAINSensedOffset_pu          = (ADC_offset[2] / (80.0f * 4096.0f));
+    CLLC_iPrimSECONDARYTankSensedOffset_pu = (ADC_offset[3] / (80.0f * 4096.0f));
+    CLLC_iSecMAINTankSensedOffset_pu       = (ADC_offset[4] / (80.0f * 4096.0f));
+    CLLC_iPrimSECONDARYSensedOffset_pu     = (ADC_offset[5] / (80.0f * 4096.0f));
+    CLLC_iSecSECONDARYTankSensedOffset_pu  = (ADC_offset[6] / (80.0f * 4096.0f));
+    CLLC_iSecSECONDARYSensedOffset_pu      = (ADC_offset[7] / (80.0f * 4096.0f));
 }
 
 void CLLC_HAL_setupFAN(void)

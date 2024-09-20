@@ -29,7 +29,7 @@ static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
 {
     XINT_init();
 	INTERRUPT_init();
-
+    // TODO: 等待系统软启动完了再开启时移算法的中断
     // #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
     //     if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_PRIM_SEC)
     //         {Interrupt_enable(INT_PRIM_ZCD1_XINT);} // 只有时移控制需要开启中断
@@ -46,28 +46,31 @@ static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
     EDIS;
 }
 
-// 获取初级PWM的周期值
-static inline uint16_t CLLC_HAL_getPrimTBPRD(void)
+// 获取PWM当前的计数器值
+static inline uint16_t CLLC_HAL_getTBCTR(uint16_t EPWM_BASE)
 {
-    return (HWREGH(CLLC_PRIM_LEGA_PWM_BASE + EPWM_O_TBPRD));
+    return (HWREGH(EPWM_BASE + EPWM_O_TBCTR));
 }
 
-// 获取次级PWM的周期值
-static inline uint16_t CLLC_HAL_getSecTBPRD(void)
+// 获取PWM的周期值
+static inline uint16_t CLLC_HAL_getTBPRD(uint16_t EPWM_BASE)
 {
-    return (HWREGH(CLLC_SEC_LEGA_PWM_BASE + EPWM_O_TBPRD));
+    return (HWREGH(EPWM_BASE + EPWM_O_TBPRD));
 }
 
-// 获取初级PWM的死区时间
-static inline uint16_t CLLC_HAL_getPrimMAINdeadBand(void)
+// 获取PWM的死区时间
+static inline uint16_t CLLC_HAL_getDeadBand(uint16_t EPWM_BASE)
 {
-  return (HWREGH(CLLC_PRIM_LEGA_PWM_BASE + EPWM_O_DBRED));
+    return (HWREGH(EPWM_BASE + EPWM_O_DBFED));
+    //只获取下降沿的死区时间，因为设置的死区时间都是相同的
 }
 
-// 获取次级PWM的死区时间
-static inline uint16_t CLLC_HAL_getSecMAINdeadBand(void)
+// 设置PWM的死区时间，上升沿和下降沿的值相同
+static inline void CLLC_HAL_setDeadBand(uint16_t EPWM_BASE, 
+                                        uint16_t deadBand)
 {
-  return (HWREGH(CLLC_SEC_LEGA_PWM_BASE + EPWM_O_DBRED));
+    HWREGH(EPWM_BASE + EPWM_O_DBFED) = deadBand;
+    HWREGH(EPWM_BASE + EPWM_O_DBRED) = deadBand;
 }
 
 // 设置谐振腔CBC保护的阈值
@@ -79,6 +82,65 @@ static inline void CLLC_HAL_setupCMPSSDacValue(uint32_t CMPSS_BASE,
                         (4096 * offset_pu) + Limit);
     CMPSS_setDACValueLow(CMPSS_BASE,
                         (4096 * offset_pu) - Limit);
+}
+
+static void CLLC_HAL_ManuallyTriggeredAllADC(void)
+{
+    typedef struct 
+    {
+        uint32_t ADC_SOC;
+        ADC_SOCNumber ADC_SOC_NUMBER;
+        uint32_t ADC_RESULTREGBASE;
+    }ADC_SOC_STRUCT;
+
+    ADC_SOC_STRUCT ADC_SOC_TABLE[10] = {
+        {CLLC_IPRIM_TANK_MAIN_ADC_MODULE,
+         CLLC_IPRIM_TANK_MAIN_ADC_SOC_NO,
+         CLLC_IPRIM_TANK_MAIN_ADCRESULTREGBASE},//A2
+
+        {CLLC_ISEC_MAIN_ADC_MODULE,
+         CLLC_ISEC_MAIN_ADC_SOC_NO,
+         CLLC_ISEC_MAIN_ADCRESULTREGBASE},//A3
+
+        {CLLC_IPRIM_MAIN_ADC_MODULE,
+         CLLC_IPRIM_MAIN_ADC_SOC_NO,
+         CLLC_IPRIM_MAIN_ADCRESULTREGBASE},//A4
+
+        {CLLC_IPRIM_TANK_SECONDARY_ADC_MODULE,
+         CLLC_IPRIM_TANK_SECONDARY_ADC_SOC_NO,
+         CLLC_IPRIM_TANK_SECONDARY_ADCRESULTREGBASE},//B1
+
+        {CLLC_ISEC_TANK_MAIN_ADC_MODULE,
+         CLLC_ISEC_TANK_MAIN_ADC_SOC_NO,
+         CLLC_ISEC_TANK_MAIN_ADCRESULTREGBASE},//B2
+
+        {CLLC_IPRIM_SECONDARY_ADC_MODULE,
+         CLLC_IPRIM_SECONDARY_ADC_SOC_NO,
+         CLLC_IPRIM_SECONDARY_ADCRESULTREGBASE},//B3
+
+        {CLLC_ISEC_TANK_SECONDARY_ADC_MODULE,
+         CLLC_ISEC_TANK_SECONDARY_ADC_SOC_NO,
+         CLLC_ISEC_TANK_SECONDARY_ADCRESULTREGBASE},//C1
+
+        {CLLC_ISEC_SECONDARY_ADC_MODULE,
+         CLLC_ISEC_SECONDARY_ADC_SOC_NO,
+         CLLC_ISEC_SECONDARY_ADCRESULTREGBASE},//C2
+
+        {CLLC_VPRIM_ADC_MODULE,
+        CLLC_VPRIM_ADC_SOC_NO,
+        CLLC_VPRIM_ADCRESULTREGBASE},//B0
+        
+        {CLLC_VSEC_ADC_MODULE,
+        CLLC_VSEC_ADC_SOC_NO,
+        CLLC_VSEC_ADCRESULTREGBASE},//C0
+    };
+
+    for(uint16_t i = 0; i < 10; i++){
+        ADC_forceSOC(ADC_SOC_TABLE[i].ADC_SOC, ADC_SOC_TABLE[i].ADC_SOC_NUMBER);
+        DEVICE_DELAY_US(10);
+        // ADCResult[i] = (ADC_readResult(ADC_SOC_TABLE[i].ADC_RESULTREGBASE,
+        //                                ADC_SOC_TABLE[i].ADC_SOC_NUMBER));
+    }
 }
 
 // 强制触发PWM的OneShotTrip事件

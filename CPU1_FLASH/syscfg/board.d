@@ -2,7 +2,7 @@
 
 syscfg/board.obj: syscfg/board.c
 syscfg/board.obj: syscfg/board.h
-syscfg/board.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
+syscfg/board.obj: C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
 syscfg/board.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 syscfg/board.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/adc.h
 syscfg/board.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdbool.h
@@ -96,14 +96,14 @@ syscfg/board.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/spi.h
 syscfg/board.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 syscfg/board.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h
 syscfg/board.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-syscfg/board.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h
+syscfg/board.obj: C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h
 syscfg/board.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h
 
 syscfg/board.c:
 
 syscfg/board.h:
 
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
+C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -291,7 +291,7 @@ C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h:
+C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h:
 

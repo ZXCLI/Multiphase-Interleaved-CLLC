@@ -49,15 +49,34 @@ void B0(void) // 更慢的任务。状态机B由CPU_TIMER2管理
     Alpha_State_Ptr = &A0;
 }
 
-void A1(void)
+void A1(void)// 0.5ms执行一次
 {
-    //DEBUG2_TRACE_IN;
+    if((CLLC_systemState.systemstate_off == 1) || 
+       (CLLC_systemState.systemstte_softstart == 1)){//执行软启动
+       if(CLLC_systemState.systemstate_off == 1){
+            CLLC_systemState.systemstate_off = 0;
+            CLLC_systemState.systemstte_softstart = 1;
+       }
 
-    CLLC_HAL_DEBUG_Transnit(); // 调试信息传输，顺序Vprim, Vsec, Iprim1, Isec1
-
-    //DEBUG2_TRACE_OUT;
+        if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
+           powerFlow_PrimToSec)
+        {
+            EPWM_setTimeBaseCounter(CLLC_PRIM_LEGB_PWM_BASE,1000);
+        }
+    }
     //
     // the next time CpuTimer0 'counter' reaches Period value go to A2
+    //
+    A_Task_Ptr = &A2;
+}
+
+void A2(void)
+{
+    //DEBUG2_TRACE_IN;
+    CLLC_HAL_DEBUG_Transnit(); // 调试信息传输，顺序Vprim, Vsec, Iprim1, Isec1
+    //DEBUG2_TRACE_OUT;
+    //
+    // the next time CpuTimer0 'counter' reaches Period value go to A3
     //
     A_Task_Ptr = &A1;
 }

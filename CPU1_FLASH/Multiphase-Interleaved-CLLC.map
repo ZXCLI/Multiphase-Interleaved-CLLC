@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v22.6.1                     
 ******************************************************************************
->> Linked Fri Sep 20 11:32:19 2024
+>> Linked Fri Sep 20 17:01:09 2024
 
 OUTPUT FILE NAME:   <Multiphase-Interleaved-CLLC.out>
 ENTRY POINT SYMBOL: "code_start"  address: 00080000
@@ -23,8 +23,8 @@ PAGE 0:
   FLASH_BANK0_SEC1      00081000   00001000  00000147  00000eb9  RWIX
   FLASH_BANK0_SEC2      00082000   00001000  00001000  00000000  RWIX
   FLASH_BANK0_SEC3      00083000   00001000  00001000  00000000  RWIX
-  FLASH_BANK0_SEC4      00084000   00001000  0000045e  00000ba2  RWIX
-  FLASH_BANK0_SEC5      00085000   00001000  000003e7  00000c19  RWIX
+  FLASH_BANK0_SEC4      00084000   00001000  000004d8  00000b28  RWIX
+  FLASH_BANK0_SEC5      00085000   00001000  00000470  00000b90  RWIX
   FLASH_BANK0_SEC6      00086000   00001000  00000000  00001000  RWIX
   FLASH_BANK0_SEC7      00087000   00001000  00000000  00001000  RWIX
   FLASH_BANK0_SEC8      00088000   00001000  00000000  00001000  RWIX
@@ -101,7 +101,7 @@ codestart
                   0000a8d0    00000002     rts2800_fpu32_eabi.lib : _lock.c.obj (.data:_lock)
                   0000a8d2    00000002                            : _lock.c.obj (.data:_unlock)
 
-.const     0    00084000    0000045e     
+.const     0    00084000    000004d8     
                   00084000    0000009b     driverlib_eabi.lib : flash.obj (.const:.string)
                   0008409b    00000001     --HOLE-- [fill = 0]
                   0008409c    0000009a                        : sysctl.obj (.const:.string)
@@ -115,10 +115,13 @@ codestart
                   00084355    00000001     --HOLE-- [fill = 0]
                   00084356    0000004c                        : ecap.obj (.const:.string)
                   000843a2    0000003e     board.obj (.const:.string)
-                  000843e0    0000003d     CLLC_HAL.obj (.const:.string)
+                  000843e0    0000003d     CLLC.obj (.const:.string)
                   0008441d    00000001     --HOLE-- [fill = 0]
-                  0008441e    00000030     CLLC_HAL.obj (.const:$P$T8$1)
-                  0008444e    00000010     CLLC_HAL.obj (.const:$P$T9$2)
+                  0008441e    0000003d     CLLC_HAL.obj (.const:.string)
+                  0008445b    00000001     --HOLE-- [fill = 0]
+                  0008445c    0000003c     CLLC.obj (.const:$P$T8$1)
+                  00084498    00000030     CLLC_HAL.obj (.const:$P$T8$1)
+                  000844c8    00000010     CLLC_HAL.obj (.const:$P$T9$2)
 
 .TI.ramfunc 
 *          0    00081000    00000129     RUN ADDR = 00008000
@@ -137,162 +140,164 @@ codestart
                   00082000    000006f2     board.obj (.text:EPWM_init)
                   000826f2    0000021e     MY_DEBUG.obj (.text:CLLC_HAL_DEBUG_Transnit)
                   00082910    0000017f     board.obj (.text:PinMux_init)
-                  00082a8f    00000122     CLLC.obj (.text:ISR2_TIMER0)
-                  00082bb1    00000119     driverlib_eabi.lib : pmbus.obj (.text:PMBus_configBusClock)
-                  00082cca    000000da     CLLC_HAL.obj (.text:CLLC_HAL_ClaADCOffset)
-                  00082da4    000000d7     device.obj (.text:Device_enableAllPeripherals)
-                  00082e7b    000000c0     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_setClock)
-                  00082f3b    000000bd                        : sysctl.obj (.text:SysCtl_isPLLValid)
-                  00082ff8    00000008     State_machine.obj (.text:A1)
+                  00082a8f    00000119     driverlib_eabi.lib : pmbus.obj (.text:PMBus_configBusClock)
+                  00082ba8    00000117     CLLC.obj (.text:ISR2_TIMER0)
+                  00082cbf    000000da     CLLC_HAL.obj (.text:CLLC_HAL_ClaADCOffset)
+                  00082d99    000000d7     device.obj (.text:Device_enableAllPeripherals)
+                  00082e70    000000cd     CLLC.obj (.text:MULT_CLLL_checkPowerFlow)
+                  00082f3d    000000c0     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_setClock)
+                  00082ffd    00000003     device.obj (.text:__error__)
 
 .text.2    0    00083000    00001000     
-                  00083000    000000a5     CLLC.obj (.text:CLLC_initGlobalVariables)
-                  000830a5    00000094     CLLC.obj (.text:MULT_CLLL_checkPowerFlow)
-                  00083139    00000083     board.obj (.text:EPWM1A_ECAP_init)
-                  000831bc    00000082     board.obj (.text:EPWM3A_ECAP_init)
-                  0008323e    0000007f     driverlib_eabi.lib : interrupt.obj (.text:Interrupt_clearIFR)
-                  000832bd    0000007b     CLLC_HAL.obj (.text:CLLC_HAL_setupBoardProtection)
-                  00083338    00000073     driverlib_eabi.lib : sysctl.obj (.text:DCC_setCounterSeeds)
-                  000833ab    00000073     device.obj (.text:Device_init)
-                  0008341e    00000069     board.obj (.text:DEBUG_init)
-                  00083487    00000066     driverlib_eabi.lib : pmbus.obj (.text:PMBus_configModuleClock)
-                  000834ed    0000005e                        : sysctl.obj (.text:SysCtl_getClock)
-                  0008354b    00000058     board.obj (.text:EPWM_setActionQualifierAction)
-                  000835a3    00000058     board.obj (.text:M_ADC_B_init)
-                  000835fb    00000052     driverlib_eabi.lib : gpio.obj (.text:GPIO_setPadConfig)
-                  0008364d    0000004e                        : interrupt.obj (.text:Interrupt_disable)
-                  0008369b    0000004e     board.obj (.text:M_ADC_A_init)
-                  000836e9    0000004d     board.obj (.text:M_ADC_C_init)
-                  00083736    00000049     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_selectOscSource)
-                  0008377f    00000045                        : sci.obj (.text:SCI_clearInterruptStatus)
-                  000837c4    00000045                        : sysctl.obj (.text:SysCtl_pollX1Counter)
-                  00083809    00000041     board.obj (.text:myPMBUS0_init)
-                  0008384a    0000003e     CLLC_HAL.obj (.text:CLLC_HAL_setupDevice)
-                  00083888    0000003e     driverlib_eabi.lib : sci.obj (.text:SCI_setConfig)
-                  000838c6    0000003e     main.obj (.text:main)
-                  00083904    0000003d     driverlib_eabi.lib : interrupt.obj (.text:Interrupt_initModule)
-                  00083941    0000003c     board.obj (.text:FAN_PWM_init)
-                  0008397d    0000003a     driverlib_eabi.lib : gpio.obj (.text:GPIO_setAnalogMode)
-                  000839b7    00000037                        : gpio.obj (.text:GPIO_setControllerCore)
-                  000839ee    00000037                        : gpio.obj (.text:GPIO_setPinConfig)
-                  00083a25    00000037                        : gpio.obj (.text:GPIO_setQualificationMode)
-                  00083a5c    00000037                        : interrupt.obj (.text:Interrupt_enable)
-                  00083a93    00000036                        : sysctl.obj (.text:SysCtl_selectXTAL)
-                  00083ac9    00000034                        : gpio.obj (.text:GPIO_setInterruptPin)
-                  00083afd    00000034     CLLC.obj (.text:ISR1_PZCD)
-                  00083b31    00000034     board.obj (.text:myCPUTIMER2_init)
-                  00083b65    00000033     CLLC.obj (.text:ISR1_SZCD)
-                  00083b98    00000031     driverlib_eabi.lib : gpio.obj (.text:GPIO_setDirectionMode)
-                  00083bc9    00000031     board.obj (.text:SYNC_init)
-                  00083bfa    00000030     rts2800_fpu32_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss)
-                  00083c2a    0000002f     driverlib_eabi.lib : xbar.obj (.text:XBAR_setEPWMMuxConfig)
-                  00083c59    0000002e                        : xbar.obj (.text:XBAR_setOutputMuxConfig)
-                  00083c87    0000002d                        : pmbus.obj (.text:PMBus_initControllerMode)
-                  00083cb4    0000002b     rts2800_fpu32_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit)
-                  00083cdf    00000029                            : exit.c.obj (.text)
-                  00083d08    00000028     driverlib_eabi.lib : adc.obj (.text:ADC_setOffsetTrimAll)
-                  00083d30    00000027                        : ecap.obj (.text:ECAP_isBaseValid)
-                  00083d57    00000026     board.obj (.text:myCPUTIMER0_init)
-                  00083d7d    00000024     driverlib_eabi.lib : sysctl.obj (.text:DCC_enableSingleShotMode)
-                  00083da1    00000024     board.obj (.text:myCPUTIMER1_init)
-                  00083dc5    00000020     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_selectXTALSingleEnded)
-                  00083de5    00000020                        : gpio.obj (.text:XBAR_setInputPin)
-                  00083e05    0000001e                        : sysctl.obj (.text:DCC_setCounter1ClkSource)
-                  00083e23    0000001e                        : ecap.obj (.text:ECAP_setEmulationMode)
-                  00083e41    0000001e                        : interrupt.obj (.text:Interrupt_initVectorTable)
-                  00083e5f    0000001d     board.obj (.text:GPIO_init)
-                  00083e7c    0000001d     rts2800_fpu32_eabi.lib : memcpy.c.obj (.text)
-                  00083e99    0000001c     driverlib_eabi.lib : sysctl.obj (.text:DCC_setCounter0ClkSource)
-                  00083eb5    0000001a     board.obj (.text:CMPSS1OUT0_init)
-                  00083ecf    0000001a     board.obj (.text:FAN1_init)
-                  00083ee9    0000001a     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_getLowSpeedClock)
-                  00083f03    00000019     rts2800_fpu32_fast_supplement_eabi.lib : div_f32.obj (.text)
-                  00083f1c    00000018     State_machine.obj (.text:A0)
-                  00083f34    00000018     State_machine.obj (.text:B0)
-                  00083f4c    00000018     driverlib_eabi.lib : sci.obj (.text:SCI_disableModule)
-                  00083f64    00000018                        : sci.obj (.text:SCI_performSoftwareReset)
-                  00083f7c    00000018     board.obj (.text:STATUS2_init)
-                  00083f94    00000017     driverlib_eabi.lib : cputimer.obj (.text:CPUTimer_isBaseValid)
-                  00083fab    00000017     board.obj (.text:INTERRUPT_init)
-                  00083fc2    00000017     board.obj (.text:STATUS1_init)
-                  00083fd9    00000017     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_enablePeripheral)
-                  00083ff0    00000010                        : sysctl.obj (.text:DCC_isBaseValid)
+                  00083000    000000bd     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_isPLLValid)
+                  000830bd    000000a9     CLLC.obj (.text:CLLC_initGlobalVariables)
+                  00083166    00000083     board.obj (.text:EPWM1A_ECAP_init)
+                  000831e9    00000082     board.obj (.text:EPWM3A_ECAP_init)
+                  0008326b    0000007f     driverlib_eabi.lib : interrupt.obj (.text:Interrupt_clearIFR)
+                  000832ea    0000007b     CLLC_HAL.obj (.text:CLLC_HAL_setupBoardProtection)
+                  00083365    00000073     driverlib_eabi.lib : sysctl.obj (.text:DCC_setCounterSeeds)
+                  000833d8    00000073     device.obj (.text:Device_init)
+                  0008344b    00000069     board.obj (.text:DEBUG_init)
+                  000834b4    00000066     driverlib_eabi.lib : pmbus.obj (.text:PMBus_configModuleClock)
+                  0008351a    0000005e                        : sysctl.obj (.text:SysCtl_getClock)
+                  00083578    00000058     board.obj (.text:EPWM_setActionQualifierAction)
+                  000835d0    00000058     board.obj (.text:M_ADC_B_init)
+                  00083628    00000052     driverlib_eabi.lib : gpio.obj (.text:GPIO_setPadConfig)
+                  0008367a    0000004e                        : interrupt.obj (.text:Interrupt_disable)
+                  000836c8    0000004e     board.obj (.text:M_ADC_A_init)
+                  00083716    0000004d     board.obj (.text:M_ADC_C_init)
+                  00083763    00000049     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_selectOscSource)
+                  000837ac    00000045                        : sci.obj (.text:SCI_clearInterruptStatus)
+                  000837f1    00000045                        : sysctl.obj (.text:SysCtl_pollX1Counter)
+                  00083836    00000041     board.obj (.text:myPMBUS0_init)
+                  00083877    0000003e     CLLC_HAL.obj (.text:CLLC_HAL_setupDevice)
+                  000838b5    0000003e     driverlib_eabi.lib : sci.obj (.text:SCI_setConfig)
+                  000838f3    0000003e     main.obj (.text:main)
+                  00083931    0000003d     driverlib_eabi.lib : interrupt.obj (.text:Interrupt_initModule)
+                  0008396e    0000003c     board.obj (.text:FAN_PWM_init)
+                  000839aa    0000003a     CLLC.obj (.text:CLLC_HAL_ManuallyTriggeredAllADC)
+                  000839e4    0000003a     driverlib_eabi.lib : gpio.obj (.text:GPIO_setAnalogMode)
+                  00083a1e    00000037                        : gpio.obj (.text:GPIO_setControllerCore)
+                  00083a55    00000037                        : gpio.obj (.text:GPIO_setPinConfig)
+                  00083a8c    00000037                        : gpio.obj (.text:GPIO_setQualificationMode)
+                  00083ac3    00000037                        : interrupt.obj (.text:Interrupt_enable)
+                  00083afa    00000036                        : sysctl.obj (.text:SysCtl_selectXTAL)
+                  00083b30    00000034                        : gpio.obj (.text:GPIO_setInterruptPin)
+                  00083b64    00000034     CLLC.obj (.text:ISR1_PZCD)
+                  00083b98    00000034     board.obj (.text:myCPUTIMER2_init)
+                  00083bcc    00000033     CLLC.obj (.text:ISR1_SZCD)
+                  00083bff    00000031     driverlib_eabi.lib : gpio.obj (.text:GPIO_setDirectionMode)
+                  00083c30    00000031     board.obj (.text:SYNC_init)
+                  00083c61    00000030     rts2800_fpu32_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss)
+                  00083c91    0000002f     driverlib_eabi.lib : xbar.obj (.text:XBAR_setEPWMMuxConfig)
+                  00083cc0    0000002e                        : xbar.obj (.text:XBAR_setOutputMuxConfig)
+                  00083cee    0000002d                        : pmbus.obj (.text:PMBus_initControllerMode)
+                  00083d1b    0000002b     rts2800_fpu32_eabi.lib : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit)
+                  00083d46    00000029                            : exit.c.obj (.text)
+                  00083d6f    00000028     driverlib_eabi.lib : adc.obj (.text:ADC_setOffsetTrimAll)
+                  00083d97    00000027                        : ecap.obj (.text:ECAP_isBaseValid)
+                  00083dbe    00000026     board.obj (.text:myCPUTIMER0_init)
+                  00083de4    00000024     driverlib_eabi.lib : sysctl.obj (.text:DCC_enableSingleShotMode)
+                  00083e08    00000024     board.obj (.text:myCPUTIMER1_init)
+                  00083e2c    00000020     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_selectXTALSingleEnded)
+                  00083e4c    00000020                        : gpio.obj (.text:XBAR_setInputPin)
+                  00083e6c    0000001e                        : sysctl.obj (.text:DCC_setCounter1ClkSource)
+                  00083e8a    0000001e                        : ecap.obj (.text:ECAP_setEmulationMode)
+                  00083ea8    0000001e                        : interrupt.obj (.text:Interrupt_initVectorTable)
+                  00083ec6    0000001d     State_machine.obj (.text:A1)
+                  00083ee3    0000001d     board.obj (.text:GPIO_init)
+                  00083f00    0000001d     rts2800_fpu32_eabi.lib : memcpy.c.obj (.text)
+                  00083f1d    0000001c     driverlib_eabi.lib : sysctl.obj (.text:DCC_setCounter0ClkSource)
+                  00083f39    0000001a     board.obj (.text:CMPSS1OUT0_init)
+                  00083f53    0000001a     board.obj (.text:FAN1_init)
+                  00083f6d    0000001a     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_getLowSpeedClock)
+                  00083f87    00000019     rts2800_fpu32_fast_supplement_eabi.lib : div_f32.obj (.text)
+                  00083fa0    00000018     State_machine.obj (.text:A0)
+                  00083fb8    00000018     State_machine.obj (.text:B0)
+                  00083fd0    00000018     driverlib_eabi.lib : sci.obj (.text:SCI_disableModule)
+                  00083fe8    00000018                        : sci.obj (.text:SCI_performSoftwareReset)
 
-.text.3    0    00085000    000003e7     
-                  00085000    00000017     rts2800_fpu32_eabi.lib : boot28.asm.obj (.text)
-                  00085017    00000016     driverlib_eabi.lib : sysctl.obj (.text:DCC_disableDoneSignal)
-                  0008502d    00000016                        : sysctl.obj (.text:DCC_enableDoneSignal)
-                  00085043    00000016                        : interrupt.obj (.text:Interrupt_defaultHandler)
-                  00085059    00000015                        : sysctl.obj (.text:DCC_clearDoneFlag)
-                  0008506e    00000015                        : sysctl.obj (.text:DCC_clearErrorFlag)
-                  00085083    00000015                        : sysctl.obj (.text:DCC_disableErrorSignal)
-                  00085098    00000015                        : sysctl.obj (.text:DCC_enableErrorSignal)
-                  000850ad    00000014     board.obj (.text:ACTIVE1_init)
-                  000850c1    00000014     board.obj (.text:ACTIVE2_init)
-                  000850d5    00000014     driverlib_eabi.lib : sysctl.obj (.text:DCC_disableModule)
-                  000850e9    00000014                        : sysctl.obj (.text:DCC_enableModule)
-                  000850fd    00000014     board.obj (.text:DEBUG1_init)
-                  00085111    00000014     board.obj (.text:DEBUG2_init)
-                  00085125    00000014     board.obj (.text:FAN2_init)
-                  00085139    00000014     board.obj (.text:FAULT_INPUT1_init)
-                  0008514d    00000014     board.obj (.text:FAULT_INPUT2_init)
-                  00085161    00000014     board.obj (.text:FAULT_OUTPUT_init)
-                  00085175    00000014     driverlib_eabi.lib : gpio.obj (.text:GPIO_isPinValid)
-                  00085189    00000014     board.obj (.text:PRIM_ZCD1_init)
-                  0008519d    00000014     board.obj (.text:PRIM_ZCD2_init)
-                  000851b1    00000014     board.obj (.text:SEC_ZCD1_init)
-                  000851c5    00000014     board.obj (.text:SEC_ZCD2_init)
-                  000851d9    00000013     driverlib_eabi.lib : cputimer.obj (.text:CPUTimer_setEmulationMode)
-                  000851ec    00000013                        : sci.obj (.text:SCI_enableModule)
-                  000851ff    00000013                        : sci.obj (.text:SCI_isBaseValid)
-                  00085212    00000011     board.obj (.text:EPWMXBAR_init)
-                  00085223    00000010     device.obj (.text:Device_initGPIO)
-                  00085233    00000010     driverlib_eabi.lib : flash.obj (.text:Flash_isCtrlBaseValid)
-                  00085243    00000010                        : flash.obj (.text:Flash_isECCBaseValid)
-                  00085253    0000000f     CLLC_HAL.obj (.text:CLLC_HAL_setupADC)
-                  00085262    0000000f     driverlib_eabi.lib : pmbus.obj (.text:PMBus_isBaseValid)
-                  00085271    0000000f     board.obj (.text:PRIM_ZCD1_XINT_init)
-                  00085280    0000000e     board.obj (.text:CMPSS7OUT_init)
-                  0008528e    0000000d     board.obj (.text:ASYSCTL_init)
-                  0008529b    0000000d     board.obj (.text:CLB1H_init)
-                  000852a8    0000000d     board.obj (.text:CLB1L_init)
-                  000852b5    0000000d     board.obj (.text:CLB2H_init)
-                  000852c2    0000000d     board.obj (.text:CLB2L_init)
-                  000852cf    0000000d     board.obj (.text:CMPSS2OUT_init)
-                  000852dc    0000000d     board.obj (.text:CMPSS3OUT_init)
-                  000852e9    0000000d     main.obj (.text:INT_M_EPWM3_TZ_ISR)
-                  000852f6    0000000d     driverlib_eabi.lib : interrupt.obj (.text:Interrupt_disableGlobal)
-                  00085303    0000000d                        : interrupt.obj (.text:Interrupt_enableGlobal)
-                  00085310    0000000d     rts2800_fpu32_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset)
-                  0008531d    0000000c     board.obj (.text:CMPSS1OUT_init)
-                  00085329    0000000c     rts2800_fpu32_eabi.lib : args_main.c.obj (.text)
-                  00085335    0000000b     board.obj (.text:INPUTXBAR_init)
-                  00085340    0000000b     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_isMCDClockFailureDetected)
-                  0008534b    0000000a                        : interrupt.obj (.text:Interrupt_illegalOperationHandler)
-                  00085355    0000000a                        : interrupt.obj (.text:Interrupt_nmiHandler)
-                  0008535f    00000009     CLLC_HAL.obj (.text:CLLC_HAL_disablePWMClkCounting)
-                  00085368    00000009     rts2800_fpu32_eabi.lib : _lock.c.obj (.text)
-                  00085371    00000008     CLLC_HAL.obj (.text:CLLC_HAL_enablePWMClkCounting)
-                  00085379    00000008     rts2800_fpu32_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none)
-                  00085381    00000008     f28004x_codestartbranch.obj (.text)
-                  00085389    00000007     board.obj (.text:ADC_init)
-                  00085390    00000007     CLLC_HAL.obj (.text:CLLC_HAL_setPins)
-                  00085397    00000007     CLLC_HAL.obj (.text:CLLC_HAL_setupPWM)
-                  0008539e    00000007     board.obj (.text:CPUTIMER_init)
-                  000853a5    00000007     board.obj (.text:ECAP_init)
-                  000853ac    00000007     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_resetMCD)
-                  000853b3    00000006     board.obj (.text:EPWM1_CAP_init)
-                  000853b9    00000006     board.obj (.text:EPWM3_CAP_init)
-                  000853bf    00000006     board.obj (.text:PZCD1_init)
-                  000853c5    00000006     board.obj (.text:TZ1_init)
-                  000853cb    00000006     board.obj (.text:TZ2_init)
-                  000853d1    00000005     CLLC_HAL.obj (.text:CLLC_HAL_setupCPI)
-                  000853d6    00000005     CLLC_HAL.obj (.text:CLLC_HAL_setupFAN)
-                  000853db    00000005     board.obj (.text:OUTPUTXBAR_init)
-                  000853e0    00000003     device.obj (.text:__error__)
-                  000853e3    00000002     rts2800_fpu32_eabi.lib : pre_init.c.obj (.text)
-                  000853e5    00000001     CLLC_HAL.obj (.text:CLLC_HAL_setupLED)
-                  000853e6    00000001     rts2800_fpu32_eabi.lib : startup.c.obj (.text)
+.text.3    0    00085000    00000470     
+                  00085000    00000018     board.obj (.text:STATUS2_init)
+                  00085018    00000017     driverlib_eabi.lib : cputimer.obj (.text:CPUTimer_isBaseValid)
+                  0008502f    00000017     board.obj (.text:INTERRUPT_init)
+                  00085046    00000017     board.obj (.text:STATUS1_init)
+                  0008505d    00000017     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_enablePeripheral)
+                  00085074    00000017     rts2800_fpu32_eabi.lib : boot28.asm.obj (.text)
+                  0008508b    00000016     driverlib_eabi.lib : sysctl.obj (.text:DCC_disableDoneSignal)
+                  000850a1    00000016                        : sysctl.obj (.text:DCC_enableDoneSignal)
+                  000850b7    00000016                        : interrupt.obj (.text:Interrupt_defaultHandler)
+                  000850cd    00000015                        : sysctl.obj (.text:DCC_clearDoneFlag)
+                  000850e2    00000015                        : sysctl.obj (.text:DCC_clearErrorFlag)
+                  000850f7    00000015                        : sysctl.obj (.text:DCC_disableErrorSignal)
+                  0008510c    00000015                        : sysctl.obj (.text:DCC_enableErrorSignal)
+                  00085121    00000014     board.obj (.text:ACTIVE1_init)
+                  00085135    00000014     board.obj (.text:ACTIVE2_init)
+                  00085149    00000014     driverlib_eabi.lib : sysctl.obj (.text:DCC_disableModule)
+                  0008515d    00000014                        : sysctl.obj (.text:DCC_enableModule)
+                  00085171    00000014     board.obj (.text:DEBUG1_init)
+                  00085185    00000014     board.obj (.text:DEBUG2_init)
+                  00085199    00000014     board.obj (.text:FAN2_init)
+                  000851ad    00000014     board.obj (.text:FAULT_INPUT1_init)
+                  000851c1    00000014     board.obj (.text:FAULT_INPUT2_init)
+                  000851d5    00000014     board.obj (.text:FAULT_OUTPUT_init)
+                  000851e9    00000014     driverlib_eabi.lib : gpio.obj (.text:GPIO_isPinValid)
+                  000851fd    00000014     board.obj (.text:PRIM_ZCD1_init)
+                  00085211    00000014     board.obj (.text:PRIM_ZCD2_init)
+                  00085225    00000014     board.obj (.text:SEC_ZCD1_init)
+                  00085239    00000014     board.obj (.text:SEC_ZCD2_init)
+                  0008524d    00000013     driverlib_eabi.lib : cputimer.obj (.text:CPUTimer_setEmulationMode)
+                  00085260    00000013                        : sci.obj (.text:SCI_enableModule)
+                  00085273    00000013                        : sci.obj (.text:SCI_isBaseValid)
+                  00085286    00000011     board.obj (.text:EPWMXBAR_init)
+                  00085297    00000010     driverlib_eabi.lib : sysctl.obj (.text:DCC_isBaseValid)
+                  000852a7    00000010     device.obj (.text:Device_initGPIO)
+                  000852b7    00000010     driverlib_eabi.lib : flash.obj (.text:Flash_isCtrlBaseValid)
+                  000852c7    00000010                        : flash.obj (.text:Flash_isECCBaseValid)
+                  000852d7    0000000f     CLLC_HAL.obj (.text:CLLC_HAL_setupADC)
+                  000852e6    0000000f     driverlib_eabi.lib : pmbus.obj (.text:PMBus_isBaseValid)
+                  000852f5    0000000f     board.obj (.text:PRIM_ZCD1_XINT_init)
+                  00085304    0000000e     board.obj (.text:CMPSS7OUT_init)
+                  00085312    0000000d     board.obj (.text:ASYSCTL_init)
+                  0008531f    0000000d     board.obj (.text:CLB1H_init)
+                  0008532c    0000000d     board.obj (.text:CLB1L_init)
+                  00085339    0000000d     board.obj (.text:CLB2H_init)
+                  00085346    0000000d     board.obj (.text:CLB2L_init)
+                  00085353    0000000d     board.obj (.text:CMPSS2OUT_init)
+                  00085360    0000000d     board.obj (.text:CMPSS3OUT_init)
+                  0008536d    0000000d     main.obj (.text:INT_M_EPWM3_TZ_ISR)
+                  0008537a    0000000d     driverlib_eabi.lib : interrupt.obj (.text:Interrupt_disableGlobal)
+                  00085387    0000000d                        : interrupt.obj (.text:Interrupt_enableGlobal)
+                  00085394    0000000d     rts2800_fpu32_eabi.lib : copy_zero_init.c.obj (.text:decompress:ZI:__TI_zero_init_nomemset)
+                  000853a1    0000000c     board.obj (.text:CMPSS1OUT_init)
+                  000853ad    0000000c     rts2800_fpu32_eabi.lib : args_main.c.obj (.text)
+                  000853b9    0000000b     board.obj (.text:INPUTXBAR_init)
+                  000853c4    0000000b     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_isMCDClockFailureDetected)
+                  000853cf    0000000a                        : interrupt.obj (.text:Interrupt_illegalOperationHandler)
+                  000853d9    0000000a                        : interrupt.obj (.text:Interrupt_nmiHandler)
+                  000853e3    00000009     CLLC_HAL.obj (.text:CLLC_HAL_disablePWMClkCounting)
+                  000853ec    00000009     rts2800_fpu32_eabi.lib : _lock.c.obj (.text)
+                  000853f5    00000008     State_machine.obj (.text:A2)
+                  000853fd    00000008     CLLC_HAL.obj (.text:CLLC_HAL_enablePWMClkCounting)
+                  00085405    00000008     rts2800_fpu32_eabi.lib : copy_decompress_none.c.obj (.text:decompress:none)
+                  0008540d    00000008     f28004x_codestartbranch.obj (.text)
+                  00085415    00000007     board.obj (.text:ADC_init)
+                  0008541c    00000007     CLLC_HAL.obj (.text:CLLC_HAL_setPins)
+                  00085423    00000007     CLLC_HAL.obj (.text:CLLC_HAL_setupPWM)
+                  0008542a    00000007     board.obj (.text:CPUTIMER_init)
+                  00085431    00000007     board.obj (.text:ECAP_init)
+                  00085438    00000007     driverlib_eabi.lib : sysctl.obj (.text:SysCtl_resetMCD)
+                  0008543f    00000006     board.obj (.text:EPWM1_CAP_init)
+                  00085445    00000006     board.obj (.text:EPWM3_CAP_init)
+                  0008544b    00000006     board.obj (.text:PZCD1_init)
+                  00085451    00000006     board.obj (.text:TZ1_init)
+                  00085457    00000006     board.obj (.text:TZ2_init)
+                  0008545d    00000005     CLLC_HAL.obj (.text:CLLC_HAL_setupCPI)
+                  00085462    00000005     CLLC_HAL.obj (.text:CLLC_HAL_setupFAN)
+                  00085467    00000005     board.obj (.text:OUTPUTXBAR_init)
+                  0008546c    00000002     rts2800_fpu32_eabi.lib : pre_init.c.obj (.text)
+                  0008546e    00000001     CLLC_HAL.obj (.text:CLLC_HAL_setupLED)
+                  0008546f    00000001     rts2800_fpu32_eabi.lib : startup.c.obj (.text)
 
 MODULE SUMMARY
 
@@ -304,16 +309,16 @@ MODULE SUMMARY
        Total:                        75     0         0      
                                                              
     .\APP\
-       CLLC.obj                      706    0         188    
+       CLLC.obj                      814    121       188    
     +--+-----------------------------+------+---------+---------+
-       Total:                        706    0         188    
+       Total:                        814    121       188    
                                                              
     .\BoardHAL\
        CLLC_HAL.obj                  460    125       0      
        MY_DEBUG.obj                  542    0         0      
-       State_machine.obj             56     0         14     
+       State_machine.obj             85     0         14     
     +--+-----------------------------+------+---------+---------+
-       Total:                        1058   125       14     
+       Total:                        1087   125       14     
                                                              
     .\device\
        device.obj                    349    0         0      
@@ -363,7 +368,7 @@ MODULE SUMMARY
        Stack:                        0      0         1016   
        Linker Generated:             0      29        0      
     +--+-----------------------------+------+---------+---------+
-       Grand Total:                  9787   1142      1228   
+       Grand Total:                  9924   1263      1228   
 
 
 LINKER GENERATED COPY TABLES
@@ -461,34 +466,35 @@ GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name
 
 page  address   name                                  
 ----  -------   ----                                  
-0     00083f1c  A0                                    
-0     00082ff8  A1                                    
-0     000850ad  ACTIVE1_init                          
-0     000850c1  ACTIVE2_init                          
-0     00085389  ADC_init                              
-0     00083d08  ADC_setOffsetTrimAll                  
-0     0008528e  ASYSCTL_init                          
+0     00083fa0  A0                                    
+0     00083ec6  A1                                    
+0     000853f5  A2                                    
+0     00085121  ACTIVE1_init                          
+0     00085135  ACTIVE2_init                          
+0     00085415  ADC_init                              
+0     00083d6f  ADC_setOffsetTrimAll                  
+0     00085312  ASYSCTL_init                          
 1     0000a8bc  A_Task_Ptr                            
 1     0000a8ba  Alpha_State_Ptr                       
-0     00083f34  B0                                    
+0     00083fb8  B0                                    
 1     0000a8be  B_Task_Ptr                            
-0     00083cdf  C$$EXIT                               
-0     0008529b  CLB1H_init                            
-0     000852a8  CLB1L_init                            
-0     000852b5  CLB2H_init                            
-0     000852c2  CLB2L_init                            
-0     00082cca  CLLC_HAL_ClaADCOffset                 
+0     00083d46  C$$EXIT                               
+0     0008531f  CLB1H_init                            
+0     0008532c  CLB1L_init                            
+0     00085339  CLB2H_init                            
+0     00085346  CLB2L_init                            
+0     00082cbf  CLLC_HAL_ClaADCOffset                 
 0     000826f2  CLLC_HAL_DEBUG_Transnit               
-0     0008535f  CLLC_HAL_disablePWMClkCounting        
-0     00085371  CLLC_HAL_enablePWMClkCounting         
-0     00085390  CLLC_HAL_setPins                      
-0     00085253  CLLC_HAL_setupADC                     
-0     000832bd  CLLC_HAL_setupBoardProtection         
-0     000853d1  CLLC_HAL_setupCPI                     
-0     0008384a  CLLC_HAL_setupDevice                  
-0     000853d6  CLLC_HAL_setupFAN                     
-0     000853e5  CLLC_HAL_setupLED                     
-0     00085397  CLLC_HAL_setupPWM                     
+0     000853e3  CLLC_HAL_disablePWMClkCounting        
+0     000853fd  CLLC_HAL_enablePWMClkCounting         
+0     0008541c  CLLC_HAL_setPins                      
+0     000852d7  CLLC_HAL_setupADC                     
+0     000832ea  CLLC_HAL_setupBoardProtection         
+0     0008545d  CLLC_HAL_setupCPI                     
+0     00083877  CLLC_HAL_setupDevice                  
+0     00085462  CLLC_HAL_setupFAN                     
+0     0008546e  CLLC_HAL_setupLED                     
+0     00085423  CLLC_HAL_setupPWM                     
 1     0000a84c  CLLC_PRIMPWM                          
 1     0000a8ce  CLLC_PRIM_COMPA                       
 1     0000a801  CLLC_PRIM_TimeShift_ticks             
@@ -526,7 +532,7 @@ page  address   name
 1     0000a832  CLLC_iSecSECONDARYSensed_Amps         
 1     0000a83a  CLLC_iSecSECONDARYSensed_pu           
 1     0000a84a  CLLC_iSecSECONDARYTankSensedOffset_pu 
-0     00083000  CLLC_initGlobalVariables              
+0     000830bd  CLLC_initGlobalVariables              
 1     0000a80a  CLLC_powerFlowState                   
 1     0000a808  CLLC_powerFlowStateActive             
 1     0000a86c  CLLC_systemState                      
@@ -545,68 +551,68 @@ page  address   name
 1     0000a846  CLLC_vSecSensedOffset_pu              
 1     0000a834  CLLC_vSecSensed_Volts                 
 1     0000a83c  CLLC_vSecSensed_pu                    
-0     00083eb5  CMPSS1OUT0_init                       
-0     0008531d  CMPSS1OUT_init                        
-0     000852cf  CMPSS2OUT_init                        
-0     000852dc  CMPSS3OUT_init                        
-0     00085280  CMPSS7OUT_init                        
-0     0008539e  CPUTIMER_init                         
-0     000851d9  CPUTimer_setEmulationMode             
-0     000850fd  DEBUG1_init                           
-0     00085111  DEBUG2_init                           
-0     0008341e  DEBUG_init                            
-0     00082da4  Device_enableAllPeripherals           
-0     000833ab  Device_init                           
-0     00085223  Device_initGPIO                       
-0     000853a5  ECAP_init                             
-0     00083e23  ECAP_setEmulationMode                 
-0     00083139  EPWM1A_ECAP_init                      
-0     000853b3  EPWM1_CAP_init                        
-0     000831bc  EPWM3A_ECAP_init                      
-0     000853b9  EPWM3_CAP_init                        
-0     00085212  EPWMXBAR_init                         
+0     00083f39  CMPSS1OUT0_init                       
+0     000853a1  CMPSS1OUT_init                        
+0     00085353  CMPSS2OUT_init                        
+0     00085360  CMPSS3OUT_init                        
+0     00085304  CMPSS7OUT_init                        
+0     0008542a  CPUTIMER_init                         
+0     0008524d  CPUTimer_setEmulationMode             
+0     00085171  DEBUG1_init                           
+0     00085185  DEBUG2_init                           
+0     0008344b  DEBUG_init                            
+0     00082d99  Device_enableAllPeripherals           
+0     000833d8  Device_init                           
+0     000852a7  Device_initGPIO                       
+0     00085431  ECAP_init                             
+0     00083e8a  ECAP_setEmulationMode                 
+0     00083166  EPWM1A_ECAP_init                      
+0     0008543f  EPWM1_CAP_init                        
+0     000831e9  EPWM3A_ECAP_init                      
+0     00085445  EPWM3_CAP_init                        
+0     00085286  EPWMXBAR_init                         
 0     00082000  EPWM_init                             
-0     00083ecf  FAN1_init                             
-0     00085125  FAN2_init                             
-0     00083941  FAN_PWM_init                          
-0     00085139  FAULT_INPUT1_init                     
-0     0008514d  FAULT_INPUT2_init                     
-0     00085161  FAULT_OUTPUT_init                     
+0     00083f53  FAN1_init                             
+0     00085199  FAN2_init                             
+0     0008396e  FAN_PWM_init                          
+0     000851ad  FAULT_INPUT1_init                     
+0     000851c1  FAULT_INPUT2_init                     
+0     000851d5  FAULT_OUTPUT_init                     
 0     00008000  Flash_initModule                      
-0     00083e5f  GPIO_init                             
-0     0008397d  GPIO_setAnalogMode                    
-0     000839b7  GPIO_setControllerCore                
-0     00083b98  GPIO_setDirectionMode                 
-0     00083ac9  GPIO_setInterruptPin                  
-0     000835fb  GPIO_setPadConfig                     
-0     000839ee  GPIO_setPinConfig                     
-0     00083a25  GPIO_setQualificationMode             
-0     00085335  INPUTXBAR_init                        
-0     00083fab  INTERRUPT_init                        
-0     000852e9  INT_M_EPWM3_TZ_ISR                    
-0     00083afd  ISR1_PZCD                             
-0     00083b65  ISR1_SZCD                             
-0     00082a8f  ISR2_TIMER0                           
-0     00085043  Interrupt_defaultHandler              
-0     0008364d  Interrupt_disable                     
-0     00083a5c  Interrupt_enable                      
-0     0008534b  Interrupt_illegalOperationHandler     
-0     00083904  Interrupt_initModule                  
-0     00083e41  Interrupt_initVectorTable             
-0     00085355  Interrupt_nmiHandler                  
-0     000830a5  MULT_CLLL_checkPowerFlow              
-0     0008369b  M_ADC_A_init                          
-0     000835a3  M_ADC_B_init                          
-0     000836e9  M_ADC_C_init                          
-0     000853db  OUTPUTXBAR_init                       
-0     00083809  PMBUS_init                            
-0     00082bb1  PMBus_configBusClock                  
-0     00083487  PMBus_configModuleClock               
-0     00083c87  PMBus_initControllerMode              
-0     00085271  PRIM_ZCD1_XINT_init                   
-0     00085189  PRIM_ZCD1_init                        
-0     0008519d  PRIM_ZCD2_init                        
-0     000853bf  PZCD1_init                            
+0     00083ee3  GPIO_init                             
+0     000839e4  GPIO_setAnalogMode                    
+0     00083a1e  GPIO_setControllerCore                
+0     00083bff  GPIO_setDirectionMode                 
+0     00083b30  GPIO_setInterruptPin                  
+0     00083628  GPIO_setPadConfig                     
+0     00083a55  GPIO_setPinConfig                     
+0     00083a8c  GPIO_setQualificationMode             
+0     000853b9  INPUTXBAR_init                        
+0     0008502f  INTERRUPT_init                        
+0     0008536d  INT_M_EPWM3_TZ_ISR                    
+0     00083b64  ISR1_PZCD                             
+0     00083bcc  ISR1_SZCD                             
+0     00082ba8  ISR2_TIMER0                           
+0     000850b7  Interrupt_defaultHandler              
+0     0008367a  Interrupt_disable                     
+0     00083ac3  Interrupt_enable                      
+0     000853cf  Interrupt_illegalOperationHandler     
+0     00083931  Interrupt_initModule                  
+0     00083ea8  Interrupt_initVectorTable             
+0     000853d9  Interrupt_nmiHandler                  
+0     00082e70  MULT_CLLL_checkPowerFlow              
+0     000836c8  M_ADC_A_init                          
+0     000835d0  M_ADC_B_init                          
+0     00083716  M_ADC_C_init                          
+0     00085467  OUTPUTXBAR_init                       
+0     00083836  PMBUS_init                            
+0     00082a8f  PMBus_configBusClock                  
+0     000834b4  PMBus_configModuleClock               
+0     00083cee  PMBus_initControllerMode              
+0     000852f5  PRIM_ZCD1_XINT_init                   
+0     000851fd  PRIM_ZCD1_init                        
+0     00085211  PRIM_ZCD2_init                        
+0     0008544b  PZCD1_init                            
 0     00082910  PinMux_init                           
 0     00081129  RamfuncsLoadEnd                       
 abs   00000129  RamfuncsLoadSize                      
@@ -614,27 +620,27 @@ abs   00000129  RamfuncsLoadSize
 0     00008129  RamfuncsRunEnd                        
 abs   00000129  RamfuncsRunSize                       
 0     00008000  RamfuncsRunStart                      
-0     0008377f  SCI_clearInterruptStatus              
-0     0008341e  SCI_init                              
-0     00083888  SCI_setConfig                         
-0     000851b1  SEC_ZCD1_init                         
-0     000851c5  SEC_ZCD2_init                         
-0     00083fc2  STATUS1_init                          
-0     00083f7c  STATUS2_init                          
-0     00083bc9  SYNC_init                             
+0     000837ac  SCI_clearInterruptStatus              
+0     0008344b  SCI_init                              
+0     000838b5  SCI_setConfig                         
+0     00085225  SEC_ZCD1_init                         
+0     00085239  SEC_ZCD2_init                         
+0     00085046  STATUS1_init                          
+0     00085000  STATUS2_init                          
+0     00083c30  SYNC_init                             
 0     00008125  SysCtl_delay                          
-0     000834ed  SysCtl_getClock                       
-0     00083ee9  SysCtl_getLowSpeedClock               
-0     00082f3b  SysCtl_isPLLValid                     
-0     00083736  SysCtl_selectOscSource                
-0     00083a93  SysCtl_selectXTAL                     
-0     00083dc5  SysCtl_selectXTALSingleEnded          
-0     00082e7b  SysCtl_setClock                       
-0     000853c5  TZ1_init                              
-0     000853cb  TZ2_init                              
-0     00083c2a  XBAR_setEPWMMuxConfig                 
-0     00083c59  XBAR_setOutputMuxConfig               
-0     00085271  XINT_init                             
+0     0008351a  SysCtl_getClock                       
+0     00083f6d  SysCtl_getLowSpeedClock               
+0     00083000  SysCtl_isPLLValid                     
+0     00083763  SysCtl_selectOscSource                
+0     00083afa  SysCtl_selectXTAL                     
+0     00083e2c  SysCtl_selectXTALSingleEnded          
+0     00082f3d  SysCtl_setClock                       
+0     00085451  TZ1_init                              
+0     00085457  TZ2_init                              
+0     00083c91  XBAR_setEPWMMuxConfig                 
+0     00083cc0  XBAR_setOutputMuxConfig               
+0     000852f5  XINT_init                             
 0     00081142  __TI_CINIT_Base                       
 0     0008114a  __TI_CINIT_Limit                      
 0     0008114a  __TI_CINIT_Warm                       
@@ -642,38 +648,38 @@ abs   00000129  RamfuncsRunSize
 0     0008113e  __TI_Handler_Table_Limit              
 1     000007f8  __TI_STACK_END                        
 abs   000003f8  __TI_STACK_SIZE                       
-0     00083cb4  __TI_auto_init_nobinit_nopinit        
+0     00083d1b  __TI_auto_init_nobinit_nopinit        
 1     0000a8ca  __TI_cleanup_ptr                      
-0     00083bfa  __TI_decompress_lzss                  
-0     00085379  __TI_decompress_none                  
+0     00083c61  __TI_decompress_lzss                  
+0     00085405  __TI_decompress_none                  
 1     0000a8cc  __TI_dtors_ptr                        
 1     0000a8c8  __TI_enable_exit_profile_output       
 abs   ffffffff  __TI_pprof_out_hndl                   
 abs   ffffffff  __TI_prof_data_size                   
 abs   ffffffff  __TI_prof_data_start                  
-0     00085310  __TI_zero_init_nomemset               
-0     00083f03  __c28xabi_divf                        
+0     00085394  __TI_zero_init_nomemset               
+0     00083f87  __c28xabi_divf                        
 n/a   UNDEFED   __c_args__                            
-0     000853e0  __error__                             
+0     00082ffd  __error__                             
 1     00000400  __stack                               
-0     00085329  _args_main                            
-0     00085000  _c_int00                              
+0     000853ad  _args_main                            
+0     00085074  _c_int00                              
 1     0000a8d0  _lock                                 
-0     00085370  _nop                                  
-0     0008536c  _register_lock                        
-0     00085368  _register_unlock                      
-0     000853e6  _system_post_cinit                    
-0     000853e3  _system_pre_init                      
+0     000853f4  _nop                                  
+0     000853f0  _register_lock                        
+0     000853ec  _register_unlock                      
+0     0008546f  _system_post_cinit                    
+0     0008546c  _system_pre_init                      
 1     0000a8d2  _unlock                               
-0     00083cdf  abort                                 
+0     00083d46  abort                                 
 0     00080000  code_start                            
-0     00083ce1  exit                                  
-0     000838c6  main                                  
-0     00083e7c  memcpy                                
-0     00083d57  myCPUTIMER0_init                      
-0     00083da1  myCPUTIMER1_init                      
-0     00083b31  myCPUTIMER2_init                      
-0     00083809  myPMBUS0_init                         
+0     00083d48  exit                                  
+0     000838f3  main                                  
+0     00083f00  memcpy                                
+0     00083dbe  myCPUTIMER0_init                      
+0     00083e08  myCPUTIMER1_init                      
+0     00083b98  myCPUTIMER2_init                      
+0     00083836  myPMBUS0_init                         
 1     0000a8c0  vTimer0                               
 1     0000a8c4  vTimer1                               
 
@@ -697,132 +703,133 @@ page  address   name
 0     00082000  EPWM_init                             
 0     000826f2  CLLC_HAL_DEBUG_Transnit               
 0     00082910  PinMux_init                           
-0     00082a8f  ISR2_TIMER0                           
-0     00082bb1  PMBus_configBusClock                  
-0     00082cca  CLLC_HAL_ClaADCOffset                 
-0     00082da4  Device_enableAllPeripherals           
-0     00082e7b  SysCtl_setClock                       
-0     00082f3b  SysCtl_isPLLValid                     
-0     00082ff8  A1                                    
-0     00083000  CLLC_initGlobalVariables              
-0     000830a5  MULT_CLLL_checkPowerFlow              
-0     00083139  EPWM1A_ECAP_init                      
-0     000831bc  EPWM3A_ECAP_init                      
-0     000832bd  CLLC_HAL_setupBoardProtection         
-0     000833ab  Device_init                           
-0     0008341e  DEBUG_init                            
-0     0008341e  SCI_init                              
-0     00083487  PMBus_configModuleClock               
-0     000834ed  SysCtl_getClock                       
-0     000835a3  M_ADC_B_init                          
-0     000835fb  GPIO_setPadConfig                     
-0     0008364d  Interrupt_disable                     
-0     0008369b  M_ADC_A_init                          
-0     000836e9  M_ADC_C_init                          
-0     00083736  SysCtl_selectOscSource                
-0     0008377f  SCI_clearInterruptStatus              
-0     00083809  PMBUS_init                            
-0     00083809  myPMBUS0_init                         
-0     0008384a  CLLC_HAL_setupDevice                  
-0     00083888  SCI_setConfig                         
-0     000838c6  main                                  
-0     00083904  Interrupt_initModule                  
-0     00083941  FAN_PWM_init                          
-0     0008397d  GPIO_setAnalogMode                    
-0     000839b7  GPIO_setControllerCore                
-0     000839ee  GPIO_setPinConfig                     
-0     00083a25  GPIO_setQualificationMode             
-0     00083a5c  Interrupt_enable                      
-0     00083a93  SysCtl_selectXTAL                     
-0     00083ac9  GPIO_setInterruptPin                  
-0     00083afd  ISR1_PZCD                             
-0     00083b31  myCPUTIMER2_init                      
-0     00083b65  ISR1_SZCD                             
-0     00083b98  GPIO_setDirectionMode                 
-0     00083bc9  SYNC_init                             
-0     00083bfa  __TI_decompress_lzss                  
-0     00083c2a  XBAR_setEPWMMuxConfig                 
-0     00083c59  XBAR_setOutputMuxConfig               
-0     00083c87  PMBus_initControllerMode              
-0     00083cb4  __TI_auto_init_nobinit_nopinit        
-0     00083cdf  C$$EXIT                               
-0     00083cdf  abort                                 
-0     00083ce1  exit                                  
-0     00083d08  ADC_setOffsetTrimAll                  
-0     00083d57  myCPUTIMER0_init                      
-0     00083da1  myCPUTIMER1_init                      
-0     00083dc5  SysCtl_selectXTALSingleEnded          
-0     00083e23  ECAP_setEmulationMode                 
-0     00083e41  Interrupt_initVectorTable             
-0     00083e5f  GPIO_init                             
-0     00083e7c  memcpy                                
-0     00083eb5  CMPSS1OUT0_init                       
-0     00083ecf  FAN1_init                             
-0     00083ee9  SysCtl_getLowSpeedClock               
-0     00083f03  __c28xabi_divf                        
-0     00083f1c  A0                                    
-0     00083f34  B0                                    
-0     00083f7c  STATUS2_init                          
-0     00083fab  INTERRUPT_init                        
-0     00083fc2  STATUS1_init                          
-0     00085000  _c_int00                              
-0     00085043  Interrupt_defaultHandler              
-0     000850ad  ACTIVE1_init                          
-0     000850c1  ACTIVE2_init                          
-0     000850fd  DEBUG1_init                           
-0     00085111  DEBUG2_init                           
-0     00085125  FAN2_init                             
-0     00085139  FAULT_INPUT1_init                     
-0     0008514d  FAULT_INPUT2_init                     
-0     00085161  FAULT_OUTPUT_init                     
-0     00085189  PRIM_ZCD1_init                        
-0     0008519d  PRIM_ZCD2_init                        
-0     000851b1  SEC_ZCD1_init                         
-0     000851c5  SEC_ZCD2_init                         
-0     000851d9  CPUTimer_setEmulationMode             
-0     00085212  EPWMXBAR_init                         
-0     00085223  Device_initGPIO                       
-0     00085253  CLLC_HAL_setupADC                     
-0     00085271  PRIM_ZCD1_XINT_init                   
-0     00085271  XINT_init                             
-0     00085280  CMPSS7OUT_init                        
-0     0008528e  ASYSCTL_init                          
-0     0008529b  CLB1H_init                            
-0     000852a8  CLB1L_init                            
-0     000852b5  CLB2H_init                            
-0     000852c2  CLB2L_init                            
-0     000852cf  CMPSS2OUT_init                        
-0     000852dc  CMPSS3OUT_init                        
-0     000852e9  INT_M_EPWM3_TZ_ISR                    
-0     00085310  __TI_zero_init_nomemset               
-0     0008531d  CMPSS1OUT_init                        
-0     00085329  _args_main                            
-0     00085335  INPUTXBAR_init                        
-0     0008534b  Interrupt_illegalOperationHandler     
-0     00085355  Interrupt_nmiHandler                  
-0     0008535f  CLLC_HAL_disablePWMClkCounting        
-0     00085368  _register_unlock                      
-0     0008536c  _register_lock                        
-0     00085370  _nop                                  
-0     00085371  CLLC_HAL_enablePWMClkCounting         
-0     00085379  __TI_decompress_none                  
-0     00085389  ADC_init                              
-0     00085390  CLLC_HAL_setPins                      
-0     00085397  CLLC_HAL_setupPWM                     
-0     0008539e  CPUTIMER_init                         
-0     000853a5  ECAP_init                             
-0     000853b3  EPWM1_CAP_init                        
-0     000853b9  EPWM3_CAP_init                        
-0     000853bf  PZCD1_init                            
-0     000853c5  TZ1_init                              
-0     000853cb  TZ2_init                              
-0     000853d1  CLLC_HAL_setupCPI                     
-0     000853d6  CLLC_HAL_setupFAN                     
-0     000853db  OUTPUTXBAR_init                       
-0     000853e0  __error__                             
-0     000853e3  _system_pre_init                      
-0     000853e5  CLLC_HAL_setupLED                     
-0     000853e6  _system_post_cinit                    
+0     00082a8f  PMBus_configBusClock                  
+0     00082ba8  ISR2_TIMER0                           
+0     00082cbf  CLLC_HAL_ClaADCOffset                 
+0     00082d99  Device_enableAllPeripherals           
+0     00082e70  MULT_CLLL_checkPowerFlow              
+0     00082f3d  SysCtl_setClock                       
+0     00082ffd  __error__                             
+0     00083000  SysCtl_isPLLValid                     
+0     000830bd  CLLC_initGlobalVariables              
+0     00083166  EPWM1A_ECAP_init                      
+0     000831e9  EPWM3A_ECAP_init                      
+0     000832ea  CLLC_HAL_setupBoardProtection         
+0     000833d8  Device_init                           
+0     0008344b  DEBUG_init                            
+0     0008344b  SCI_init                              
+0     000834b4  PMBus_configModuleClock               
+0     0008351a  SysCtl_getClock                       
+0     000835d0  M_ADC_B_init                          
+0     00083628  GPIO_setPadConfig                     
+0     0008367a  Interrupt_disable                     
+0     000836c8  M_ADC_A_init                          
+0     00083716  M_ADC_C_init                          
+0     00083763  SysCtl_selectOscSource                
+0     000837ac  SCI_clearInterruptStatus              
+0     00083836  PMBUS_init                            
+0     00083836  myPMBUS0_init                         
+0     00083877  CLLC_HAL_setupDevice                  
+0     000838b5  SCI_setConfig                         
+0     000838f3  main                                  
+0     00083931  Interrupt_initModule                  
+0     0008396e  FAN_PWM_init                          
+0     000839e4  GPIO_setAnalogMode                    
+0     00083a1e  GPIO_setControllerCore                
+0     00083a55  GPIO_setPinConfig                     
+0     00083a8c  GPIO_setQualificationMode             
+0     00083ac3  Interrupt_enable                      
+0     00083afa  SysCtl_selectXTAL                     
+0     00083b30  GPIO_setInterruptPin                  
+0     00083b64  ISR1_PZCD                             
+0     00083b98  myCPUTIMER2_init                      
+0     00083bcc  ISR1_SZCD                             
+0     00083bff  GPIO_setDirectionMode                 
+0     00083c30  SYNC_init                             
+0     00083c61  __TI_decompress_lzss                  
+0     00083c91  XBAR_setEPWMMuxConfig                 
+0     00083cc0  XBAR_setOutputMuxConfig               
+0     00083cee  PMBus_initControllerMode              
+0     00083d1b  __TI_auto_init_nobinit_nopinit        
+0     00083d46  C$$EXIT                               
+0     00083d46  abort                                 
+0     00083d48  exit                                  
+0     00083d6f  ADC_setOffsetTrimAll                  
+0     00083dbe  myCPUTIMER0_init                      
+0     00083e08  myCPUTIMER1_init                      
+0     00083e2c  SysCtl_selectXTALSingleEnded          
+0     00083e8a  ECAP_setEmulationMode                 
+0     00083ea8  Interrupt_initVectorTable             
+0     00083ec6  A1                                    
+0     00083ee3  GPIO_init                             
+0     00083f00  memcpy                                
+0     00083f39  CMPSS1OUT0_init                       
+0     00083f53  FAN1_init                             
+0     00083f6d  SysCtl_getLowSpeedClock               
+0     00083f87  __c28xabi_divf                        
+0     00083fa0  A0                                    
+0     00083fb8  B0                                    
+0     00085000  STATUS2_init                          
+0     0008502f  INTERRUPT_init                        
+0     00085046  STATUS1_init                          
+0     00085074  _c_int00                              
+0     000850b7  Interrupt_defaultHandler              
+0     00085121  ACTIVE1_init                          
+0     00085135  ACTIVE2_init                          
+0     00085171  DEBUG1_init                           
+0     00085185  DEBUG2_init                           
+0     00085199  FAN2_init                             
+0     000851ad  FAULT_INPUT1_init                     
+0     000851c1  FAULT_INPUT2_init                     
+0     000851d5  FAULT_OUTPUT_init                     
+0     000851fd  PRIM_ZCD1_init                        
+0     00085211  PRIM_ZCD2_init                        
+0     00085225  SEC_ZCD1_init                         
+0     00085239  SEC_ZCD2_init                         
+0     0008524d  CPUTimer_setEmulationMode             
+0     00085286  EPWMXBAR_init                         
+0     000852a7  Device_initGPIO                       
+0     000852d7  CLLC_HAL_setupADC                     
+0     000852f5  PRIM_ZCD1_XINT_init                   
+0     000852f5  XINT_init                             
+0     00085304  CMPSS7OUT_init                        
+0     00085312  ASYSCTL_init                          
+0     0008531f  CLB1H_init                            
+0     0008532c  CLB1L_init                            
+0     00085339  CLB2H_init                            
+0     00085346  CLB2L_init                            
+0     00085353  CMPSS2OUT_init                        
+0     00085360  CMPSS3OUT_init                        
+0     0008536d  INT_M_EPWM3_TZ_ISR                    
+0     00085394  __TI_zero_init_nomemset               
+0     000853a1  CMPSS1OUT_init                        
+0     000853ad  _args_main                            
+0     000853b9  INPUTXBAR_init                        
+0     000853cf  Interrupt_illegalOperationHandler     
+0     000853d9  Interrupt_nmiHandler                  
+0     000853e3  CLLC_HAL_disablePWMClkCounting        
+0     000853ec  _register_unlock                      
+0     000853f0  _register_lock                        
+0     000853f4  _nop                                  
+0     000853f5  A2                                    
+0     000853fd  CLLC_HAL_enablePWMClkCounting         
+0     00085405  __TI_decompress_none                  
+0     00085415  ADC_init                              
+0     0008541c  CLLC_HAL_setPins                      
+0     00085423  CLLC_HAL_setupPWM                     
+0     0008542a  CPUTIMER_init                         
+0     00085431  ECAP_init                             
+0     0008543f  EPWM1_CAP_init                        
+0     00085445  EPWM3_CAP_init                        
+0     0008544b  PZCD1_init                            
+0     00085451  TZ1_init                              
+0     00085457  TZ2_init                              
+0     0008545d  CLLC_HAL_setupCPI                     
+0     00085462  CLLC_HAL_setupFAN                     
+0     00085467  OUTPUTXBAR_init                       
+0     0008546c  _system_pre_init                      
+0     0008546e  CLLC_HAL_setupLED                     
+0     0008546f  _system_post_cinit                    
 1     00000400  __stack                               
 1     000007f8  __TI_STACK_END                        
 1     0000a800  CLLC_clooseGvLoop                     
@@ -898,4 +905,4 @@ abs   ffffffff  __TI_prof_data_size
 abs   ffffffff  __TI_prof_data_start                  
 n/a   UNDEFED   __c_args__                            
 
-[215 symbols]
+[216 symbols]

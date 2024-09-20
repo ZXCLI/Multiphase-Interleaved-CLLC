@@ -3,7 +3,7 @@
 syscfg/c2000ware_libraries.obj: syscfg/c2000ware_libraries.c
 syscfg/c2000ware_libraries.obj: syscfg/c2000ware_libraries.h
 syscfg/c2000ware_libraries.obj: syscfg/board.h
-syscfg/c2000ware_libraries.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
+syscfg/c2000ware_libraries.obj: C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
 syscfg/c2000ware_libraries.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 syscfg/c2000ware_libraries.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/adc.h
 syscfg/c2000ware_libraries.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdbool.h
@@ -97,7 +97,7 @@ syscfg/c2000ware_libraries.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/dri
 syscfg/c2000ware_libraries.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 syscfg/c2000ware_libraries.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h
 syscfg/c2000ware_libraries.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-syscfg/c2000ware_libraries.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h
+syscfg/c2000ware_libraries.obj: C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h
 syscfg/c2000ware_libraries.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h
 
 syscfg/c2000ware_libraries.c:
@@ -106,7 +106,7 @@ syscfg/c2000ware_libraries.h:
 
 syscfg/board.h:
 
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
+C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -294,7 +294,7 @@ C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h:
+C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h:
 

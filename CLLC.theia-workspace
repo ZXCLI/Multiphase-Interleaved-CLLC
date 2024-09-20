@@ -1,8 +1,22 @@
 {
   "folders": [
     {
+      "path": "file:///c%3A/Users/zxc/workspace_ccstheia"
+    },
+    {
       "path": ""
     }
   ],
-  "settings": {}
+"settings": {},
+"launch": {
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Multiphase-Interleaved-CLLC",
+            "type": "ccs-debug",
+            "request": "launch",
+            "project": "Multiphase-Interleaved-CLLC"
+        }
+    ]
+}
 }

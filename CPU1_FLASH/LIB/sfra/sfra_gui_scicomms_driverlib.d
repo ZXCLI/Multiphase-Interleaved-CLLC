@@ -11,7 +11,7 @@ LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/ccstheia141/ccs/tools/compiler/t
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_types.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_stdint.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/sys/_stdint.h
-LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
+LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/adc.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stdbool.h
@@ -95,7 +95,7 @@ LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_spi.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h
-LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h
+LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: ../LIB/sfra/sfra_gui_scicomms_driverlib.h
 LIB/sfra/sfra_gui_scicomms_driverlib.obj: ../LIB/sfra/sfra_f32.h
@@ -125,7 +125,7 @@ C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/machine/_
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/sys/_stdint.h:
 
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
+C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/driverlib.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/inc/hw_memmap.h:
 
@@ -293,7 +293,7 @@ C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/version.h:
 
 C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/driver_inclusive_terminology_mapping.h:
 
-C:/Users/ZXC/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h:
+C:/Users/zxc/Documents/mcu\ project/ti-project/Multiphase-Interleaved-CLLC/device/device.h:
 
 C:/ti/ccstheia141/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include/stddef.h:
 
