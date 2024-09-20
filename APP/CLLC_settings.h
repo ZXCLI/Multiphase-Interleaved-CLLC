@@ -88,6 +88,6 @@
 //
 #define CLLC_GV_RUN DCL_runPI_C3
 
-#define CLLC_MAX_TD_STEP_PU ((float32_t)0.05) // 电荷积分TD的最大调整步长
+#define CLLC_MAX_TD_TICKS ((float32_t)500) // 电荷积分TD的最大值
 
 #endif // CLLC_SETTINGS_H

@@ -18,6 +18,6 @@
 "../LIB/FPUfastRTS/rts2800_fpu32_fast_supplement_eabi.lib"
 "../LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib"
 "../LIB/sfra/sfra_f32_tmu_eabi.lib"
--l"C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib"
+-l"C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC_DEBUG/LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib"
 -lc2000ware_libraries.cmd.genlibs
 -llibc.a

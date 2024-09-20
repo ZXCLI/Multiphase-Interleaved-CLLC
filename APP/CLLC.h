@@ -14,17 +14,22 @@ extern volatile uint16_t CLLC_PRIM_COMPA;
 extern volatile uint16_t CLLC_SEC_COMPA;
 
 // flage and status
-extern volatile uint8_t CLLC_clooseGvLoop;
+extern volatile uint16_t CLLC_clooseGvLoop;
+extern volatile uint16_t CLLC_SencondaryEabled;
 extern volatile uint16_t CLLC_PRIM_TimeShift_ticks;
 extern volatile uint16_t CLLC_SEC_TimeShift_ticks;
-extern volatile uint16_t CLLC_PRIM_TimeShiftPrev_ticks;
-extern volatile uint16_t CLLC_SEC_TimeShiftPrev_ticks;
+extern volatile uint16_t CLLC_PRIM_TimeShift_ticks_min,
+                         CLLC_PRIM_TimeShift_ticks_max;
+extern volatile uint16_t CLLC_SEC_TimeShift_ticks_min,
+                         CLLC_SEC_TimeShift_ticks_max;
+// extern volatile uint16_t CLLC_PRIM_TimeShiftPrev_ticks;
+// extern volatile uint16_t CLLC_SEC_TimeShiftPrev_ticks;
 
 // LOOP
 extern CLLC_GV CLLC_gvPrim2Sec;
 extern CLLC_GV CLLC_gvSec2Prim;
-extern CLLC_gvPrim2Sec_out;
-extern CLLC_gvSec2Prim_out;
+extern float32_t CLLC_gvPrim2Sec_out;
+extern float32_t CLLC_gvSec2Prim_out;
 
 // 高压侧
 //SI unit
@@ -37,18 +42,7 @@ extern float32_t CLLC_iPrimMAINSensed_pu;   // IPRIM1
 extern float32_t CLLC_iPrimSECONDARYSensed_pu;// IPRIM2
 extern float32_t CLLC_vPrimSensed_pu;
 extern float32_t CLLC_vPrimRef_pu;
-extern float32_t CLLC_vPrimRefSlewed_pu;
-
-// extern volatile float32_t CLLC_pwmDutyPrimRef_pu;
-// extern float32_t CLLC_pwmDutyPrim_pu;
-// extern uint32_t CLLC_pwmDutyAPrim_ticks;
-// extern uint32_t CLLC_pwmDutyBPrim_ticks;
-
-// extern volatile float32_t CLLC_pwmDeadBandREDPrimRef_ns;
-// extern uint32_t CLLC_pwmDeadBandREDPrim_ticks;
-
-// extern volatile float32_t CLLC_pwmDeadBandFEDPrimRef_ns;
-// extern uint32_t CLLC_pwmDeadBandFEDPrim_ticks;
+extern float32_t CLLC_vPrimRefSlewed_pu; // 可能不需要斜坡?
 //OFFSET
 extern float32_t CLLC_iPrimMAINSensedOffset_pu;
 extern float32_t CLLC_iPrimSECONDARYSensedOffset_pu;
@@ -72,19 +66,8 @@ extern float32_t CLLC_iSecMAINSensed_pu;   // IPRIM1
 extern float32_t CLLC_iSecSECONDARYSensed_pu;// IPRIM2
 extern float32_t CLLC_vSecSensed_pu;
 extern float32_t CLLC_vSecRef_pu;
-extern float32_t CLLC_vSecRefSlewed_pu;
-
-// extern volatile float32_t CLLC_pwmDutySecRef_pu;
-// extern float32_t CLLC_pwmDutySec_pu;
-// extern uint32_t CLLC_pwmDutyASec_ticks;
-// extern uint32_t CLLC_pwmDutyBSec_ticks;
-
-// extern volatile float32_t CLLC_pwmDeadBandREDSecRef_ns;
-// extern uint32_t CLLC_pwmDeadBandREDSec_ticks;
-
-// extern volatile float32_t CLLC_pwmDeadBandFEDSecRef_ns;
-// extern uint32_t CLLC_pwmDeadBandFEDSec_ticks;
-//OFFSET
+extern float32_t CLLC_vSecRefSlewed_pu; // 可能不需要斜坡?
+// OFFSET
 extern float32_t CLLC_iSecMAINSensedOffset_pu;
 extern float32_t CLLC_iSecSECONDARYSensedOffset_pu;
 extern float32_t CLLC_vSecSensedOffset_pu;
@@ -102,24 +85,21 @@ void CLLC_initGlobalVariables(void);//初始化变量
 void CLLC_updateBoardStatus(void);//更新板卡状态
 void CLLC_isBRUSTModeEnabled(void);//判断是否需要进入BRUST模式
 void CLLC_isSyncRectificationModeEnabled(void);//判断是否需要进入同步整流模式
+void CLLC_isSecondaryEnabled(void);//判断是否需要开启第二相
 void MULT_CLLL_checkPowerFlow(void);//检测功率流向
 
-typedef union
+typedef struct
 {
-    enum
-    {
-        systemstate_off = 0,
-        systemstate_waiteforBUSvoltage = 1,
-        systemstte_softstart = 2,
-        systemstate_normal = 3,
-        systemstate_SyncRectification,
-        systemstate_Brust,
-        systemstate_fault,
-    } CLLC_SystemState_Enum;
-    int32_t pad;
-} CLLC_SystemState_EnumType;//系统工作状态
+    uint16_t systemstate_off;
+    uint16_t systemstate_fault;
+    uint16_t systemstate_waiteforBUSvoltage;
+    uint16_t systemstte_softstart;
+    uint16_t systemstate_normal;
+    uint16_t systemstate_SyncRectification;
+    uint16_t systemstate_Brust;
+} CLLC_SystemState_StructType;//系统工作状态
 
-extern volatile CLLC_SystemState_EnumType CLLC_systemState;
+extern volatile CLLC_SystemState_StructType CLLC_systemState;
 
 typedef struct
 {
