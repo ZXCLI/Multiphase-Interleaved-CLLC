@@ -13,12 +13,12 @@
 "./device/device.obj"
 "./device/f28004x_codestartbranch.obj"
 "../28004x_generic_flash_lnk.cmd"
-"C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib"
+"C:/ti/C2000Ware_5_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib"
 "../LIB/CLAmath/F28004x_CLADATROM_Symbols_eabi_fpu32.lib"
 "../LIB/CLAmath/cla1_math_library_datarom_fpu32_eabi.lib"
 "../LIB/FPUfastRTS/rts2800_fpu32_fast_supplement_eabi.lib"
 "../LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib"
 "../LIB/sfra/sfra_f32_tmu_eabi.lib"
--l"C:/Users/zxc/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib"
+-l"C:/Users/ZXC/Documents/mcu project/ti-project/Multiphase-Interleaved-CLLC/LIB/SFO/SFO_v8_fpu_lib_build_c28_driverlib_eabi.lib"
 -lc2000ware_libraries.cmd.genlibs
 -llibc.a

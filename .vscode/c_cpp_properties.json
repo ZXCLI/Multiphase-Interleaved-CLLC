@@ -12,8 +12,7 @@
                 "${workspaceFolder}/CPU1_FLASH/syscfg",
                 "${workspaceFolder}/device/",
                 "${workspaceFolder}/device/driverlib",
-                "${workspaceFolder}/device/driverlib/inc",
-                "C:/ti/ccs1240/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/include"
+                "${workspaceFolder}/device/driverlib/inc"
             ],
             "defines": [
                 "_DEBUG",

@@ -12,7 +12,7 @@ SYSCFG_SRCS += \
 ../CLLC.syscfg 
 
 LIB_SRCS += \
-C:/ti/C2000Ware_5_01_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
+C:/ti/C2000Ware_5_03_00_00/driverlib/f28004x/driverlib/ccs/Debug/driverlib.lib 
 
 C_SRCS += \
 ./syscfg/board.c \
@@ -45,6 +45,7 @@ OBJS += \
 GEN_MISC_FILES += \
 ./syscfg/board.h \
 ./syscfg/board.cmd.genlibs \
+./syscfg/board.json \
 ./syscfg/pinmux.csv \
 ./syscfg/epwm.dot \
 ./syscfg/adc.dot \
@@ -63,6 +64,7 @@ OBJS__QUOTED += \
 GEN_MISC_FILES__QUOTED += \
 "syscfg\board.h" \
 "syscfg\board.cmd.genlibs" \
+"syscfg\board.json" \
 "syscfg\pinmux.csv" \
 "syscfg\epwm.dot" \
 "syscfg\adc.dot" \

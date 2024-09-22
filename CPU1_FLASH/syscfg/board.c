@@ -207,19 +207,19 @@ void PinMux_init()
 	// PMBUSA -> myPMBUS0 Pinmux
 	//
 	GPIO_setPinConfig(myPMBUS0_PMBUSALERT_PIN_CONFIG);
-	GPIO_setPadConfig(myPMBUS0_PMBUSALERT_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setPadConfig(myPMBUS0_PMBUSALERT_GPIO, GPIO_PIN_TYPE_OD | GPIO_PIN_TYPE_PULLUP);
 	GPIO_setQualificationMode(myPMBUS0_PMBUSALERT_GPIO, GPIO_QUAL_ASYNC);
 
 	GPIO_setPinConfig(myPMBUS0_PMBUSCTL_PIN_CONFIG);
-	GPIO_setPadConfig(myPMBUS0_PMBUSCTL_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setPadConfig(myPMBUS0_PMBUSCTL_GPIO, GPIO_PIN_TYPE_OD | GPIO_PIN_TYPE_PULLUP);
 	GPIO_setQualificationMode(myPMBUS0_PMBUSCTL_GPIO, GPIO_QUAL_ASYNC);
 
 	GPIO_setPinConfig(myPMBUS0_PMBUSSCL_PIN_CONFIG);
-	GPIO_setPadConfig(myPMBUS0_PMBUSSCL_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setPadConfig(myPMBUS0_PMBUSSCL_GPIO, GPIO_PIN_TYPE_OD | GPIO_PIN_TYPE_PULLUP);
 	GPIO_setQualificationMode(myPMBUS0_PMBUSSCL_GPIO, GPIO_QUAL_ASYNC);
 
 	GPIO_setPinConfig(myPMBUS0_PMBUSSDA_PIN_CONFIG);
-	GPIO_setPadConfig(myPMBUS0_PMBUSSDA_GPIO, GPIO_PIN_TYPE_STD);
+	GPIO_setPadConfig(myPMBUS0_PMBUSSDA_GPIO, GPIO_PIN_TYPE_OD | GPIO_PIN_TYPE_PULLUP);
 	GPIO_setQualificationMode(myPMBUS0_PMBUSSDA_GPIO, GPIO_QUAL_ASYNC);
 
 	//
@@ -251,9 +251,11 @@ void M_ADC_A_init(){
 	//
 	// ADC Initialization: Write ADC configurations and power up the ADC
 	//
-	// Configures the ADC module's offset trim
+	// Set the analog voltage reference selection and ADC module's offset trims.
+	// This function sets the analog voltage reference to internal (with the reference voltage of 1.65V or 2.5V) or external for ADC
+	// which is same as ASysCtl APIs.
 	//
-	ADC_setOffsetTrimAll(ADC_REFERENCE_INTERNAL,ADC_REFERENCE_3_3V);
+	ADC_setVREF(M_ADC_A_BASE, ADC_REFERENCE_INTERNAL, ADC_REFERENCE_3_3V);
 	//
 	// Configures the analog-to-digital converter module prescaler.
 	//
@@ -324,13 +326,16 @@ void M_ADC_A_init(){
 	ADC_setupSOC(M_ADC_A_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN4, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_A_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 }
+
 void M_ADC_B_init(){
 	//
 	// ADC Initialization: Write ADC configurations and power up the ADC
 	//
-	// Configures the ADC module's offset trim
+	// Set the analog voltage reference selection and ADC module's offset trims.
+	// This function sets the analog voltage reference to internal (with the reference voltage of 1.65V or 2.5V) or external for ADC
+	// which is same as ASysCtl APIs.
 	//
-	ADC_setOffsetTrimAll(ADC_REFERENCE_INTERNAL,ADC_REFERENCE_3_3V);
+	ADC_setVREF(M_ADC_B_BASE, ADC_REFERENCE_INTERNAL, ADC_REFERENCE_3_3V);
 	//
 	// Configures the analog-to-digital converter module prescaler.
 	//
@@ -414,13 +419,16 @@ void M_ADC_B_init(){
 	ADC_setupSOC(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN3, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_B_BASE, ADC_SOC_NUMBER3, ADC_INT_SOC_TRIGGER_NONE);
 }
+
 void M_ADC_C_init(){
 	//
 	// ADC Initialization: Write ADC configurations and power up the ADC
 	//
-	// Configures the ADC module's offset trim
+	// Set the analog voltage reference selection and ADC module's offset trims.
+	// This function sets the analog voltage reference to internal (with the reference voltage of 1.65V or 2.5V) or external for ADC
+	// which is same as ASysCtl APIs.
 	//
-	ADC_setOffsetTrimAll(ADC_REFERENCE_INTERNAL,ADC_REFERENCE_3_3V);
+	ADC_setVREF(M_ADC_C_BASE, ADC_REFERENCE_INTERNAL, ADC_REFERENCE_3_3V);
 	//
 	// Configures the analog-to-digital converter module prescaler.
 	//
@@ -491,6 +499,7 @@ void M_ADC_C_init(){
 	ADC_setupSOC(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_TRIGGER_EPWM3_SOCA, ADC_CH_ADCIN2, 30U);
 	ADC_setInterruptSOCTrigger(M_ADC_C_BASE, ADC_SOC_NUMBER2, ADC_INT_SOC_TRIGGER_NONE);
 }
+
 
 //*****************************************************************************
 //
@@ -600,9 +609,10 @@ void M_CMPSS1_init(){
     //
     CMPSS_configLatchOnPWMSYNC(M_CMPSS1_BASE,false,false);
     //
-    // Enables the CMPSS module.
+    // Disables the CMPSS module.
     //
-    CMPSS_enableModule(M_CMPSS1_BASE);
+    CMPSS_disableModule(M_CMPSS1_BASE);
+
     //
     // Delay for CMPSS DAC to power up.
     //
@@ -928,7 +938,7 @@ void myDAC0_init(){
 	//
 	// Set the DAC shadow output
 	//
-	DAC_setShadowValue(myDAC0_BASE, 0U);
+	DAC_setShadowValue(myDAC0_BASE, 555U);
 
 	//
 	// Delay for buffered DAC to power up.
@@ -955,7 +965,7 @@ void myDAC1_init(){
 	//
 	// Set the DAC shadow output
 	//
-	DAC_setShadowValue(myDAC1_BASE, 0U);
+	DAC_setShadowValue(myDAC1_BASE, 555U);
 
 	//
 	// Delay for buffered DAC to power up.
@@ -1650,11 +1660,13 @@ void EPWM1_CAP_init(){
 //*****************************************************************************
 void INTERRUPT_init(){
 	
-	// Interrupt Setings for INT_myCPUTIMER0
+	// Interrupt Settings for INT_myCPUTIMER0
+	// ISR need to be defined for the registered interrupts
 	Interrupt_register(INT_myCPUTIMER0, &ISR2_TIMER0);
 	Interrupt_disable(INT_myCPUTIMER0);
 	
-	// Interrupt Setings for INT_PRIM_ZCD1_XINT
+	// Interrupt Settings for INT_PRIM_ZCD1_XINT
+	// ISR need to be defined for the registered interrupts
 	Interrupt_register(INT_PRIM_ZCD1_XINT, &ISR1_PZCD);
 	Interrupt_disable(INT_PRIM_ZCD1_XINT);
 }
@@ -1704,13 +1716,15 @@ void myPMBUS0_init(){
 		PMBus_disableI2CMode(myPMBUS0_BASE);	
 		PMBus_deassertAlertLine(myPMBUS0_BASE);	
 		PMBus_setOwnAddress(myPMBUS0_BASE, myPMBUS0_OWN_ADDRESS);
-		moduleFreq = PMBus_configModuleClock(myPMBUS0_BASE, myPMBUS0_BAUDRATE, 100000000);
+		moduleFreq = PMBus_configModuleClock(myPMBUS0_BASE, myPMBUS0_BAUDRATE, DEVICE_SYSCLK_FREQ);
 		PMBus_configBusClock(myPMBUS0_BASE, myPMBUS0_CLOCKMODE, moduleFreq);
+
 		PMBus_initControllerMode(myPMBUS0_BASE);
 		//
 		// config target address 
 		//
 		PMBus_setTargetAddress(myPMBUS0_BASE, myPMBUS0_TARGET_ADDRESS);
+		PMBus_enableModule(myPMBUS0_BASE);
 }
 
 //*****************************************************************************

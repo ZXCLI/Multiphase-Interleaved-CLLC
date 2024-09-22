@@ -643,11 +643,13 @@ void EPWM1_CAP_init();
 //*****************************************************************************
 
 // Interrupt Settings for INT_myCPUTIMER0
+// ISR need to be defined for the registered interrupts
 #define INT_myCPUTIMER0 INT_TIMER0
 #define INT_myCPUTIMER0_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void ISR2_TIMER0(void);
 
 // Interrupt Settings for INT_PRIM_ZCD1_XINT
+// ISR need to be defined for the registered interrupts
 #define INT_PRIM_ZCD1_XINT INT_XINT1
 #define INT_PRIM_ZCD1_XINT_INTERRUPT_ACK_GROUP INTERRUPT_ACK_GROUP1
 extern __interrupt void ISR1_PZCD(void);
@@ -676,6 +678,15 @@ void CMPSS1OUT0_init();
 #define myPMBUS0_OWN_ADDRESS 26
 #define myPMBUS0_ENABLE_I2C_MODE false
 #define myPMBUS0_CLOCKMODE PMBUS_CLOCKMODE_STANDARD
+#define myPMBUS0_GPIO_MAP(gpioNumber, enumValue) do { \
+	switch((gpioNumber)) { \
+		case 2: 	(enumValue) = 0; break; \
+		case 3: 	(enumValue) = 1; break; \
+		case 9: 	(enumValue) = 2; break; \
+		case 32: 	(enumValue) = 3; break; \
+	} \
+}while(0)
+
 void myPMBUS0_init();
 
 //*****************************************************************************

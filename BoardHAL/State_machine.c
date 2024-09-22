@@ -59,7 +59,7 @@ void A1(void)// 0.5ms执行一次
        }
 
         static uint16_t softstart_counter = 0;
-        softstart_counter++;
+        softstart_counter += 2;
         uint16_t softTBPRD = (uint16_t)((CLLC_PWMSYSCLOCK_FREQ_HZ/ \
                               CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ) / \
                              (3.8702f-0.1365f*softstart_counter \
@@ -84,6 +84,12 @@ void A1(void)// 0.5ms执行一次
         if(softstart_counter > 60){
             CLLC_systemState.systemstte_softstart = 0;
             CLLC_systemState.systemstate_normal = 1;
+        #if CLLC_PROTECTION == CLLC_PROTECTION_ENABLED // 软启动完成再开启CBC保护
+            CMPSS_enableModule(M_CMPSS1_BASE);
+            CMPSS_enableModule(M_CMPSS2_BASE);
+            CMPSS_enableModule(M_CMPSS3_BASE);
+            CMPSS_enableModule(M_CMPSS4_BASE);
+        #endif
         }
     }
 
@@ -99,7 +105,7 @@ void A1(void)// 0.5ms执行一次
 void A2(void)
 {
     //DEBUG2_TRACE_IN;
-    CLLC_HAL_DEBUG_Transnit(); // 调试信息传输，顺序Vprim, Vsec, Iprim1, Isec1
+    // CLLC_HAL_DEBUG_Transnit(); // 调试信息传输，顺序Vprim, Vsec, Iprim1, Isec1
     //DEBUG2_TRACE_OUT;
     //
     // the next time CpuTimer0 'counter' reaches Period value go to A3

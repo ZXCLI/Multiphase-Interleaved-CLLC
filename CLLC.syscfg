@@ -1,8 +1,9 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "F28004x" --package "F28004x_100PZ" --part "F28004x_100PZ" --context "system" --product "C2000WARE@5.01.00.00"
- * @versions {"tool":"1.19.0+3426"}
+ * @cliArgs --device "F28004x" --part "F28004x_100PZ" --package "F28004x_100PZ" --context "system" --product "C2000WARE@5.03.00.00"
+ * @v2CliArgs --device "TMS320F280041C" --package "100PZ" --context "system" --product "C2000WARE@5.03.00.00"
+ * @versions {"tool":"1.21.1+3772"}
  */
 
 /**
@@ -142,7 +143,6 @@ mux2.inputSelect = "X1_XTAL";
 
 cmpss1.$name            = "M_CMPSS1";
 cmpss1.configBlanking   = "3";
-cmpss1.enableModule     = true;
 cmpss1.lowCompInvert    = true;
 cmpss1.sampleWindowHigh = 10;
 cmpss1.thresholdHigh    = 8;
@@ -177,12 +177,14 @@ dac1.$name            = "myDAC0";
 dac1.enableOutput     = true;
 dac1.referenceVoltage = "DAC_REF_ADC_VREFHI";
 dac1.gainMode         = "DAC_GAIN_TWO";
+dac1.shadowValue      = 555;
 
 dac2.$name            = "myDAC1";
 dac2.dacBase          = "DACB_BASE";
 dac2.enableOutput     = true;
 dac2.referenceVoltage = "DAC_REF_ADC_VREFHI";
 dac2.gainMode         = "DAC_GAIN_TWO";
+dac2.shadowValue      = 555;
 
 ecap1.ecapMode      = "APWM";
 ecap1.useInterrupts = false;
@@ -617,6 +619,8 @@ sci1.useInterrupts         = false;
 sci1.sci.$assign           = "SCIB";
 sci1.sci.sci_rxPin.$assign = "GPIO57";
 sci1.sci.sci_txPin.$assign = "GPIO56";
+sci1.rxQual.$name          = "myGPIOQUAL0";
+sci1.txQual.$name          = "myGPIOQUAL1";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
