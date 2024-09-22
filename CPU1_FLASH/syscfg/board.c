@@ -1206,6 +1206,9 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(M_EPWM1_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_setFallingEdgeDelayCount(M_EPWM1_BASE, 20);	
     EPWM_setDeadBandCounterClock(M_EPWM1_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
+    EPWM_setTripZoneAction(M_EPWM1_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
+    EPWM_setTripZoneAction(M_EPWM1_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM1_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
     EPWM_setClockPrescaler(M_EPWM2_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(M_EPWM2_BASE, 1120);	
     EPWM_setTimeBaseCounter(M_EPWM2_BASE, 0);	
@@ -1237,6 +1240,9 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(M_EPWM2_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_setFallingEdgeDelayCount(M_EPWM2_BASE, 20);	
     EPWM_setDeadBandCounterClock(M_EPWM2_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
+    EPWM_setTripZoneAction(M_EPWM2_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
+    EPWM_setTripZoneAction(M_EPWM2_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM2_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
     EPWM_setClockPrescaler(M_EPWM3_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(M_EPWM3_BASE, 1120);	
     EPWM_setTimeBaseCounter(M_EPWM3_BASE, 0);	
@@ -1273,6 +1279,7 @@ void EPWM_init(){
     EPWM_setTripZoneAction(M_EPWM3_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
     EPWM_setTripZoneAction(M_EPWM3_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
     EPWM_setTripZoneAction(M_EPWM3_BASE, EPWM_TZ_ACTION_EVENT_DCAEVT2, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM3_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
     EPWM_enableTripZoneSignals(M_EPWM3_BASE, EPWM_TZ_SIGNAL_DCAEVT2);	
     EPWM_selectCycleByCycleTripZoneClearEvent(M_EPWM3_BASE, EPWM_TZ_CBC_PULSE_CLR_CNTR_PERIOD);	
     EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCAH);	
@@ -1329,6 +1336,7 @@ void EPWM_init(){
     EPWM_setDeadBandCounterClock(M_EPWM4_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
     EPWM_setTripZoneAction(M_EPWM4_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
     EPWM_setTripZoneAction(M_EPWM4_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM4_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
     EPWM_enableTripZoneSignals(M_EPWM4_BASE, EPWM_TZ_SIGNAL_DCAEVT2);	
     EPWM_selectDigitalCompareTripInput(M_EPWM4_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCAH);	
     EPWM_setTripZoneDigitalCompareEventCondition(M_EPWM4_BASE, EPWM_TZ_DC_OUTPUT_A2, EPWM_TZ_EVENT_DCXH_HIGH);	
@@ -1363,6 +1371,9 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(M_EPWM5_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_setFallingEdgeDelayCount(M_EPWM5_BASE, 20);	
     EPWM_setDeadBandCounterClock(M_EPWM5_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
+    EPWM_setTripZoneAction(M_EPWM5_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
+    EPWM_setTripZoneAction(M_EPWM5_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM5_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
     EPWM_setClockPrescaler(M_EPWM6_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(M_EPWM6_BASE, 500);	
     EPWM_setTimeBaseCounter(M_EPWM6_BASE, 0);	
@@ -1394,6 +1405,9 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(M_EPWM6_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_setFallingEdgeDelayCount(M_EPWM6_BASE, 20);	
     EPWM_setDeadBandCounterClock(M_EPWM6_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
+    EPWM_setTripZoneAction(M_EPWM6_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
+    EPWM_setTripZoneAction(M_EPWM6_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM6_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
     EPWM_setClockPrescaler(M_EPWM7_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(M_EPWM7_BASE, 500);	
     EPWM_setTimeBaseCounter(M_EPWM7_BASE, 0);	
@@ -1425,6 +1439,9 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(M_EPWM7_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_setFallingEdgeDelayCount(M_EPWM7_BASE, 20);	
     EPWM_setDeadBandCounterClock(M_EPWM7_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
+    EPWM_setTripZoneAction(M_EPWM7_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
+    EPWM_setTripZoneAction(M_EPWM7_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM7_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
     EPWM_setClockPrescaler(M_EPWM8_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(M_EPWM8_BASE, 500);	
     EPWM_setTimeBaseCounter(M_EPWM8_BASE, 0);	
@@ -1456,6 +1473,9 @@ void EPWM_init(){
     EPWM_setFallingEdgeDelayCountShadowLoadMode(M_EPWM8_BASE, EPWM_FED_LOAD_ON_CNTR_ZERO);	
     EPWM_setFallingEdgeDelayCount(M_EPWM8_BASE, 20);	
     EPWM_setDeadBandCounterClock(M_EPWM8_BASE, EPWM_DB_COUNTER_CLOCK_HALF_CYCLE);	
+    EPWM_setTripZoneAction(M_EPWM8_BASE, EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_LOW);	
+    EPWM_setTripZoneAction(M_EPWM8_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
+    EPWM_enableTripZoneSignals(M_EPWM8_BASE, EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);	
 }
 
 //*****************************************************************************

@@ -81,12 +81,12 @@ extern EMAVG CLLC_vSecSensedAvg_pu;
 
 
 void CLLC_initGlobalVariables(void);//初始化变量
-
+void CLLC_softStart(void);//软启动
 void CLLC_updateBoardStatus(void);//更新板卡状态
 void CLLC_isBRUSTModeEnabled(void);//判断是否需要进入BRUST模式
 void CLLC_isSyncRectificationModeEnabled(void);//判断是否需要进入同步整流模式
 void CLLC_isSecondaryEnabled(void);//判断是否需要开启第二相
-void MULT_CLLL_checkPowerFlow(void);//检测功率流向
+void CLLL_checkPowerFlow(void);//检测功率流向
 
 typedef struct
 {

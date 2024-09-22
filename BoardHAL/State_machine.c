@@ -51,64 +51,30 @@ void B0(void) // 更慢的任务。状态机B由CPU_TIMER2管理
 
 void A1(void)// 0.5ms执行一次
 {
-    if((CLLC_systemState.systemstate_off == 1) || 
-       (CLLC_systemState.systemstte_softstart == 1)){//执行软启动
-       if(CLLC_systemState.systemstate_off == 1){
-            CLLC_systemState.systemstate_off = 0;
-            CLLC_systemState.systemstte_softstart = 1;
-       }
+    CLLC_softStart(); // 软启动
+    CLLL_checkPowerFlow(); // 检查功率流
 
-        static uint16_t softstart_counter = 0;
-        softstart_counter += 2;
-        uint16_t softTBPRD = (uint16_t)((CLLC_PWMSYSCLOCK_FREQ_HZ/ \
-                              CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ) / \
-                             (3.8702f-0.1365f*softstart_counter \
-                              +0.00257f* softstart_counter*softstart_counter \
-                              -0.00001803f*softstart_counter* \
-                              softstart_counter*softstart_counter)); 
-        // 三阶多项式拟合，指数衰减从4到1，对应频率从4倍谐振频率下降到1倍谐振频率
-        if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
-           powerFlow_PrimToSec)
-        {
-            EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, softTBPRD);
-            EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
-                                        EPWM_COUNTER_COMPARE_A, (softTBPRD >> 1));
-        }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
-           powerFlow_SecToPrim)
-        {
-            EPWM_setTimeBasePeriod(CLLC_SEC_LEGB_PWM_BASE, softTBPRD);
-            EPWM_setCounterCompareValue(CLLC_SEC_LEGB_PWM_BASE,
-                                        EPWM_COUNTER_COMPARE_A, (softTBPRD >> 1));
-        }
-
-        if(softstart_counter > 60){
-            CLLC_systemState.systemstte_softstart = 0;
-            CLLC_systemState.systemstate_normal = 1;
-        #if CLLC_PROTECTION == CLLC_PROTECTION_ENABLED // 软启动完成再开启CBC保护
-            CMPSS_enableModule(M_CMPSS1_BASE);
-            CMPSS_enableModule(M_CMPSS2_BASE);
-            CMPSS_enableModule(M_CMPSS3_BASE);
-            CMPSS_enableModule(M_CMPSS4_BASE);
-        #endif
-        }
-    }
-
-    if(CLLC_systemState.systemstate_normal == 1){
-
-    }
     //
     // the next time CpuTimer0 'counter' reaches Period value go to A2
     //
-    A_Task_Ptr = &A2;
+    A_Task_Ptr = &A1;
 }
 
 void A2(void)
 {
-    //DEBUG2_TRACE_IN;
-    // CLLC_HAL_DEBUG_Transnit(); // 调试信息传输，顺序Vprim, Vsec, Iprim1, Isec1
-    //DEBUG2_TRACE_OUT;
     //
     // the next time CpuTimer0 'counter' reaches Period value go to A3
     //
     A_Task_Ptr = &A1;
+}
+
+void B1(void)
+{
+    DEBUG2_TRACE_IN;
+    CLLC_HAL_DEBUG_Transnit(); // 调试信息传输，顺序Vprim, Vsec, Iprim1, Isec1
+    DEBUG2_TRACE_OUT;
+    //
+    // the next time CpuTimer1 'counter' reaches Period value go to B2
+    //
+    B_Task_Ptr = &B1;
 }

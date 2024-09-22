@@ -4,15 +4,6 @@ void CLLC_HAL_DEBUG_Transnit(void)
 {
     char DEBUG_Buffer[100];
 
-    EMAVG_run(&CLLC_iPrimMAINSensedAvg_pu, CLLC_iPrimMAINSensed_pu);
-    EMAVG_run(&CLLC_iSecMAINSensedAvg_pu, CLLC_iSecMAINSensed_pu);
-
-    EMAVG_run(&CLLC_iPrimSECONDARYSensedAvg_pu, CLLC_iPrimSECONDARYSensed_pu);
-    EMAVG_run(&CLLC_iSecSECONDARYSensedAvg_pu, CLLC_iSecSECONDARYSensed_pu);
-
-    EMAVG_run(&CLLC_vPrimSensedAvg_pu, CLLC_vPrimSensed_pu);
-    EMAVG_run(&CLLC_vSecSensedAvg_pu, CLLC_vSecSensed_pu);
-
     float32_t Vprim = (CLLC_vPrimSensedAvg_pu.out *
                        CLLC_VPRIM_MAX_SENSE_VOLTS);
     float32_t Vsec = (CLLC_vSecSensedAvg_pu.out *
@@ -28,10 +19,5 @@ void CLLC_HAL_DEBUG_Transnit(void)
     //            CLLC_iPrimMAINSensedOffset_pu * 1000.0f,
     //            CLLC_iPrimSECONDARYTankSensedOffset_pu * 1000.0f, DEBUG_Buffer);
 
-    DEBUG2_TRACE_OUT;
-
-    DEBUG2_TRACE_IN;
-
     UARTprintf(DEBUG_Buffer);
-    DEBUG2_TRACE_OUT;
 }

@@ -51,8 +51,8 @@
 #define CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ    ((float32_t)89.13*1000)
                                                                     //谐振频率
 #define CLLC_TRANSFORMER_TRUNS_RATIO           ((float32_t)(15.0f/4.0f))
-#define CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)160*1000)
-#define CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)50*1000)
+#define CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)150*1000)
+#define CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ        ((float32_t)75*1000)
 
 #define CLLC_VPRIM_MAX_SENSE_VOLTS         ((float32_t)470.423) //初级母线最大电压
 #define CLLC_VSEC_MAX_SENSE_VOLTS          ((float32_t)112.448) //次级母线最大电压

@@ -23,6 +23,7 @@ void CLLC_HAL_enablePWMClkCounting(void);
 
 void CLLC_HAL_ClaADCOffset(void);
 void CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow);
+void CLLC_runEMAVG(void);
 
 
 static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
@@ -30,14 +31,6 @@ static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
     XINT_init();
 	INTERRUPT_init();
     // TODO: 等待系统软启动完了再开启时移算法的中断
-    // #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
-    //     if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_PRIM_SEC)
-    //         {Interrupt_enable(INT_PRIM_ZCD1_XINT);} // 只有时移控制需要开启中断
-    //     else if(CLLC_POWER_FLOW == CLLC_POWER_FLOW_SEC_PRIM)
-    //         {Interrupt_enable(INT_SEC_ZCD1_XINT); } // 只有时移控制需要开启中断
-    // #endif
-    //Interrupt_enable(INT_PRIM_ZCD1_XINT);
-
     Interrupt_enable(INT_myCPUTIMER0);//环路中断
     
     EALLOW;

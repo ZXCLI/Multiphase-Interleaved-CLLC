@@ -15,21 +15,21 @@ void main(void)
 
     CLLC_initGlobalVariables(); // 初始化全局变量
 
-    CLLC_HAL_disablePWMClkCounting();//关闭EPWM时钟
+    CLLC_HAL_disablePWMClkCounting(); // 关闭EPWM时钟
 
-    CLLC_HAL_setPins();//设置引脚
+    CLLC_HAL_setPins(); // 设置引脚
 
-    CLLC_HAL_setupLED();//初始化LED
+    CLLC_HAL_setupLED(); // 初始化LED
 
-    CLLC_HAL_setupCPI();//通信外设初始化
+    CLLC_HAL_setupCPI(); // 通信外设初始化
 
-    CLLC_HAL_setupFAN();//初始化风扇
-
-    CLLC_HAL_setupADC();//初始化ADC
-
+    CLLC_HAL_setupFAN(); // 初始化风扇
+    
     CLLC_HAL_setupPWM(
             CLLC_powerFlowStateActive.CLLC_PowerFlowState_Enum);
     // 初始化PWM
+
+    CLLC_HAL_setupADC(); // 初始化ADC
     
     CLLC_HAL_setupBoardProtection(); // 初始化保护
 

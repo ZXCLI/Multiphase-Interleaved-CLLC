@@ -62,7 +62,7 @@ void CLLC_HAL_setupADC(void)
     ADC_init();// 初始化ADC
     DEVICE_DELAY_US(1000000);// 延时1s，保证偏置电压稳定
     CLLC_HAL_ClaADCOffset();// 校准ADC偏移量
-    MULT_CLLL_checkPowerFlow();
+    CLLL_checkPowerFlow();
 }
 
 void CLLC_HAL_ClaADCOffset(void)
@@ -289,4 +289,14 @@ void CLLC_HAL_enablePWMClkCounting(void)
     SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_TBCLKSYNC); // 开启EPWM时钟
 }
 
+void CLLC_runEMAVG(void)
+{
+    EMAVG_run(&CLLC_iPrimMAINSensedAvg_pu, CLLC_iPrimMAINSensed_pu);
+    EMAVG_run(&CLLC_iSecMAINSensedAvg_pu, CLLC_iSecMAINSensed_pu);
 
+    EMAVG_run(&CLLC_iPrimSECONDARYSensedAvg_pu, CLLC_iPrimSECONDARYSensed_pu);
+    EMAVG_run(&CLLC_iSecSECONDARYSensedAvg_pu, CLLC_iSecSECONDARYSensed_pu);
+
+    EMAVG_run(&CLLC_vPrimSensedAvg_pu, CLLC_vPrimSensed_pu);
+    EMAVG_run(&CLLC_vSecSensedAvg_pu, CLLC_vSecSensed_pu);
+}
