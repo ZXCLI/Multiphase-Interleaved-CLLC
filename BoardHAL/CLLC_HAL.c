@@ -259,7 +259,8 @@ CLLC_HAL_getPrimMAINEPWMpreiodANDdeadTime(MAINEPWM_StructType *MAINEPWM)
     //     ECAP_getEventTimeStamp(ECAP6_BASE, ECAP_EVENT_4); // 下降沿2
 
     MAINEPWM->PWM_preiod_ticks = rising_edge_2 - rising_edge_1; // 周期
-    MAINEPWM->PWM_deadBand_ticks = CLLC_HAL_getPrimMAINdeadBand(); // 死区时间
+    MAINEPWM->PWM_deadBand_ticks = CLLC_HAL_getDeadBand(CLLC_PRIM_LEGB_PWM_BASE); 
+    // 死区时间
 }
 
 // 使用ECAP在运行时移算法时获取次级主相EPWM的周期值和死区时间
@@ -276,7 +277,33 @@ CLLC_HAL_getSecMAINEPWMpreiodANDdeadTime(MAINEPWM_StructType *MAINEPWM)
   //     ECAP_getEventTimeStamp(ECAP6_BASE, ECAP_EVENT_4); // 下降沿2
 
   MAINEPWM->PWM_preiod_ticks = rising_edge_2 - rising_edge_1; // 周期
-  MAINEPWM->PWM_deadBand_ticks = CLLC_HAL_getPrimMAINdeadBand(); // 死区时间
+  MAINEPWM->PWM_deadBand_ticks = CLLC_HAL_getDeadBand(CLLC_SEC_LEGB_PWM_BASE);
+  // 死区时间
+}
+
+void CLLC_HAL_HysteresisLoop(float32_t highThreshold, float32_t lowThreshold,
+                             uint16_t* INPUT_Flage,uint16_t* lastState,
+                             void (*function)())
+{
+    if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_PrimToSec){
+        if(CLLC_iPrimMAINSensedAvg_pu.out > highThreshold){
+            (*INPUT_Flage) = 1;
+        }else if(CLLC_iPrimMAINSensedAvg_pu.out < lowThreshold){
+            (*INPUT_Flage) = 0;
+        }
+    }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_SecToPrim){
+        if(CLLC_iSecMAINSensedAvg_pu.out > highThreshold){
+            (*INPUT_Flage) = 1;
+        }else if(CLLC_iSecMAINSensedAvg_pu.out < lowThreshold){
+            (*INPUT_Flage) = 0;
+        }
+    }
+
+    if((*INPUT_Flage) != (*lastState)){
+        function();
+    }
+
+    (*lastState) = (*INPUT_Flage);
 }
 
 void CLLC_HAL_disablePWMClkCounting(void)

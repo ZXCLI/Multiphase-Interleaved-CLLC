@@ -24,13 +24,15 @@ void CLLC_HAL_enablePWMClkCounting(void);
 void CLLC_HAL_ClaADCOffset(void);
 void CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow);
 void CLLC_runEMAVG(void);
+void CLLC_HAL_HysteresisLoop(float32_t highThreshold, float32_t lowThreshold,
+                             uint16_t *INPUT_Flage, uint16_t *lastState,
+                             void (*function)());
 
 
 static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
 {
     XINT_init();
 	INTERRUPT_init();
-    // TODO: 等待系统软启动完了再开启时移算法的中断
     Interrupt_enable(INT_myCPUTIMER0);//环路中断
     
     EALLOW;
@@ -58,7 +60,7 @@ static inline uint16_t CLLC_HAL_getDeadBand(uint16_t EPWM_BASE)
     //只获取下降沿的死区时间，因为设置的死区时间都是相同的
 }
 
-// 设置PWM的死区时间，上升沿和下降沿的值相同
+// 设置PWM的死区时间，上升沿和下降沿死区的值相同
 static inline void CLLC_HAL_setDeadBand(uint16_t EPWM_BASE, 
                                         uint16_t deadBand)
 {
@@ -131,8 +133,6 @@ static void CLLC_HAL_ManuallyTriggeredAllADC(void)
     for(uint16_t i = 0; i < 10; i++){
         ADC_forceSOC(ADC_SOC_TABLE[i].ADC_SOC, ADC_SOC_TABLE[i].ADC_SOC_NUMBER);
         DEVICE_DELAY_US(10);
-        // ADCResult[i] = (ADC_readResult(ADC_SOC_TABLE[i].ADC_RESULTREGBASE,
-        //                                ADC_SOC_TABLE[i].ADC_SOC_NUMBER));
     }
 }
 

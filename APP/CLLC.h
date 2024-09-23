@@ -97,6 +97,7 @@ typedef struct
     uint16_t systemstate_normal;
     uint16_t systemstate_SyncRectification;
     uint16_t systemstate_Brust;
+    uint16_t systemstate_SecondaryEnabled;
 } CLLC_SystemState_StructType;//系统工作状态
 
 extern volatile CLLC_SystemState_StructType CLLC_systemState;

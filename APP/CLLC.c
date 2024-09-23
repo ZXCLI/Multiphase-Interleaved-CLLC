@@ -129,9 +129,9 @@ static inline void CLLC_runVotageLoop(void)
         CLLC_gvPrim2Sec_out = DCL_runPI_C3(&CLLC_gvPrim2Sec, CLLC_vSecSensed_pu, 
                                            CLLC_vSecRef_pu);
         CLLC_PRIM_COMPA = CLLC_gvPrim2Sec_out * CLLC_MAX_TD_TICKS;
-        EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
-                                    EPWM_COUNTER_COMPARE_A,CLLC_PRIM_COMPA);
-        EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, CLLC_PRIM_COMPA<<1);
+        // EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
+        //                           EPWM_COUNTER_COMPARE_A,CLLC_PRIM_COMPA);
+        // EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, CLLC_PRIM_COMPA<<1);
 
     }else if (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
               CLLC_POWER_FLOW_SEC_PRIM)
@@ -298,25 +298,23 @@ void CLLC_updateBoardStatus(void)
 
 void CLLC_isBRUSTModeEnabled(void)
 {
-
-
-
+    static uint16_t lastBRUSTModeState = 0;
 }
-
 
 void CLLC_isSyncRectificationModeEnabled(void)
 {
-
-
-
+    static uint16_t lastSyncRecteState = 0;
+    CLLC_HAL_HysteresisLoop(0.1f,0.05f,
+                            &CLLC_iPrimMAINSensedAvg_pu.out,&lastSyncRecteState,
+                            &CLLC_isBRUSTModeEnabled);
 }
-
 
 void CLLC_isSecondaryEnabled(void)
 {
-
-
-
+    static uint16_t lastSecondaryEnabledState = 0;
+    CLLC_HAL_HysteresisLoop(0.1f, 0.05f,
+                            &CLLC_iPrimMAINSensedAvg_pu.out, &lastSecondaryEnabledState,
+                            &CLLC_isBRUSTModeEnabled);
 }
 
 

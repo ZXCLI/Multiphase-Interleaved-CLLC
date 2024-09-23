@@ -9,16 +9,10 @@ void (*B_Task_Ptr)(void);       // State pointer B branch
 
 void A0(void) // 快速任务。状态机A由CPU_TIMER1管理
 {
-    //
-    // loop rate synchronizer for A-tasks
-    //
     if (CLLC_GET_TASKA_TIMER_OVERFLOW_STATUS == 1)
     {
         CLLC_CLEAR_TASKA_TIMER_OVERFLOW_FLAG; // clear flag
 
-        //
-        // jump to an A Task (A1,A2,A3,...)
-        //
         (*A_Task_Ptr)();
 
         vTimer0[0]++; // virtual timer 0, instance 0 (spare)
@@ -28,24 +22,15 @@ void A0(void) // 快速任务。状态机A由CPU_TIMER1管理
 
 void B0(void) // 更慢的任务。状态机B由CPU_TIMER2管理
 {
-    //
-    // loop rate synchronizer for B-tasks
-    //
+   
     if (CLLC_GET_TASKB_TIMER_OVERFLOW_STATUS == 1)
     {
         CLLC_CLEAR_TASKB_TIMER_OVERFLOW_FLAG; // clear flag
 
-        //
-        // jump to a B Task (B1,B2,B3,...)
-        //
         (*B_Task_Ptr)();
 
         vTimer1[0]++; // virtual timer 1, instance 0 (spare)
     }
-
-    //
-    // Allow A state tasks
-    //
     Alpha_State_Ptr = &A0;
 }
 
@@ -54,17 +39,13 @@ void A1(void)// 0.5ms执行一次
     CLLC_softStart(); // 软启动
     CLLL_checkPowerFlow(); // 检查功率流
 
-    //
-    // the next time CpuTimer0 'counter' reaches Period value go to A2
-    //
+
     A_Task_Ptr = &A1;
 }
 
 void A2(void)
 {
-    //
-    // the next time CpuTimer0 'counter' reaches Period value go to A3
-    //
+
     A_Task_Ptr = &A1;
 }
 
@@ -73,8 +54,7 @@ void B1(void)
     DEBUG2_TRACE_IN;
     CLLC_HAL_DEBUG_Transnit(); // 调试信息传输，顺序Vprim, Vsec, Iprim1, Isec1
     DEBUG2_TRACE_OUT;
-    //
-    // the next time CpuTimer1 'counter' reaches Period value go to B2
-    //
+
+
     B_Task_Ptr = &B1;
 }
