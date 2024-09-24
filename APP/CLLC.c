@@ -1,4 +1,5 @@
 #include "CLLC.h"
+#include "inc/hw_types.h"
 
 
 
@@ -147,6 +148,7 @@ __interrupt void ISR2_TIMER0(void)
     // CLLC_PRIM_COMPA = (CLLC_HAL_getTBPRD(CLLC_PRIM_LEGA_PWM_BASE) >> 1);
     // // 获取当前计数器周期值
     // CLLC_SEC_COMPA = (CLLC_HAL_getTBPRD(CLLC_SEC_LEGA_PWM_BASE) >> 1);
+    CLLC_softStart();
     CLLC_readSensedSignals();
     if((CLLC_clooseGvLoop == 1) && (CLLC_systemState.systemstate_normal == 1)){
         CLLC_runVotageLoop();
@@ -238,14 +240,14 @@ void CLLC_softStart(void)
             CLLC_systemState.systemstte_softstart = 1;
         }
 
-        static uint16_t softstart_counter = 0;
-        softstart_counter += 2;
+        static float32_t softstart_counter = 0;
+        softstart_counter += 0.03f;
         uint16_t softTBPRD = (uint16_t)((CLLC_PWMSYSCLOCK_FREQ_HZ/ \
                                 CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ) / \
-                                (3.8702f-0.1365f*softstart_counter \
-                                +0.00257f* softstart_counter*softstart_counter \
-                                -0.00001803f*softstart_counter* \
-                                softstart_counter*softstart_counter)); 
+                                (3.8702f - 0.1365f * softstart_counter \
+                                +0.00257f * softstart_counter * softstart_counter \
+                                -0.00001803f * softstart_counter* \
+                                softstart_counter * softstart_counter)); 
         // 三阶多项式拟合，指数衰减从4到1，对应频率从4倍谐振频率下降到1倍谐振频率
         if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
             powerFlow_PrimToSec)
@@ -269,14 +271,14 @@ void CLLC_softStart(void)
             CMPSS_enableModule(M_CMPSS2_BASE);
             CMPSS_enableModule(M_CMPSS3_BASE);
             CMPSS_enableModule(M_CMPSS4_BASE);
-            // EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE, 
-            //                            EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);
-            // EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
-            //                            EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);
-            // EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
-            //                            EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);
-            // EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
-            //                            EPWM_TZ_SIGNAL_OSHT1 | EPWM_TZ_SIGNAL_OSHT2);
+            EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE, 
+                                       EPWM_TZ_SIGNAL_OSHT1);
+            EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
+                                       EPWM_TZ_SIGNAL_OSHT1);
+            EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
+                                       EPWM_TZ_SIGNAL_OSHT1);
+            EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
+                                       EPWM_TZ_SIGNAL_OSHT1);
         #endif  
 
         #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
@@ -293,28 +295,30 @@ void CLLC_softStart(void)
 
 void CLLC_updateBoardStatus(void)
 {
+    // CLLC_TripFlag.trip_MAIN = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGB_PWM_BASE);
+    // CLLC_tripFlag.trip_SECONDARY = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGD_PWM_BASE);
+    CLLC_tripFlag.trip_MAIN = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGB_PWM_BASE);
+    CLLC_tripFlag.trip_SECONDARY = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGD_PWM_BASE);
 
+    // uint16_t Trip1_OHST = (Trip1 & EPWM_TZ_FLAG_OST);
+    // uint16_t Trip1_CBC = (Trip1 & EPWM_TZ_FLAG_CBC);
+    // uint16_t Trip2_OHST = (Trip2 & EPWM_TZ_FLAG_OST);
+    // uint16_t Trip2_CBC = (Trip2 & EPWM_TZ_FLAG_CBC);
 }
 
 void CLLC_isBRUSTModeEnabled(void)
 {
-    static uint16_t lastBRUSTModeState = 0;
+    
 }
 
 void CLLC_isSyncRectificationModeEnabled(void)
 {
-    static uint16_t lastSyncRecteState = 0;
-    CLLC_HAL_HysteresisLoop(0.1f,0.05f,
-                            &CLLC_iPrimMAINSensedAvg_pu.out,&lastSyncRecteState,
-                            &CLLC_isBRUSTModeEnabled);
+
 }
 
 void CLLC_isSecondaryEnabled(void)
 {
-    static uint16_t lastSecondaryEnabledState = 0;
-    CLLC_HAL_HysteresisLoop(0.1f, 0.05f,
-                            &CLLC_iPrimMAINSensedAvg_pu.out, &lastSecondaryEnabledState,
-                            &CLLC_isBRUSTModeEnabled);
+   
 }
 
 
@@ -323,10 +327,15 @@ void CLLL_checkPowerFlow(void)
     if(CLLC_systemState.systemstate_normal == 0){ // 初始化时判断功率流向
         CLLC_HAL_ManuallyTriggeredAllADC();
         CLLC_readSensedSignals();
-        if((CLLC_vPrimSensed_pu > 0.1f) && (CLLC_vSecSensed_pu > 0.1f)){
-            if(CLLC_vPrimSensed_pu > (CLLC_vSecSensed_pu * CLLC_TRANSFORMER_TRUNS_RATIO)){
+        if((CLLC_vPrimSensed_pu > 0.1f) || (CLLC_vSecSensed_pu > 0.1f)){
+            if ((CLLC_vPrimSensed_pu * CLLC_VPRIM_MAX_SENSE_VOLTS) > 
+            ((CLLC_vSecSensed_pu * CLLC_VSEC_MAX_SENSE_VOLTS) 
+            * CLLC_TRANSFORMER_TRUNS_RATIO))
+            {
                 CLLC_powerFlowState.CLLC_PowerFlowState_Enum = powerFlow_PrimToSec;
-            }else{
+            }
+            else
+            {
                 CLLC_powerFlowState.CLLC_PowerFlowState_Enum = powerFlow_SecToPrim;
             }
         }else{ // 在两边都没有母线的时候，默认按照LAB中的设定功率流向
@@ -340,7 +349,7 @@ void CLLL_checkPowerFlow(void)
         if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_PrimToSec){
             CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE,2000);
             CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE,2000);
-        }else{
+        }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_SecToPrim){
             CLLC_HAL_setDeadBand(CLLC_PRIM_LEGA_PWM_BASE,2000);
             CLLC_HAL_setDeadBand(CLLC_PRIM_LEGB_PWM_BASE,2000);
         }
@@ -351,6 +360,5 @@ void CLLL_checkPowerFlow(void)
         CLLC_HAL_setDeadBand(CLLC_SEC_LEGD_PWM_BASE,2000);
     }else{ // 正常运行时判断功率流向
         // CLLC_runEMAVG();
-
     }
 }

@@ -5,8 +5,8 @@
 #include "CLLC.h"
 #include "MY_DEBUG.h"
 
-extern int16_t vTimer0[4];         // Virtual Timers slaved off CPU Timers (A events)
-extern int16_t vTimer1[4];         // Virtual Timers slaved off CPU Timers (B events)
+extern int16_t vTimer[4];         // Virtual Timers slaved off CPU Timers (A events)
+extern int16_t vTimerCompare[4];        // Virtual Timers slaved off CPU Timers (B events)
 
 extern void (*Alpha_State_Ptr)(void); // 基态状态机指针
 extern void (*A_Task_Ptr)(void);      // State pointer A branch

@@ -25,7 +25,7 @@ void CLLC_HAL_ClaADCOffset(void);
 void CLLC_HAL_SwitchPowerFlow_PWMLogic(uint16_t powerFlow);
 void CLLC_runEMAVG(void);
 void CLLC_HAL_HysteresisLoop(float32_t highThreshold, float32_t lowThreshold,
-                             uint16_t *INPUT_Flage, uint16_t *lastState,
+                             float32_t INPUT,uint16_t* nowState,uint16_t* lastState,
                              void (*function)());
 
 

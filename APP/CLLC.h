@@ -121,7 +121,7 @@ typedef struct
     uint8_t SecOverCurrent_SECONDARY;
 } CLLC_TripFlag_StructType;//系统跳闸状态
 
-extern volatile CLLC_TripFlag_StructType CLLC_TripFlag;
+extern volatile CLLC_TripFlag_StructType CLLC_tripFlag;
 
 typedef union
 {

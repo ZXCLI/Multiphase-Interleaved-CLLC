@@ -52,7 +52,9 @@ void CLLC_HAL_setupCPI(void)
 
 void CLLC_HAL_setupLED(void)
 {
-    
+    GPIO_writePin(STATUS1,1);
+    GPIO_writePin(STATUS2,1);
+    GPIO_writePin(FAULT_OUTPUT,0);
 }
 
 
@@ -181,7 +183,7 @@ void CLLC_HAL_setupBoardProtection(void)
     #elif CLLC_PROTECTION == CLLC_PROTECTION_ENABLED
         CMPSS_init(); // 初始化比较器
         CLLC_HAL_setupCMPSSDacValue(CMPSS1_BASE,
-                                         CLLC_iPrimMAINTankSensedOffset_pu , 1800);
+                                         CLLC_iPrimMAINTankSensedOffset_pu , 2000);
         XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPH);
         XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPL);
         CMPSS_clearFilterLatchHigh(CMPSS1_BASE);
@@ -282,28 +284,28 @@ CLLC_HAL_getSecMAINEPWMpreiodANDdeadTime(MAINEPWM_StructType *MAINEPWM)
 }
 
 void CLLC_HAL_HysteresisLoop(float32_t highThreshold, float32_t lowThreshold,
-                             uint16_t* INPUT_Flage,uint16_t* lastState,
+                             float32_t INPUT,uint16_t* nowState,uint16_t* lastState,
                              void (*function)())
 {
     if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_PrimToSec){
-        if(CLLC_iPrimMAINSensedAvg_pu.out > highThreshold){
-            (*INPUT_Flage) = 1;
-        }else if(CLLC_iPrimMAINSensedAvg_pu.out < lowThreshold){
-            (*INPUT_Flage) = 0;
+        if(INPUT > highThreshold){
+            (*nowState) = 1;
+        }else if(INPUT < lowThreshold){
+            (*nowState) = 0;
         }
     }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_SecToPrim){
-        if(CLLC_iSecMAINSensedAvg_pu.out > highThreshold){
-            (*INPUT_Flage) = 1;
-        }else if(CLLC_iSecMAINSensedAvg_pu.out < lowThreshold){
-            (*INPUT_Flage) = 0;
+        if(INPUT > highThreshold){
+            (*nowState) = 1;
+        }else if(INPUT < lowThreshold){
+            (*nowState) = 0;
         }
     }
 
-    if((*INPUT_Flage) != (*lastState)){
+    if((*nowState) != (*lastState)){
         function();
     }
 
-    (*lastState) = (*INPUT_Flage);
+    (*lastState) = (*nowState);
 }
 
 void CLLC_HAL_disablePWMClkCounting(void)

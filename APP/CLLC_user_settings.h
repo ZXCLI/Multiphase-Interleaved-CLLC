@@ -15,7 +15,7 @@
 // 7 -> Closed loop voltage with resistive load, time shift control,
 //
 
-#define CLLC_LAB 1
+#define CLLC_LAB 2
 
 #if CLLC_LAB == 1
 #define CLLC_CONTROL_MODE CLLC_DIR_FEEQ_CTRL
