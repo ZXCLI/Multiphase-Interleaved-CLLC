@@ -145,9 +145,6 @@ static inline void CLLC_runVotageLoop(void)
 
 __interrupt void ISR2_TIMER0(void)
 {
-    // CLLC_PRIM_COMPA = (CLLC_HAL_getTBPRD(CLLC_PRIM_LEGA_PWM_BASE) >> 1);
-    // // 获取当前计数器周期值
-    // CLLC_SEC_COMPA = (CLLC_HAL_getTBPRD(CLLC_SEC_LEGA_PWM_BASE) >> 1);
     CLLC_softStart();
     CLLC_readSensedSignals();
     if((CLLC_clooseGvLoop == 1) && (CLLC_systemState.systemstate_normal == 1)){
@@ -243,42 +240,32 @@ void CLLC_softStart(void)
         static float32_t softstart_counter = 0;
         softstart_counter += 0.03f;
         uint16_t softTBPRD = (uint16_t)((CLLC_PWMSYSCLOCK_FREQ_HZ/ \
-                                CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ) / \
-                                (3.8702f - 0.1365f * softstart_counter \
-                                +0.00257f * softstart_counter * softstart_counter \
-                                -0.00001803f * softstart_counter* \
-                                softstart_counter * softstart_counter)); 
+                             CLLC_NOMINAL_PWM_SWITCHING_FREQUENCY_HZ) / \
+                             (3.8702f - 0.1365f * softstart_counter \
+                             +0.00257f * softstart_counter * softstart_counter \
+                             -0.00001803f * softstart_counter* \
+                             softstart_counter * softstart_counter)); 
         // 三阶多项式拟合，指数衰减从4到1，对应频率从4倍谐振频率下降到1倍谐振频率
         if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
             powerFlow_PrimToSec)
         {
-            EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, softTBPRD);
-            EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
-                                        EPWM_COUNTER_COMPARE_A, (softTBPRD >> 1));
+            CLLC_HAL_setTBPRDandCMPA(CLLC_PRIM_LEGB_PWM_BASE, softTBPRD);
         }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == 
             powerFlow_SecToPrim)
         {
-            EPWM_setTimeBasePeriod(CLLC_SEC_LEGB_PWM_BASE, softTBPRD);
-            EPWM_setCounterCompareValue(CLLC_SEC_LEGB_PWM_BASE,
-                                        EPWM_COUNTER_COMPARE_A, (softTBPRD >> 1));
+            CLLC_HAL_setTBPRDandCMPA(CLLC_PRIM_LEGD_PWM_BASE, softTBPRD);
         }
         // 软启动完成
         if(softstart_counter > 60){
             CLLC_systemState.systemstte_softstart = 0;
             CLLC_systemState.systemstate_normal = 1;
         #if CLLC_PROTECTION == CLLC_PROTECTION_ENABLED // 软启动完成再开启CBC和OSHT保护
-            CMPSS_enableModule(M_CMPSS1_BASE);
-            CMPSS_enableModule(M_CMPSS2_BASE);
-            CMPSS_enableModule(M_CMPSS3_BASE);
-            CMPSS_enableModule(M_CMPSS4_BASE);
-            EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE, 
-                                       EPWM_TZ_SIGNAL_OSHT1);
-            EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
-                                       EPWM_TZ_SIGNAL_OSHT1);
-            EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
-                                       EPWM_TZ_SIGNAL_OSHT1);
-            EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
-                                       EPWM_TZ_SIGNAL_OSHT1);
+            // CMPSS_enableModule(M_CMPSS1_BASE);
+            // CMPSS_enableModule(M_CMPSS2_BASE);
+            // CMPSS_enableModule(M_CMPSS3_BASE);
+            // CMPSS_enableModule(M_CMPSS4_BASE);
+            // CLLC_HAL_enableAllTripZoneSignals();
+            CLLC_HAL_clearAllTripZoneFlag();
         #endif  
 
         #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
@@ -295,15 +282,10 @@ void CLLC_softStart(void)
 
 void CLLC_updateBoardStatus(void)
 {
-    // CLLC_TripFlag.trip_MAIN = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGB_PWM_BASE);
-    // CLLC_tripFlag.trip_SECONDARY = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGD_PWM_BASE);
-    CLLC_tripFlag.trip_MAIN = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGB_PWM_BASE);
-    CLLC_tripFlag.trip_SECONDARY = EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGD_PWM_BASE);
-
-    // uint16_t Trip1_OHST = (Trip1 & EPWM_TZ_FLAG_OST);
-    // uint16_t Trip1_CBC = (Trip1 & EPWM_TZ_FLAG_CBC);
-    // uint16_t Trip2_OHST = (Trip2 & EPWM_TZ_FLAG_OST);
-    // uint16_t Trip2_CBC = (Trip2 & EPWM_TZ_FLAG_CBC);
+    CLLC_tripFlag.trip_MAIN = 
+                    EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGB_PWM_BASE);
+    CLLC_tripFlag.trip_SECONDARY = 
+                    EPWM_getTripZoneFlagStatus(CLLC_PRIM_LEGD_PWM_BASE);
 }
 
 void CLLC_isBRUSTModeEnabled(void)
@@ -324,7 +306,7 @@ void CLLC_isSecondaryEnabled(void)
 
 void CLLL_checkPowerFlow(void)
 {
-    if(CLLC_systemState.systemstate_normal == 0){ // 初始化时判断功率流向
+    if(CLLC_systemState.systemstate_off == 1){ // 初始化时判断功率流向
         CLLC_HAL_ManuallyTriggeredAllADC();
         CLLC_readSensedSignals();
         if((CLLC_vPrimSensed_pu > 0.1f) || (CLLC_vSecSensed_pu > 0.1f)){
@@ -349,10 +331,16 @@ void CLLL_checkPowerFlow(void)
         if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_PrimToSec){
             CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE,2000);
             CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE,2000);
+            CLLC_HAL_setTBPRDandCMPA(CLLC_PRIM_LEGA_PWM_BASE, 290);
+            CLLC_HAL_setTBPRDandCMPA(CLLC_PRIM_LEGB_PWM_BASE, 290);
         }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_SecToPrim){
             CLLC_HAL_setDeadBand(CLLC_PRIM_LEGA_PWM_BASE,2000);
             CLLC_HAL_setDeadBand(CLLC_PRIM_LEGB_PWM_BASE,2000);
+            CLLC_HAL_setTBPRDandCMPA(CLLC_SEC_LEGA_PWM_BASE, 290);
+            CLLC_HAL_setTBPRDandCMPA(CLLC_SEC_LEGB_PWM_BASE, 290);
         }
+        // 关闭同步整流的信号
+        CLLC_HAL_disableCLBXBAR(); // 关闭CLB输出到EPWMXBAR的信号
         // 关闭第二相
         CLLC_HAL_setDeadBand(CLLC_PRIM_LEGC_PWM_BASE,2000);
         CLLC_HAL_setDeadBand(CLLC_PRIM_LEGD_PWM_BASE,2000);

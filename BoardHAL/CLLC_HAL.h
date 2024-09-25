@@ -68,6 +68,92 @@ static inline void CLLC_HAL_setDeadBand(uint16_t EPWM_BASE,
     HWREGH(EPWM_BASE + EPWM_O_DBRED) = deadBand;
 }
 
+static inline void CLLC_HAL_setTBPRDandCMPA(uint16_t EPWM_BASE,uint16_t TBPRD)
+{
+    HWREGH(EPWM_BASE + EPWM_O_TBPRD) = TBPRD;
+    EPWM_setCounterCompareValue(EPWM_BASE, EPWM_COUNTER_COMPARE_A, (TBPRD >> 1));
+}
+
+static inline void CLLC_HAL_disableCPMSSXBAR(void)
+{
+    XBAR_disableEPWMMux(CMPSS2OUT, XBAR_MUX02);
+    XBAR_disableEPWMMux(CMPSS3OUT, XBAR_MUX04);
+    XBAR_disableEPWMMux(CMPSS7OUT, XBAR_MUX12);
+    XBAR_disableEPWMMux(CMPSS1OUT, XBAR_MUX00);
+}
+
+static inline void CLLC_HAL_enableCPMSSXBAR(void)
+{
+    XBAR_enableEPWMMux(CMPSS2OUT, XBAR_MUX02);
+    XBAR_enableEPWMMux(CMPSS3OUT, XBAR_MUX04);
+    XBAR_enableEPWMMux(CMPSS7OUT, XBAR_MUX12);
+    XBAR_enableEPWMMux(CMPSS1OUT, XBAR_MUX00);
+}
+
+static inline void CLLC_HAL_disableCLBXBAR(void)
+{
+    XBAR_disableEPWMMux(CLB1L, XBAR_MUX03);
+    XBAR_disableEPWMMux(CLB1H, XBAR_MUX01);
+    XBAR_disableEPWMMux(CLB2L, XBAR_MUX07);
+    XBAR_disableEPWMMux(CLB2H, XBAR_MUX05);
+}
+
+static inline void CLLC_HAL_enableCLBXBAR(void)
+{
+    XBAR_enableEPWMMux(CLB1L, XBAR_MUX03);
+    XBAR_enableEPWMMux(CLB1H, XBAR_MUX01);
+    XBAR_enableEPWMMux(CLB2L, XBAR_MUX07);
+    XBAR_enableEPWMMux(CLB2H, XBAR_MUX05);
+}
+
+static inline void CLLC_HAL_disblePRIMmainEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+}
+
+static inline void CLLC_HAL_enablePRIMmainEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+}
+
+static inline void CLLC_HAL_disableSECmainEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+}
+
+static inline void CLLC_HAL_enableSECmainEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+}
+
+static inline void CLLC_HAL_disablePRIMsecondaryEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_PRIM_LEGC_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_PRIM_LEGD_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+}
+
+static inline void CLLC_HAL_enablePRIMsecondaryEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_PRIM_LEGC_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_PRIM_LEGD_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+}
+
+static inline void CLLC_HAL_disableSECsecondaryEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGC_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGD_PWM_BASE, CLLC_EPWM_DISABLE_DEADBAND_TICKS);
+}
+
+static inline void CLLC_HAL_enableSECsecondaryEPWM(void)
+{
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGC_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+    CLLC_HAL_setDeadBand(CLLC_SEC_LEGD_PWM_BASE, CLLC_EPWM_NOMAL_DEADBAND_TICKS);
+}
+
 // 设置谐振腔CBC保护的阈值
 static inline void CLLC_HAL_setupCMPSSDacValue(uint32_t CMPSS_BASE,
                                     float32_t offset_pu,
@@ -136,6 +222,40 @@ static void CLLC_HAL_ManuallyTriggeredAllADC(void)
     }
 }
 
+static inline void CLLC_HAL_clearAllTripZoneFlag(void)
+{
+    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGA_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGB_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(CLLC_SEC_LEGA_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(CLLC_SEC_LEGB_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+                           // 清除第一相的OST
+
+    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGC_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGD_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(CLLC_SEC_LEGC_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
+    EPWM_clearTripZoneFlag(CLLC_SEC_LEGD_PWM_BASE,
+                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2)); 
+                           // 清除第二相的OST
+}
+
+static inline void CLLC_HAL_enableAllTripZoneSignals(void)
+{
+    EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
+    EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
+    EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
+    EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
+}
 // 强制触发PWM的OneShotTrip事件
 static inline void CLLC_HAL_forcePWMOneShotTrip(uint32_t EPWM_BASE)
 {

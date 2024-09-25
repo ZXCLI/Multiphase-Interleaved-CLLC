@@ -38,7 +38,6 @@ void B0(void) // 更慢的任务。状态机B由CPU_TIMER2管理
 
 void A1(void)// 0.5ms执行一次
 {
-    // CLLC_softStart(); // 软启动
     CLLL_checkPowerFlow(); // 检查功率流
 
     CLLC_updateBoardStatus();

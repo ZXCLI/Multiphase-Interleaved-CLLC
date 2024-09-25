@@ -181,34 +181,12 @@ void CLLC_HAL_setupBoardProtection(void)
                                EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
 
     #elif CLLC_PROTECTION == CLLC_PROTECTION_ENABLED
-        CMPSS_init(); // 初始化比较器
+        CMPSS_init(); // 初始化比较器，但是这个时候并没有启用比较器模块
+        CLLC_HAL_disableCPMSSXBAR();// 关闭比较器输出到EPWMXBAR的信号
         CLLC_HAL_setupCMPSSDacValue(CMPSS1_BASE,
                                          CLLC_iPrimMAINTankSensedOffset_pu , 2000);
-        XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPH);
-        XBAR_clearInputFlag(XBAR_INPUT_FLG_CMPSS1_CTRIPL);
-        CMPSS_clearFilterLatchHigh(CMPSS1_BASE);
-        CMPSS_clearFilterLatchLow(CMPSS1_BASE);
     #endif
-
-    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGA_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGB_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    EPWM_clearTripZoneFlag(CLLC_SEC_LEGA_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    EPWM_clearTripZoneFlag(CLLC_SEC_LEGB_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-                           // 清除第一相的OST
-
-    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGC_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    EPWM_clearTripZoneFlag(CLLC_PRIM_LEGD_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    EPWM_clearTripZoneFlag(CLLC_SEC_LEGC_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2));
-    EPWM_clearTripZoneFlag(CLLC_SEC_LEGD_PWM_BASE,
-                           (EPWM_TZ_INTERRUPT_OST | EPWM_TZ_INTERRUPT_DCAEVT2)); 
-                           // 清除第二相的OST
+        CLLC_HAL_clearAllTripZoneFlag();
 }
 
 void CLLC_HAL_setupPWM(uint16_t powerFlowDir)

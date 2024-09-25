@@ -56,7 +56,7 @@
 
 #define CLLC_VPRIM_MAX_SENSE_VOLTS         ((float32_t)470.423) //初级母线最大电压
 #define CLLC_VSEC_MAX_SENSE_VOLTS          ((float32_t)112.448) //次级母线最大电压
-#define CLLC_VSEC_OPTIMAL_RANGE_VOLTS      ((float32_t)100)
+// #define CLLC_VSEC_OPTIMAL_RANGE_VOLTS      ((float32_t)100)
 // #define CLLC_IPRIM_MAX_SENSE_AMPS          ((float32_t)8)      //初级母线最大电流
 // #define CLLC_ISEC_MAX_SENSE_AMPS           ((float32_t)55)     //次级母线最大电流
 #define CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS   ((float32_t)13.013)      //初级母线最大支路电流
