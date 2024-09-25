@@ -42,6 +42,7 @@ void A1(void)// 0.5ms执行一次
 
     CLLC_updateBoardStatus();
 
+    EALLOW;
     if(CLLC_tripFlag.trip_MAIN == 1){
         GPIO_writePin(STATUS1,0);
         GPIO_writePin(FAULT_OUTPUT, 1);
@@ -50,7 +51,7 @@ void A1(void)// 0.5ms执行一次
         GPIO_writePin(STATUS2,0);
         GPIO_writePin(FAULT_OUTPUT, 1);
     }
-
+    EDIS;
     A_Task_Ptr = &A2;
 }
 

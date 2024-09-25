@@ -159,10 +159,12 @@ static inline void CLLC_HAL_setupCMPSSDacValue(uint32_t CMPSS_BASE,
                                     float32_t offset_pu,
                                     uint16_t Limit)
 {
+    EALLOW;
     CMPSS_setDACValueHigh(CMPSS_BASE,
                         (4096 * offset_pu) + Limit);
     CMPSS_setDACValueLow(CMPSS_BASE,
                         (4096 * offset_pu) - Limit);
+    EDIS;
 }
 
 static void CLLC_HAL_ManuallyTriggeredAllADC(void)
@@ -247,14 +249,14 @@ static inline void CLLC_HAL_clearAllTripZoneFlag(void)
 
 static inline void CLLC_HAL_enableAllTripZoneSignals(void)
 {
-    EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE,
-                               EPWM_TZ_SIGNAL_OSHT1);
-    EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
-                               EPWM_TZ_SIGNAL_OSHT1);
-    EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
-                               EPWM_TZ_SIGNAL_OSHT1);
-    EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
-                               EPWM_TZ_SIGNAL_OSHT1);
+    // EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE,
+    //                            EPWM_TZ_SIGNAL_OSHT1);
+    // EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
+    //                            EPWM_TZ_SIGNAL_OSHT1);
+    // EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
+    //                            EPWM_TZ_SIGNAL_OSHT1);
+    // EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
+    //                            EPWM_TZ_SIGNAL_OSHT1);
 }
 // 强制触发PWM的OneShotTrip事件
 static inline void CLLC_HAL_forcePWMOneShotTrip(uint32_t EPWM_BASE)

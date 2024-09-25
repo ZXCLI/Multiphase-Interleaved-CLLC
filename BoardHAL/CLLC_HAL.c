@@ -39,9 +39,11 @@ void CLLC_HAL_setupDevice(void)
 
 void CLLC_HAL_setPins(void)
 {
+    EALLOW;
     PinMux_init();
     INPUTXBAR_init();
     GPIO_init();
+    EDIS;
 }
 
 void CLLC_HAL_setupCPI(void)
@@ -52,9 +54,12 @@ void CLLC_HAL_setupCPI(void)
 
 void CLLC_HAL_setupLED(void)
 {
+    EALLOW;
     GPIO_writePin(STATUS1,1);
     GPIO_writePin(STATUS2,1);
     GPIO_writePin(FAULT_OUTPUT,0);
+    GPIO_writePin(DEBUG2,0);
+    EDIS;
 }
 
 
@@ -135,7 +140,8 @@ void CLLC_HAL_setupFAN(void)
     OUTPUTXBAR_init();
     ECAP_init();
 }
-//
+
+// 设置板卡保护
 void CLLC_HAL_setupBoardProtection(void)
 {
     #if CLLC_PROTECTION == CLLC_PROTECTION_DISABLED
@@ -247,18 +253,18 @@ CLLC_HAL_getPrimMAINEPWMpreiodANDdeadTime(MAINEPWM_StructType *MAINEPWM)
 static inline void 
 CLLC_HAL_getSecMAINEPWMpreiodANDdeadTime(MAINEPWM_StructType *MAINEPWM) 
 {
-  uint32_t rising_edge_1, rising_edge_2; //, falling_edge_1, falling_edge_2;
+    uint32_t rising_edge_1, rising_edge_2; //, falling_edge_1, falling_edge_2;
 
-  rising_edge_1 = ECAP_getEventTimeStamp(ECAP7_BASE, ECAP_EVENT_1); // 上升沿1
-  // falling_edge_1 =
-  //     ECAP_getEventTimeStamp(ECAP6_BASE, ECAP_EVENT_2); // 下降沿1
-  rising_edge_2 = ECAP_getEventTimeStamp(ECAP7_BASE, ECAP_EVENT_3); // 上升沿2
-  // falling_edge_2 =
-  //     ECAP_getEventTimeStamp(ECAP6_BASE, ECAP_EVENT_4); // 下降沿2
+    rising_edge_1 = ECAP_getEventTimeStamp(ECAP7_BASE, ECAP_EVENT_1); // 上升沿1
+    // falling_edge_1 =
+    //     ECAP_getEventTimeStamp(ECAP6_BASE, ECAP_EVENT_2); // 下降沿1
+    rising_edge_2 = ECAP_getEventTimeStamp(ECAP7_BASE, ECAP_EVENT_3); // 上升沿2
+    // falling_edge_2 =
+    //     ECAP_getEventTimeStamp(ECAP6_BASE, ECAP_EVENT_4); // 下降沿2
 
-  MAINEPWM->PWM_preiod_ticks = rising_edge_2 - rising_edge_1; // 周期
-  MAINEPWM->PWM_deadBand_ticks = CLLC_HAL_getDeadBand(CLLC_SEC_LEGB_PWM_BASE);
-  // 死区时间
+    MAINEPWM->PWM_preiod_ticks = rising_edge_2 - rising_edge_1; // 周期
+    MAINEPWM->PWM_deadBand_ticks = CLLC_HAL_getDeadBand(CLLC_SEC_LEGB_PWM_BASE);
+    // 死区时间
 }
 
 void CLLC_HAL_HysteresisLoop(float32_t highThreshold, float32_t lowThreshold,

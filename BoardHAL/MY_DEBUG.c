@@ -12,7 +12,7 @@ void CLLC_HAL_DEBUG_Transnit(void)
                         CLLC_IPRIM_MAX_BRANCH_SENSE_AMPS * 100.0f);
     float32_t Isec1 = (CLLC_iSecMAINSensedAvg_pu.out *
                        CLLC_ISEC_MAX_BRACH_SENSE_AMPS * 100.0f);
-    DEBUG2_TRACE_IN;
+    // DEBUG2_TRACE_IN;
     formatData(Vprim, Vsec, Iprim1, Isec1, DEBUG_Buffer);
     // formatData(CLLC_iPrimMAINTankSensedOffset_pu * 1000.0f,
     //            CLLC_iSecMAINSensedOffset_pu * 1000.0f,

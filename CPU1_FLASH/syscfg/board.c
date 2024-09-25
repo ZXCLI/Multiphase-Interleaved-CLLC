@@ -1279,8 +1279,10 @@ void EPWM_init(){
     EPWM_enableTripZoneSignals(M_EPWM3_BASE, EPWM_TZ_SIGNAL_DCAEVT2);	
     EPWM_selectCycleByCycleTripZoneClearEvent(M_EPWM3_BASE, EPWM_TZ_CBC_PULSE_CLR_CNTR_PERIOD);	
     EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCAH);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN15, EPWM_DC_TYPE_DCAL);	
     EPWM_setTripZoneDigitalCompareEventCondition(M_EPWM3_BASE, EPWM_TZ_DC_OUTPUT_A2, EPWM_TZ_EVENT_DCXH_HIGH);	
     EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCBH);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM3_BASE, EPWM_DC_TRIP_TRIPIN15, EPWM_DC_TYPE_DCBL);	
     EPWM_setTripZoneDigitalCompareEventCondition(M_EPWM3_BASE, EPWM_TZ_DC_OUTPUT_B2, EPWM_TZ_EVENT_DCXH_HIGH);	
     EPWM_enableADCTrigger(M_EPWM3_BASE, EPWM_SOC_A);	
     EPWM_setADCTriggerSource(M_EPWM3_BASE, EPWM_SOC_A, EPWM_SOC_TBCTR_U_CMPC);	
@@ -1334,7 +1336,10 @@ void EPWM_init(){
     EPWM_setTripZoneAction(M_EPWM4_BASE, EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_LOW);	
     EPWM_enableTripZoneSignals(M_EPWM4_BASE, EPWM_TZ_SIGNAL_DCAEVT2);	
     EPWM_selectDigitalCompareTripInput(M_EPWM4_BASE, EPWM_DC_TRIP_TRIPIN4, EPWM_DC_TYPE_DCAH);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM4_BASE, EPWM_DC_TRIP_TRIPIN15, EPWM_DC_TYPE_DCAL);	
     EPWM_setTripZoneDigitalCompareEventCondition(M_EPWM4_BASE, EPWM_TZ_DC_OUTPUT_A2, EPWM_TZ_EVENT_DCXH_HIGH);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM4_BASE, EPWM_DC_TRIP_TRIPIN15, EPWM_DC_TYPE_DCBH);	
+    EPWM_selectDigitalCompareTripInput(M_EPWM4_BASE, EPWM_DC_TRIP_TRIPIN15, EPWM_DC_TYPE_DCBL);	
     EPWM_setClockPrescaler(M_EPWM5_BASE, EPWM_CLOCK_DIVIDER_1, EPWM_HSCLOCK_DIVIDER_1);	
     EPWM_setTimeBasePeriod(M_EPWM5_BASE, 500);	
     EPWM_setTimeBaseCounter(M_EPWM5_BASE, 0);	

@@ -256,16 +256,22 @@ void CLLC_softStart(void)
             CLLC_HAL_setTBPRDandCMPA(CLLC_PRIM_LEGD_PWM_BASE, softTBPRD);
         }
         // 软启动完成
-        if(softstart_counter > 60){
+        if(softstart_counter > 60.0f){
             CLLC_systemState.systemstte_softstart = 0;
             CLLC_systemState.systemstate_normal = 1;
         #if CLLC_PROTECTION == CLLC_PROTECTION_ENABLED // 软启动完成再开启CBC和OSHT保护
-            // CMPSS_enableModule(M_CMPSS1_BASE);
+            CMPSS_enableModule(M_CMPSS1_BASE);
             // CMPSS_enableModule(M_CMPSS2_BASE);
             // CMPSS_enableModule(M_CMPSS3_BASE);
             // CMPSS_enableModule(M_CMPSS4_BASE);
-            // CLLC_HAL_enableAllTripZoneSignals();
+            CLLC_HAL_enableCPMSSXBAR();
             CLLC_HAL_clearAllTripZoneFlag();
+            // TODO:硬件的FAULT逻辑有问题，暂时不能启用OSHT保护
+            // CLLC_HAL_enableAllTripZoneSignals();
+            // CLLC_HAL_clearAllTripZoneFlag();
+            EALLOW;
+            GPIO_writePin(DEBUG2,1);
+            EDIS;
         #endif  
 
         #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
@@ -329,23 +335,19 @@ void CLLL_checkPowerFlow(void)
         }
         // 启机的时候先关闭同步整流和第二相
         if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_PrimToSec){
-            CLLC_HAL_setDeadBand(CLLC_SEC_LEGA_PWM_BASE,2000);
-            CLLC_HAL_setDeadBand(CLLC_SEC_LEGB_PWM_BASE,2000);
+            CLLC_HAL_disableSECmainEPWM();
             CLLC_HAL_setTBPRDandCMPA(CLLC_PRIM_LEGA_PWM_BASE, 290);
             CLLC_HAL_setTBPRDandCMPA(CLLC_PRIM_LEGB_PWM_BASE, 290);
         }else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == powerFlow_SecToPrim){
-            CLLC_HAL_setDeadBand(CLLC_PRIM_LEGA_PWM_BASE,2000);
-            CLLC_HAL_setDeadBand(CLLC_PRIM_LEGB_PWM_BASE,2000);
+            CLLC_HAL_disableSECmainEPWM();
             CLLC_HAL_setTBPRDandCMPA(CLLC_SEC_LEGA_PWM_BASE, 290);
             CLLC_HAL_setTBPRDandCMPA(CLLC_SEC_LEGB_PWM_BASE, 290);
         }
         // 关闭同步整流的信号
         CLLC_HAL_disableCLBXBAR(); // 关闭CLB输出到EPWMXBAR的信号
         // 关闭第二相
-        CLLC_HAL_setDeadBand(CLLC_PRIM_LEGC_PWM_BASE,2000);
-        CLLC_HAL_setDeadBand(CLLC_PRIM_LEGD_PWM_BASE,2000);
-        CLLC_HAL_setDeadBand(CLLC_SEC_LEGC_PWM_BASE,2000);
-        CLLC_HAL_setDeadBand(CLLC_SEC_LEGD_PWM_BASE,2000);
+        CLLC_HAL_disablePRIMsecondaryEPWM();
+        CLLC_HAL_disableSECsecondaryEPWM();
     }else{ // 正常运行时判断功率流向
         // CLLC_runEMAVG();
     }
