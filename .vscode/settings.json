@@ -15,5 +15,6 @@
         "mult_cllc_hal.h": "c",
         "stdint.h": "c",
         "mult_cllc_settings.h": "c"
-    }
+    },
+    "C_Cpp.default.compilerPath": ""
 }

@@ -12,16 +12,18 @@
                 "${workspaceFolder}/CPU1_FLASH/syscfg",
                 "${workspaceFolder}/device/",
                 "${workspaceFolder}/device/driverlib",
-                "${workspaceFolder}/device/driverlib/inc"
+                "${workspaceFolder}/device/driverlib/inc",
+                "C:/ti/ccstheia150/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/include"
             ],
             "defines": [
-                "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
                 "__TMS320C28XX__",
                 "__interrupt=" // 定义为空，消除红色波浪线
             ],
-            "cStandard": "c11"
+            "cStandard": "c11",
+            "compilerPath": "C:/ti/ccstheia150/ccs/tools/compiler/ti-cgt-c2000_22.6.1A23259/bin/cl2000.exe",
+            "intelliSenseMode": "clang-x64"
         }
     ],
     "version": 4

@@ -259,7 +259,8 @@ void CLLC_softStart(void)
         if(softstart_counter > 60.0f){
             CLLC_systemState.systemstte_softstart = 0;
             CLLC_systemState.systemstate_normal = 1;
-        #if CLLC_PROTECTION == CLLC_PROTECTION_ENABLED // 软启动完成再开启CBC和OSHT保护
+        #if CLLC_PROTECTION == CLLC_PROTECTION_ENABLED 
+            // 软启动完成再开启CBC和OSHT保护
             CMPSS_enableModule(M_CMPSS1_BASE);
             // CMPSS_enableModule(M_CMPSS2_BASE);
             // CMPSS_enableModule(M_CMPSS3_BASE);
@@ -267,8 +268,8 @@ void CLLC_softStart(void)
             CLLC_HAL_enableCPMSSXBAR();
             CLLC_HAL_clearAllTripZoneFlag();
             // TODO:硬件的FAULT逻辑有问题，暂时不能启用OSHT保护
-            // CLLC_HAL_enableAllTripZoneSignals();
-            // CLLC_HAL_clearAllTripZoneFlag();
+            CLLC_HAL_enableAllTripZoneSignals();
+            CLLC_HAL_clearAllTripZoneFlag();
             EALLOW;
             GPIO_writePin(DEBUG2,1);
             EDIS;

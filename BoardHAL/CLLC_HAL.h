@@ -249,14 +249,14 @@ static inline void CLLC_HAL_clearAllTripZoneFlag(void)
 
 static inline void CLLC_HAL_enableAllTripZoneSignals(void)
 {
-    // EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE,
-    //                            EPWM_TZ_SIGNAL_OSHT1);
-    // EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
-    //                            EPWM_TZ_SIGNAL_OSHT1);
-    // EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
-    //                            EPWM_TZ_SIGNAL_OSHT1);
-    // EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
-    //                            EPWM_TZ_SIGNAL_OSHT1);
+    EPWM_enableTripZoneSignals(CLLC_PRIM_LEGA_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
+    EPWM_enableTripZoneSignals(CLLC_PRIM_LEGB_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
+    EPWM_enableTripZoneSignals(CLLC_SEC_LEGA_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
+    EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
+                               EPWM_TZ_SIGNAL_OSHT1);
 }
 // 强制触发PWM的OneShotTrip事件
 static inline void CLLC_HAL_forcePWMOneShotTrip(uint32_t EPWM_BASE)
