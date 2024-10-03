@@ -39,7 +39,9 @@
             "dcl.h": "c",
             "clamath.h": "c",
             "math.h": "c",
-            "complex.h": "c"
+            "complex.h": "c",
+            "stdint-gcc.h": "c",
+            "_stdint40.h": "c"
         }
     }
 }

@@ -41,6 +41,11 @@ static inline void CLLC_HAL_setupInterrupt(uint16_t powerFlow)
     EDIS;
 }
 
+static inline void CLLC_enablePRIM_TD_INT(void)
+{
+    Interrupt_enable(INT_PRIM_ZCD1_XINT);
+}
+
 // 获取PWM当前的计数器值
 static inline uint16_t CLLC_HAL_getTBCTR(uint16_t EPWM_BASE)
 {
@@ -258,12 +263,55 @@ static inline void CLLC_HAL_enableAllTripZoneSignals(void)
     EPWM_enableTripZoneSignals(CLLC_SEC_LEGB_PWM_BASE,
                                EPWM_TZ_SIGNAL_OSHT1);
 }
+
+static inline void CLLC_HAL_disableAllTripZoneSignals(void)
+{
+    // 移除初级跳闸事件
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGA_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGA_PWM_BASE, 
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGB_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGB_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGC_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGC_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGD_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_PRIM_LEGD_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+    // 移除次级跳闸事件
+    EPWM_setTripZoneAction(CLLC_SEC_LEGA_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_SEC_LEGA_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+
+    EPWM_setTripZoneAction(CLLC_SEC_LEGB_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_SEC_LEGB_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+
+    EPWM_setTripZoneAction(CLLC_SEC_LEGC_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_SEC_LEGC_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+
+    EPWM_setTripZoneAction(CLLC_SEC_LEGD_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
+    EPWM_setTripZoneAction(CLLC_SEC_LEGD_PWM_BASE,
+                            EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
+
+}
 // 强制触发PWM的OneShotTrip事件
 static inline void CLLC_HAL_forcePWMOneShotTrip(uint32_t EPWM_BASE)
 {
     EPWM_forceTripZoneEvent(EPWM_BASE, EPWM_TZ_FORCE_EVENT_OST);
 }
-
-
 
 #endif // CLLC_HAL_H

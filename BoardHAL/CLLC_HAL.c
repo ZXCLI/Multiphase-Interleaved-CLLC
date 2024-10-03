@@ -145,52 +145,12 @@ void CLLC_HAL_setupFAN(void)
 void CLLC_HAL_setupBoardProtection(void)
 {
     #if CLLC_PROTECTION == CLLC_PROTECTION_DISABLED
-        // 移除初级跳闸事件
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGA_PWM_BASE,
-                                EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGA_PWM_BASE, 
-                                EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGB_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGB_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGC_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGC_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGD_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_PRIM_LEGD_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-        // 移除次级跳闸事件
-        EPWM_setTripZoneAction(CLLC_SEC_LEGA_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_SEC_LEGA_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-
-        EPWM_setTripZoneAction(CLLC_SEC_LEGB_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_SEC_LEGB_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-
-        EPWM_setTripZoneAction(CLLC_SEC_LEGC_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_SEC_LEGC_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-
-        EPWM_setTripZoneAction(CLLC_SEC_LEGD_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZA, EPWM_TZ_ACTION_DISABLE);
-        EPWM_setTripZoneAction(CLLC_SEC_LEGD_PWM_BASE,
-                               EPWM_TZ_ACTION_EVENT_TZB, EPWM_TZ_ACTION_DISABLE);
-
+        CLLC_HAL_disableAllTripZoneSignals();
     #elif CLLC_PROTECTION == CLLC_PROTECTION_ENABLED
         CMPSS_init(); // 初始化比较器，但是这个时候并没有启用比较器模块
         CLLC_HAL_disableCPMSSXBAR();// 关闭比较器输出到EPWMXBAR的信号
         CLLC_HAL_setupCMPSSDacValue(CMPSS1_BASE,
-                                         CLLC_iPrimMAINTankSensedOffset_pu , 2000);
+                                    CLLC_iPrimMAINTankSensedOffset_pu , 2000);
     #endif
         CLLC_HAL_clearAllTripZoneFlag();
 }

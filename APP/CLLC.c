@@ -127,29 +127,48 @@ static inline void CLLC_runVotageLoop(void)
     if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
       CLLC_POWER_FLOW_PRIM_SEC)
     {
-        CLLC_gvPrim2Sec_out = DCL_runPI_C3(&CLLC_gvPrim2Sec, CLLC_vSecSensed_pu, 
+        CLLC_gvPrim2Sec_out = DCL_runPI_C2(&CLLC_gvPrim2Sec, CLLC_vSecSensed_pu, 
                                            CLLC_vSecRef_pu);
-        CLLC_PRIM_COMPA = CLLC_gvPrim2Sec_out * CLLC_MAX_TD_TICKS;
-        // EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
-        //                           EPWM_COUNTER_COMPARE_A,CLLC_PRIM_COMPA);
-        // EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, CLLC_PRIM_COMPA<<1);
+        
+        CLLC_PRIM_TimeShift_ticks = (uint16_t)(CLLC_gvPrim2Sec_out * CLLC_MAX_TD_TICKS);
+        CLLC_PRIM_TimeShift_ticks = (CLLC_PRIM_TimeShift_ticks > CLLC_PRIM_TimeShift_ticks_max) ? \
+                        CLLC_PRIM_TimeShift_ticks_max : CLLC_PRIM_TimeShift_ticks;
+        CLLC_PRIM_TimeShift_ticks = (CLLC_PRIM_TimeShift_ticks < CLLC_PRIM_TimeShift_ticks_min) ? \
+                        CLLC_PRIM_TimeShift_ticks_min : CLLC_PRIM_TimeShift_ticks;
 
-    }else if (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
+        CLLC_PRIM_TimeShift_ticks = CLLC_MAX_TD_TICKS - CLLC_PRIM_TimeShift_ticks;
+
+        EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
+                                  EPWM_COUNTER_COMPARE_A,CLLC_PRIM_TimeShift_ticks);
+        EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, CLLC_PRIM_TimeShift_ticks<<1);
+
+        CLLC_PRIM_COMPA = CLLC_PRIM_TimeShift_ticks;
+
+        return;
+    }
+    else if (CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
               CLLC_POWER_FLOW_SEC_PRIM)
     {
         CLLC_gvSec2Prim_out = DCL_runPI_C3(&CLLC_gvSec2Prim, CLLC_vPrimSensed_pu, 
                                            CLLC_vPrimRef_pu);
     }
-    
+
+    // EPWM_setCounterCompareValue(CLLC_PRIM_LEGB_PWM_BASE,
+    //                           EPWM_COUNTER_COMPARE_A,CLLC_PRIM_COMPA);
+    // EPWM_setTimeBasePeriod(CLLC_PRIM_LEGB_PWM_BASE, CLLC_PRIM_COMPA<<1);
 }
 
 __interrupt void ISR2_TIMER0(void)
 {
     CLLC_softStart();
     CLLC_readSensedSignals();
+#if CLLC_INCR_BUILD == CLLC_CLOSED_LOOP_BUILD
+
     if((CLLC_clooseGvLoop == 1) && (CLLC_systemState.systemstate_normal == 1)){
         CLLC_runVotageLoop();
     }
+    
+#endif
     CLLC_runEMAVG();// TODO:先放在中断里面，看看后面中断的占用率
     Interrupt_clearACKGroup(INTERRUPT_ACK_GROUP1); // timer0要加上清除中断标志
 }
@@ -183,26 +202,32 @@ void CLLC_initGlobalVariables(void)
     CLLC_systemState.systemstate_off = 1;
     
     // 环路相关变量
-    CLLC_clooseGvLoop = 0;
+    CLLC_clooseGvLoop = 1;
     CLLC_PRIM_TimeShift_ticks = 0;
     CLLC_SEC_TimeShift_ticks = 0;
 
-    CLLC_vPrimRef_pu = 0.0f;
-    CLLC_vSecRef_pu = 0.0f;
+    CLLC_vPrimRef_pu = 0.1f;
+    CLLC_vSecRef_pu = 0.15f;
 
     CLLC_PRIM_TimeShift_ticks_min = CLLC_PWMSYSCLOCK_FREQ_HZ /
                                     (4 * CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ);
     CLLC_SEC_TimeShift_ticks_min = CLLC_PWMSYSCLOCK_FREQ_HZ /
                                     (4 * CLLC_MAX_PWM_SWITCHING_FREQUENCY_HZ);
-    CLLC_PRIM_TimeShift_ticks_max = 530;// 注意：该值应该上机实测调整
-    CLLC_SEC_TimeShift_ticks_max = 530;
+
+    // 注意：分母上的系数应该大于2，最好上机实测调整                                
+    CLLC_PRIM_TimeShift_ticks_max = CLLC_PWMSYSCLOCK_FREQ_HZ /
+                                    (2.3f * CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ);
+    CLLC_SEC_TimeShift_ticks_max = CLLC_PWMSYSCLOCK_FREQ_HZ /
+                                    (2.3f * CLLC_MIN_PWM_SWITCHING_FREQUENCY_HZ);
 
     // 补偿器参数
+    DCL_resetPI(&CLLC_gvPrim2Sec);
     CLLC_gvPrim2Sec.Kp = 3.0f;
-    CLLC_gvPrim2Sec.Ki = 0.0f;
+    CLLC_gvPrim2Sec.Ki = 1.0f;
     CLLC_gvPrim2Sec.Umax = 100.0f;
-    CLLC_gvPrim2Sec.Umin = 0.0f;
+    CLLC_gvPrim2Sec.Umin = -100.0f;
 
+    DCL_resetPI(&CLLC_gvSec2Prim);
     CLLC_gvSec2Prim.Kp = 0.0f;
     CLLC_gvSec2Prim.Ki = 0.0f;
     CLLC_gvSec2Prim.Umax = 0.0f;
@@ -259,30 +284,35 @@ void CLLC_softStart(void)
         if(softstart_counter > 60.0f){
             CLLC_systemState.systemstte_softstart = 0;
             CLLC_systemState.systemstate_normal = 1;
+
+            EALLOW;
         #if CLLC_PROTECTION == CLLC_PROTECTION_ENABLED 
+
             // 软启动完成再开启CBC和OSHT保护
-            CMPSS_enableModule(M_CMPSS1_BASE);
+            // TODO:硬件全部调试正常后记得取消注释
+            // CMPSS_enableModule(M_CMPSS1_BASE);
             // CMPSS_enableModule(M_CMPSS2_BASE);
             // CMPSS_enableModule(M_CMPSS3_BASE);
             // CMPSS_enableModule(M_CMPSS4_BASE);
-            CLLC_HAL_enableCPMSSXBAR();
-            CLLC_HAL_clearAllTripZoneFlag();
-            // TODO:硬件的FAULT逻辑有问题，暂时不能启用OSHT保护
+            // CLLC_HAL_enableCPMSSXBAR();
             CLLC_HAL_enableAllTripZoneSignals();
             CLLC_HAL_clearAllTripZoneFlag();
-            EALLOW;
+            
             GPIO_writePin(DEBUG2,1);
-            EDIS;
+            
         #endif  
 
-        #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
+    #if CLLC_CONTROL_MODE == CLLC_TIME_SHIF_CTRL
+
         if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
             powerFlow_PrimToSec)
-            {Interrupt_enable(INT_PRIM_ZCD1_XINT);} // 只有时移控制需要开启中断
-        else if(CLLC_POWER_FLOW.CLLC_PowerFlowState_Enum == \
+            {CLLC_enablePRIM_TD_INT();} // 只有时移控制需要开启中断
+        else if(CLLC_powerFlowState.CLLC_PowerFlowState_Enum == \
             powerFlow_SecToPrim)
-            {Interrupt_enable(INT_SEC_ZCD1_XINT); } 
-        #endif
+            //{Interrupt_enable(INT_SEC_ZCD1_XINT); } 
+
+    #endif
+            EDIS;
         }
     }
 }
